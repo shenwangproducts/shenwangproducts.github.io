@@ -1,0 +1,269 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000000; /* พื้นหลังทั่วทั้งเว็บไซต์ */
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* Header */
+header {
+    background-color: #333;
+    color: #00ff00;
+    padding: 0.5px;
+    text-align: center;
+}
+
+/* Navigation menu */
+nav ul {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;  /*ความห่าง5หัวข้อ*/
+}
+
+nav ul li a {
+    color: #88ff00;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Background สำหรับทุกหน้า */
+main {
+    padding: 20px;
+    flex-grow: 1;
+    background-image: url('background.jpg'); /* กำหนดภาพพื้นหลัง */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #88ff00; /* ทำให้ข้อความอ่านง่ายขึ้น */
+}
+
+/* Banner */
+.banner img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+}
+
+/* Promotion and Game Items */
+.game-item {
+    background-color: rgba(255, 255, 255, 0.8); /* ทำให้พื้นหลังเกมโปร่งใส */
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Download Section */
+#download {
+    padding: 40px;
+    background-color: #0e0d0d;
+    text-align: center;
+}
+
+/* App Item */
+.app-item {
+    background-color: #fff;
+    padding: 30px;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 1200px;
+}
+
+/* App Info */
+.app-info {
+    margin-bottom: 20px;
+}
+
+.app-image {
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+}
+
+h3 {
+    font-size: 24px;
+    margin: 10px 0;
+}
+
+p {
+    font-size: 16px;
+    color: #666;
+}
+
+.btn-download {
+    padding: 12px 20px;
+    background-color: #28a745;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.btn-download:hover {
+    background-color: #218838;
+}
+
+/* App Examples */
+.app-examples {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.app-examples h4 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Video Section */
+.video-zone {
+    margin-bottom: 40px;
+}
+
+.video-zone h5 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+iframe {
+    width: 100%;
+    max-width: 800px;
+    height: 450px;
+    border: none;
+    border-radius: 10px;
+}
+
+/* Image Gallery */
+.image-zone h5 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.image-gallery {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.example-image {
+    width: 23%;
+    border-radius: 10px;
+    transition: transform 0.3s;
+}
+
+.example-image:hover {
+    transform: scale(1.05);
+}
+
+
+/* Comments Section */
+.comments textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* Contact Methods */
+.contact-methods {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.contact-method {
+    width: 30%;
+    margin-bottom: 30px;
+}
+
+.contact-method h3 {
+    margin-bottom: 10px;
+}
+
+/* Footer */
+footer {
+    background-color: #222;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    background-image: url('footer-background.jpg'); /* พื้นหลังของฟุตเตอร์ */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Footer Content */
+.footer-home {
+    text-align: center;
+    padding: 10px;
+    background-color: #222;
+    color: rgb(83, 253, 4);
+    border-top: 3px solid #28a745;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px 10px 0 0;
+}
+
+/* Social links */
+.social-links a {
+    margin: 0 10px;
+    color: #5eff00;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.social-links a:hover {
+    text-decoration: underline;
+    color: #28a745;
+}
+
+/* Apply background image to each section */
+section {
+    display: none;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5); /* ทำให้พื้นหลังเป็นโปร่งแสง */
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+section.active {
+    display: block;
+}
+
+section#home {
+    background-image: url('home-background.jpg'); /* กำหนดพื้นหลังสำหรับหน้า Home */
+}
+
+section#promotion {
+    background-image: url('promotion-background.jpg'); /* กำหนดพื้นหลังสำหรับหน้า Promotion */
+}
+
+section#news {
+    background-image: url('news-background.jpg'); /* กำหนดพื้นหลังสำหรับหน้า News */
+}
+
+section#download {
+    background-image: url('download-background.jpg'); /* กำหนดพื้นหลังสำหรับหน้า Download */
+}
+
+section#contact {
+    background-image: url('contact-background.jpg'); /* กำหนดพื้นหลังสำหรับหน้า Contact */
+}
+

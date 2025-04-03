@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Z GAME PRODUCTS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <h1>Z GAME PRODUCTS</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="changePage('home')">Home</a></li>
+                <li><a href="#" onclick="changePage('promotion')">Promotion</a></li>
+                <li><a href="#" onclick="changePage('news')">News</a></li>
+                <li><a href="#" onclick="changePage('download')">Download</a></li>
+                <li><a href="#" onclick="changePage('contact')">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="content">
+        <!-- Home Page -->
+        <section id="home" class="page active">
+            <h2>Welcome to Z GAME PRODUCTS</h2>
+            <p>Your destination for the latest game promotions and news!</p>
+            <div class="banner">
+                <!-- แสดงภาพแบนเนอร์หลัก -->
+                <img src="assets/img/home-banner.jpg" alt="Home Banner">
+            </div>
+        </section>
+
+        <!-- Promotion Page -->
+        <section id="promotion" class="page hidden">
+            <h2>Game Promotions</h2>
+            <div class="game-item">
+                <h3>Game 1</h3>
+                <p>A thrilling adventure game!</p>
+                <button onclick="showDetails('game1')">View Details</button>
+            </div>
+            <div class="game-item">
+                <h3>Game 2</h3>
+                <p>A fantasy role-playing game!</p>
+                <button onclick="showDetails('game2')">View Details</button>
+            </div>
+        </section>
+
+        <!-- News Page -->
+        <section id="news" class="page hidden">
+            <h2>Latest News</h2>
+            <div class="news-item">
+                <h3>Game Update 1</h3>
+                <p>New features and improvements!</p>
+                <p><a href="#">Read more</a></p>
+            </div>
+            <div class="news-item">
+                <h3>New Product Release</h3>
+                <p>Check out the latest game available now!</p>
+                <p><a href="#">Read more</a></p>
+            </div>
+        </section>
+
+        <!-- Download Page -->
+        <section id="download" class="active">
+            <div class="download-container">
+                <h2>ดาวน์โหลดแอพของเรา</h2>
+        
+                <!-- แสดงข้อมูลแอพ -->
+                <div class="app-item">
+                    <div class="app-info">
+                        <img src="assets/img/App_shenwang_hub.jpg" alt="App Shenwang Hub" class="app-image">
+                        <h3>shenwang hub</h3><!--ชื่อแอพ -->
+                        <p>ผู้สร้าง: z game company</p>
+                        <p>รายละเอียด: แอพที่น่าสนใจและสามารถช่วยให้คุณทำงานได้ง่ายขึ้น ...</p>
+                        <a href="download-link" class="btn-download">ติดตั้งแอพ</a>
+                    </div>
+        
+                    <!-- โซนตัวอย่าง -->
+                    <div class="app-examples">
+                        <h4></h4>
+                        <div class="video-zone">
+                            <h5>วีดีโอแนะนำ</h5>
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/wHXKY_2kJIc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+        
+                        <div class="image-zone">
+                            <h5>ภาพตัวอย่าง</h5>
+                            <div class="image-gallery">
+                                <img src="image1.jpg" alt="Example Image 1" class="example-image">
+                                <img src="image2.jpg" alt="Example Image 2" class="example-image">
+                                <img src="image3.jpg" alt="Example Image 3" class="example-image">
+                                <img src="image4.jpg" alt="Example Image 4" class="example-image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contact Page -->
+        <section id="contact" class="page hidden">
+            <h2>Contact Us</h2>
+            <div class="contact-methods">
+                <div class="contact-method">
+                    <h3>WeChat</h3>
+                    <p>Our official WeChat channel</p>
+                </div>
+                <div class="contact-method">
+                    <h3>Facebook</h3>
+                    <p>Follow us on Facebook</p>
+                </div>
+                <div class="contact-method">
+                    <h3>Line</h3>
+                    <p>Contact us via Line</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-home">
+            <p>&copy; 2025 Z GAME PRODUCTS. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#">Facebook</a>
+                <a href="#">Twitter</a>
+                <a href="#">Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+   <script src="script.js"></script>
+</html>
