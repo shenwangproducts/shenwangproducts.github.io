@@ -46,7 +46,6 @@
 
     <section id="promotion" class="page">
         <h2>โปรโมทแอปของเรา</h2>
-        <!-- เพิ่มโซนโปรโมท -->
     </section>
 
     <section id="new" class="page">
@@ -92,9 +91,7 @@
 
     <section id="app-detail" class="page hidden">
         <button onclick="showPage('download')">← กลับไปหน้า ดาวน์โหลด</button>
-        <div id="app-detail-content">
-            <!-- เนื้อหาแอปจะมาแสดงตรงนี้ -->
-        </div>
+        <div id="app-detail-content"></div>
     </section>
 
     <section id="contact" class="page">
@@ -108,22 +105,16 @@
     </footer>
 
     <script src="script.js"></script>
-
     <script>
-        // โค้ด JavaScript สำหรับการแสดงรายละเอียดแอป
         function showPage(pageId) {
-            // ซ่อนหน้าอื่น ๆ และแสดงหน้าที่เลือก
             const pages = document.querySelectorAll('.page');
             pages.forEach(page => page.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
         }
 
-        // ฟังก์ชันแสดงรายละเอียดแอป
         function showAppDetail(appId) {
             const appDetailSection = document.getElementById('app-detail');
             const appDetailContent = document.getElementById('app-detail-content');
-            
-            // เนื้อหาของแอป
             let appDetailText = "";
             switch (appId) {
                 case 'app1':
@@ -139,11 +130,10 @@
                     appDetailText = "<h3>Shenwang Mobile</h3><p>รายละเอียดเกี่ยวกับ Shenwang Mobile...</p>";
                     break;
             }
-
             appDetailContent.innerHTML = appDetailText;
-            showPage('app-detail');  // แสดงหน้ารายละเอียดแอป
+            showPage('app-detail');
         }
     </script>
 
 </body>
-    </html>
+        </html>
