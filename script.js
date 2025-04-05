@@ -25,7 +25,21 @@ function changeBanner() {
 setInterval(changeBanner, 4000);
 changeBanner();
 
+// Show page content based on navigation
+function showPage(pageId) {
+    const pages = document.querySelectorAll('.page');
+    pages.forEach(page => {
+        page.classList.remove('active');
+    });
+    const selectedPage = document.getElementById(pageId);
+    if (selectedPage) {
+        selectedPage.classList.add('active');
+    }
+}
+
 document.addEventListener("DOMContentLoaded", function () {
+    showPage('home'); // Show the home page initially
+
     const accessToken = "EAAS1TraTcEIBOwrZBE4OLdhFlXtZBupZCVazV04MgYN4T42Akm4ZBalODlvveAs2j5ueeIg8EoKp4LLUOFiJQImA4dKFjBVOkIzkuhLZBdCGZAwIZCrzfrs3eG7S9vgNapZCsC7A8Ex3INnkz3jSGKFY4iFS1MmTbrnJlyZAAXuHydY57mA9M2WspdxJa7nw4ULvzxVYZD";
     const pageId = "me"; // ใช้ "me" ถ้า token เป็นของเพจ
     const limit = 5;
