@@ -354,3 +354,114 @@ button:hover {
         width: 100%;
     }
 }
+
+/* ปรับภาพ Logo */
+.logo-img {
+    height: 60px;
+}
+
+/* เมนู */
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    background-color: #222;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: inline-block;
+}
+
+nav ul li a:hover {
+    background-color: #444;
+    border-radius: 5px;
+}
+
+/* หน้าเนื้อหา */
+.page {
+    display: none;
+    padding: 20px;
+}
+
+.page.active {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}
+
+/* รายการแอป */
+.app-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.app-item {
+    background: #f5f5f5;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.app-item img {
+    width: 100%;
+    max-height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.app-item h4 {
+    margin: 10px 0;
+}
+
+.app-item button {
+    padding: 8px 16px;
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.app-item button:hover {
+    background-color: #004c99;
+}
+
+/* รายละเอียดแอป */
+#app-detail-content {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 700px;
+    margin: auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+#app-detail-content h3 {
+    color: #222;
+}
+
+#app-detail-content a {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+#app-detail-content a:hover {
+    background-color: #218838;
+    }
