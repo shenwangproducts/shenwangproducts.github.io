@@ -82,12 +82,29 @@
             </div>
         </div>
     </section>
-
     <section id="download" class="page">
-        <h2>ดาวน์โหลดแอป</h2>
-        <div class="app-item"><img src="app1.jpg" alt="App 1"><h4>แอป 1</h4></div>
-    </section>
+    <h2>ดาวน์โหลดแอป</h2>
+    <div class="app-list">
+        <div class="app-item">
+            <img src="app1.jpg" alt="App 1">
+            <h4>Hunter Killer of Krampus</h4>
+            <button onclick="showAppDetail('app1')">ดูรายละเอียดเพิ่มเติม</button>
+        </div>
+        <div class="app-item">
+            <img src="app2.jpg" alt="App 2">
+            <h4>ชีวิตที่สมบูรณ์แบบ</h4>
+            <button onclick="showAppDetail('app2')">ดูรายละเอียดเพิ่มเติม</button>
+        </div>
+    </div>
+</section>
 
+<section id="app-detail" class="page hidden">
+    <button onclick="showPage('download')">← กลับไปหน้า ดาวน์โหลด</button>
+    <div id="app-detail-content">
+        <!-- ตรงนี้ JavaScript จะโหลดเนื้อหาของแต่ละแอปตามที่กด -->
+    </div>
+</section>
+    
     <section id="contact" class="page">
         <h2>ติดต่อเรา</h2>
         <div class="contact-method"><img src="contact.jpg"><a href="https://link.com">Facebook</a></div>
