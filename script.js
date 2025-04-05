@@ -1,47 +1,80 @@
-// Change page content based on navigation
+// เปลี่ยนหน้าเว็บตามปุ่มนำทาง
 function changePage(pageId) {
-    // Hide all sections
     document.querySelectorAll('section').forEach(function(section) {
         section.classList.remove('active');
         section.classList.add('hidden');
     });
 
-    // Show the selected page
     document.getElementById(pageId).classList.remove('hidden');
     document.getElementById(pageId).classList.add('active');
 }
 
-// Auto-switch banners every 4 seconds (Home)
-let bannerIndex = 0;
-const banners = document.querySelectorAll('.banner img');
-function changeBanner() {
-    banners.forEach(function(banner, index) {
-        banner.style.display = 'none';
-    });
-    bannerIndex = (bannerIndex + 1) % banners.length;
-    banners[bannerIndex].style.display = 'block';
-}
-
-setInterval(changeBanner, 4000);
-changeBanner();
-
-// Show page content based on navigation
+// แสดงหน้าเว็บที่กำหนด
 function showPage(pageId) {
     const pages = document.querySelectorAll('.page');
     pages.forEach(page => {
         page.classList.remove('active');
     });
+
     const selectedPage = document.getElementById(pageId);
     if (selectedPage) {
         selectedPage.classList.add('active');
     }
 }
 
+// เปลี่ยนแบนเนอร์อัตโนมัติทุก 4 วินาที
+let bannerIndex = 0;
+const banners = document.querySelectorAll('.banner img');
+function changeBanner() {
+    banners.forEach((banner) => {
+        banner.style.display = 'none';
+    });
+    bannerIndex = (bannerIndex + 1) % banners.length;
+    banners[bannerIndex].style.display = 'block';
+}
+setInterval(changeBanner, 4000);
+changeBanner();
+
+// ข้อมูลแอป (สามารถเพิ่มได้)
+const apps = [
+    {
+        id: '1',
+        name: 'ชื่อแอป 1',
+        description: 'รายละเอียดของแอป 1',
+        image: 'img/app1.jpg',
+        downloadLink: 'https://yourdownloadlink1.com'
+    },
+    {
+        id: '2',
+        name: 'ชื่อแอป 2',
+        description: 'รายละเอียดของแอป 2',
+        image: 'img/app2.jpg',
+        downloadLink: 'https://yourdownloadlink2.com'
+    }
+];
+
+// แสดงรายละเอียดแอป
+function showAppDetail(appId) {
+    const app = apps.find(a => a.id === appId);
+    if (!app) return;
+
+    const contentDiv = document.getElementById('app-detail-content');
+    contentDiv.innerHTML = `
+        <h3>${app.name}</h3>
+        <img src="${app.image}" alt="${app.name}" style="width: 100%; border-radius: 10px;">
+        <p>${app.description}</p>
+        <a href="${app.downloadLink}" target="_blank">ดาวน์โหลด</a>
+    `;
+
+    showPage('app-detail');
+}
+
+// โหลดโพสต์ Facebook
 document.addEventListener("DOMContentLoaded", function () {
-    showPage('home'); // Show the home page initially
+    showPage('home'); // เริ่มที่หน้า Home
 
     const accessToken = "EAAS1TraTcEIBOwrZBE4OLdhFlXtZBupZCVazV04MgYN4T42Akm4ZBalODlvveAs2j5ueeIg8EoKp4LLUOFiJQImA4dKFjBVOkIzkuhLZBdCGZAwIZCrzfrs3eG7S9vgNapZCsC7A8Ex3INnkz3jSGKFY4iFS1MmTbrnJlyZAAXuHydY57mA9M2WspdxJa7nw4ULvzxVYZD";
-    const pageId = "me"; // ใช้ "me" ถ้า token เป็นของเพจ
+    const pageId = "me"; // หรือใส่ Page ID
     const limit = 5;
 
     fetch(`https://graph.facebook.com/v18.0/${pageId}/posts?fields=message,created_time,full_picture,permalink_url&access_token=${accessToken}&limit=${limit}`)
@@ -70,4 +103,12 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("Error loading FB feed", err);
             document.getElementById("fb-feed").innerHTML = "<p>ไม่สามารถโหลดโพสต์ Facebook ได้ในขณะนี้</p>";
         });
+
+    // ถ้าคุณใช้ปุ่มแบบ data attribute
+    document.querySelectorAll('.detail-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const appId = this.dataset.appId;
+            showAppDetail(appId);
+        });
+    });
 });
