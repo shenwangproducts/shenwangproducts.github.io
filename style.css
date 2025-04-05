@@ -2,396 +2,368 @@
    1. General Styles
    ========================= */
 body {
-    font-family: sans-serif; /* กำหนดฟอนต์ให้กับข้อความภายในหน้าเว็บ */
-    margin: 0; /* ลบ margin พื้นฐานของบราวเซอร์ */
-    padding: 0; /* ลบ padding พื้นฐานของบราวเซอร์ */
-    background-color: #f4f4f4; /* กำหนดสีพื้นหลังให้กับทั้งหน้า */
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4; /* สีพื้นหลังหลัก */
 }
 
 img {
-    width: 100%; /* กำหนดความกว้างของภาพให้เต็มความกว้างของคอนเทนเนอร์ */
-    height: auto; /* ปรับความสูงให้เหมาะสมกับอัตราส่วนของภาพ */
+    width: 100%;
+    height: auto; /* ให้ภาพปรับขนาดอัตโนมัติ */
 }
 
 /* =========================
    2. Header
    ========================= */
 header {
-    display: flex; /* ใช้ flexbox เพื่อจัดเรียงเนื้อหาภายใน header */
-    align-items: center; /* จัดตำแหน่งเนื้อหาในแนวตั้งให้อยู่กลาง */
-    padding: 10px; /* เพิ่มระยะห่างรอบๆ เนื้อหาภายใน header */
-    background-color: #222; /* กำหนดสีพื้นหลังให้กับ header */
-    color: white; /* กำหนดสีข้อความให้เป็นสีขาว */
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #222;
+    color: white;
 }
 
 .logo-img {
-    height: 60px; /* กำหนดความสูงของโลโก้ */
-    margin-right: 10px; /* เพิ่มระยะห่างระหว่างโลโก้กับข้อความ */
+    height: 60px;
+    margin-right: 10px;
 }
 
 header h1 {
-    font-size: 1.5em; /* กำหนดขนาดตัวอักษรของหัวข้อใน header */
+    font-size: 1.5em;
 }
 
 /* =========================
    3. Navigation Bar (เมนูนำทาง)
    ========================= */
 nav {
-    background-color: #222; /* กำหนดสีพื้นหลังให้กับเมนูนำทาง */
+    background-color: #222;
 }
 
 nav ul {
-    list-style: none; /* ลบเครื่องหมายจุดจากรายการในเมนู */
-    padding: 0; /* ลบ padding พื้นฐานของบราวเซอร์ */
-    display: flex; /* ใช้ flexbox เพื่อจัดเรียงรายการในเมนูให้อยู่ในแถวเดียวกัน */
-    justify-content: center; /* จัดตำแหน่งรายการในเมนูให้อยู่กลาง */
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
 }
 
 nav ul li {
-    margin: 0 15px; /* เพิ่มระยะห่างระหว่างแต่ละรายการในเมนู */
+    margin: 0 15px;
 }
 
 nav ul li a {
-    color: white; /* กำหนดสีข้อความในลิงก์ให้เป็นสีขาว */
-    text-decoration: none; /* ลบเส้นใต้ในลิงก์ */
-    padding: 10px 15px; /* เพิ่มระยะห่างภายในลิงก์ */
-    display: inline-block; /* ทำให้ลิงก์มีลักษณะเป็นบล็อก */
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: inline-block;
 }
 
 nav ul li a:hover {
-    background-color: #444; /* เปลี่ยนสีพื้นหลังเมื่อเมาส์ hover อยู่บนลิงก์ */
-    border-radius: 5px; /* เพิ่มมุมมนให้กับลิงก์ */
+    background-color: #444;
+    border-radius: 5px;
 }
 
 /* =========================
    4. Page Section
    ========================= */
 .page {
-    display: none; /* ซ่อนเนื้อหาภายในหน้าโดยเริ่มต้น */
-    padding: 20px; /* เพิ่มระยะห่างรอบๆ เนื้อหาในหน้า */
-    background-color: white; /* กำหนดสีพื้นหลังให้กับหน้า */
+    display: none;
+    padding: 20px;
+    background-color: white;
 }
 
 .page.active {
-    display: block; /* เมื่อหน้า active จะแสดงผล */
+    display: block;
 }
 
 .hidden {
-    display: none; /* ซ่อนองค์ประกอบที่ใช้คลาส .hidden */
+    display: none;
 }
 
 /* =========================
    5. Footer
    ========================= */
 footer {
-    background-color: #222; /* กำหนดสีพื้นหลังให้กับ footer */
-    color: white; /* กำหนดสีข้อความให้เป็นสีขาว */
-    text-align: center; /* จัดข้อความใน footer ให้อยู่กลาง */
-    padding: 10px; /* เพิ่มระยะห่างภายใน footer */
-    position: fixed; /* ทำให้ footer คงที่ที่ด้านล่าง */
-    bottom: 0; /* กำหนดให้ footer อยู่ที่ด้านล่างสุดของหน้า */
-    width: 100%; /* กำหนดให้ footer ขยายเต็มความกว้างของหน้า */
+    background-color: #222;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 
 /* =========================
    6. Welcome Section
    ========================= */
 .welcome-content {
-    display: flex; /* ใช้ flexbox เพื่อจัดเรียงเนื้อหาภายใน */
-    flex-direction: column; /* จัดเรียงเนื้อหาในแนวตั้ง */
-    align-items: center; /* จัดตำแหน่งเนื้อหาให้อยู่กลาง */
-    gap: 20px; /* เพิ่มระยะห่างระหว่างเนื้อหาภายใน */
-    text-align: center; /* จัดข้อความให้อยู่กลาง */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
 }
 
 .welcome-img {
-    width: 60%; /* กำหนดให้ภาพใน section นี้มีความกว้าง 60% */
-    border-radius: 10px; /* เพิ่มมุมมนให้กับภาพ */
+    width: 60%;
+    border-radius: 10px;
 }
 
 /* =========================
    7. Promotion Section
    ========================= */
 .promotion-section {
-    display: flex; /* ใช้ flexbox เพื่อจัดเรียงเนื้อหาภายใน */
-    flex-direction: column; /* จัดเรียงเนื้อหาในแนวตั้ง */
-    gap: 40px; /* เพิ่มระยะห่างระหว่างส่วนต่าง ๆ */
-    max-height: 500px; /* กำหนดความสูงสูงสุดของ section */
-    overflow-y: auto; /* ถ้าเนื้อหามากกว่าความสูงที่กำหนด จะสามารถเลื่อนขึ้น-ลงได้ */
-    padding-bottom: 80px; /* เพิ่มระยะห่างที่ด้านล่าง */
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    max-height: 500px;
+    overflow-y: auto;
+    padding-bottom: 80px;
 }
 
 .zone {
-    display: flex; /* ใช้ flexbox เพื่อจัดเรียงเนื้อหาภายใน */
-    flex-direction: column; /* จัดเรียงเนื้อหาในแนวตั้ง */
-    gap: 10px; /* เพิ่มระยะห่างระหว่างแต่ละส่วน */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .game-items {
-    display: flex; /* ใช้ flexbox เพื่อจัดเรียงเกมในแถว */
-    flex-wrap: wrap; /* ให้รายการในแถวถัดไปถ้ามีพื้นที่ไม่พอ */
-    gap: 20px; /* เพิ่มระยะห่างระหว่างเกม */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 .game-item {
-    width: calc(25% - 20px); /* กำหนดความกว้างของแต่ละรายการเป็น 25% ของพื้นที่รวม (ลบระยะห่าง) */
-    background-color: #f4f4f4; /* กำหนดสีพื้นหลังให้กับรายการ */
-    border: 1px solid #ddd; /* กำหนดขอบของรายการ */
-    padding: 10px; /* เพิ่มระยะห่างภายในรายการ */
-    text-align: center; /* จัดข้อความให้อยู่กลาง */
-    border-radius: 5px; /* เพิ่มมุมมนให้กับรายการ */
-    transition: transform 0.3s ease; /* เพิ่มการเปลี่ยนแปลงของขนาดด้วยความเร็ว 0.3 วินาที */
+    width: calc(25% - 20px);
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    transition: transform 0.3s ease;
 }
 
 .game-item:hover {
-    transform: scale(1.05); /* เมื่อเมาส์ hover ที่รายการ จะขยายขนาดขึ้น 5% */
+    transform: scale(1.05);
 }
 
 .game-item img {
-    border-radius: 5px; /* เพิ่มมุมมนให้กับภาพในแต่ละรายการ */
+    border-radius: 5px;
 }
 
 .game-item h4 {
-    font-size: 1.1em; /* กำหนดขนาดตัวอักษรของชื่อเกม */
-    margin-top: 10px; /* เพิ่มระยะห่างด้านบน */
+    font-size: 1.1em;
+    margin-top: 10px;
 }
 
 /* =========================
    8. Facebook Feed Section
    ========================= */
 #fb-feed {
-    padding: 10px; /* เพิ่มระยะห่างภายใน feed */
+    padding: 10px;
 }
 
 .fb-post img {
-    margin-top: 10px; /* เพิ่มระยะห่างด้านบนของภาพ */
-    max-width: 100%; /* กำหนดความกว้างสูงสุดของภาพให้เต็มพื้นที่ */
-    border-radius: 10px; /* เพิ่มมุมมนให้กับภาพ */
+    margin-top: 10px;
+    max-width: 100%;
+    border-radius: 10px;
 }
 
 .fb-page {
-    margin: 20px 0; /* เพิ่มระยะห่างด้านบนและล่าง */
+    margin: 20px 0;
 }
 
 /* =========================
    9. Contact Section
    ========================= */
 .contact-method {
-    display: flex; /* ใช้ flexbox เพื่อจัดเรียงเนื้อหาภายใน */
-    flex-direction: column; /* จัดเรียงเนื้อหาในแนวตั้ง */
-    align-items: center; /* จัดตำแหน่งให้อยู่กลาง */
-    gap: 10px; /* เพิ่มระยะห่างระหว่างส่วนต่าง ๆ */
-    margin: 20px 0; /* เพิ่มระยะห่างด้านบนและล่าง */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
 }
 
 .contact-method img {
-    width: 80%; /* กำหนดความกว้างของภาพในส่วนนี้ */
-    max-width: 200px; /* กำหนดความกว้างสูงสุดของภาพ */
-    border-radius: 5px; /* เพิ่มมุมมนให้กับภาพ */
+    width: 80%;
+    max-width: 200px;
+    border-radius: 5px;
 }
 
 .contact-method a {
-    text-decoration: none; /* ลบเส้นใต้ของลิงก์ */
-    color: #008CBA; /* กำหนดสีของข้อความในลิงก์ */
-    font-weight: bold; /* กำหนดให้ข้อความในลิงก์ตัวหนา */
+    text-decoration: none;
+    color: #008CBA;
+    font-weight: bold;
 }
 
 /* =========================
    10. App List Section
    ========================= */
 .app-list {
-    display: grid; /* ใช้ grid layout เพื่อจัดเรียงแอป */
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* กำหนดจำนวนคอลัมน์และความกว้างขั้นต่ำ */
-    gap: 20px; /* เพิ่มระยะห่างระหว่างแต่ละรายการ */
-    padding: 20px; /* เพิ่มระยะห่างรอบ ๆ เนื้อหา */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
 }
 
 .app-item {
-    background: #f5f5f5; /* กำหนดสีพื้นหลังให้กับแอปแต่ละรายการ */
-    padding: 15px; /* เพิ่มระยะห่างภายในแอป */
-    border-radius: 10px; /* เพิ่มมุมมนให้กับแอป */
-    text-align: center; /* จัดข้อความให้อยู่กลาง */
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* เพิ่มเงาให้กับแอป */
-    transition: transform 0.3s ease; /* เพิ่มการเปลี่ยนแปลงขนาดเมื่อ hover */
+    background: #f5f5f5;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
 }
 
 .app-item:hover {
-    transform: translateY(-5px); /* เมื่อเมาส์ hover จะยกแอปขึ้น */
+    transform: translateY(-5px);
 }
 
 .app-item img {
-    width: 100%; /* กำหนดความกว้างของภาพให้เต็มพื้นที่ */
-    max-height: 180px; /* กำหนดความสูงสูงสุดของภาพ */
-    object-fit: cover; /* ให้ภาพปรับขนาดตามอัตราส่วน */
-    border-radius: 8px; /* เพิ่มมุมมนให้กับภาพ */
+    width: 100%;
+    max-height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
 }
 
 .app-item h4 {
-    margin: 10px 0; /* เพิ่มระยะห่างด้านบนและล่างของชื่อแอป */
+    margin: 10px 0;
 }
 
 .app-item button {
-    padding: 8px 16px; /* เพิ่มระยะห่างภายในปุ่ม */
-    background-color: #0066cc; /* กำหนดสีพื้นหลังของปุ่ม */
-    color: white; /* กำหนดสีข้อความให้เป็นสีขาว */
-    border: none; /* ลบเส้นขอบของปุ่ม */
-    border-radius: 6px; /* เพิ่มมุมมนให้กับปุ่ม */
-    cursor: pointer; /* เปลี่ยน cursor เมื่อวางเมาส์ที่ปุ่ม */
+    padding: 8px 16px;
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
 .app-item button:hover {
-    background-color: #004c99; /* เปลี่ยนสีพื้นหลังของปุ่มเมื่อ hover */
+    background-color: #004c99;
 }
 
 /* =========================
    11. App Detail Section
    ========================= */
 #app-detail {
-    padding: 20px; /* เพิ่มระยะห่างภายในส่วนรายละเอียดของแอป */
-    max-width: 1000px; /* จำกัดความกว้างสูงสุดของส่วนนี้ */
-    margin: auto; /* จัดให้อยู่กลาง */
-    color: white; /* กำหนดสีข้อความให้เป็นสีขาว */
-    background-color: #121212; /* กำหนดสีพื้นหลังเป็นสีเข้ม */
-    border-radius: 10px; /* เพิ่มมุมมนให้กับส่วนนี้ */
+    padding: 20px;
+    max-width: 1000px;
+    margin: auto;
+    color: white;
+    background-color: #121212;
+    border-radius: 10px;
 }
 
 #app-detail button {
-    margin-bottom: 20px; /* เพิ่มระยะห่างด้านล่าง */
-    padding: 10px 20px; /* เพิ่มระยะห่างภายในปุ่ม */
-    background: #555; /* กำหนดสีพื้นหลังของปุ่ม */
-    color: white; /* กำหนดสีข้อความให้เป็นสีขาว */
-    border: none; /* ลบเส้นขอบของปุ่ม */
-    border-radius: 8px; /* เพิ่มมุมมนให้กับปุ่ม */
-    cursor: pointer; /* เปลี่ยน cursor เมื่อวางเมาส์ที่ปุ่ม */
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    background: #555;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
 }
 
 #app-detail button:hover {
-    background: #333; /* เปลี่ยนสีพื้นหลังของปุ่มเมื่อ hover */
+    background: #333;
 }
 
 .app-header {
-    display: flex; /* ใช้ flexbox เพื่อจัดเรียงหัวข้อ */
-    gap: 20px; /* เพิ่มระยะห่างระหว่างแต่ละส่วน */
-    margin-bottom: 20px; /* เพิ่มระยะห่างด้านล่าง */
-    flex-wrap: wrap; /* ให้ส่วนต่าง ๆ ไหลไปในบรรทัดถัดไปได้ */
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
 .app-header img {
-    width: 250px; /* กำหนดความกว้างของภาพ */
-    border-radius: 10px; /* เพิ่มมุมมนให้กับภาพ */
+    width: 250px;
+    border-radius: 10px;
 }
 
 .app-info {
-    flex: 1; /* ให้ส่วนข้อมูลของแอปขยายเต็มพื้นที่ */
-    display: flex; /* ใช้ flexbox เพื่อจัดเรียงข้อมูล */
-    flex-direction: column; /* จัดเรียงเนื้อหาในแนวตั้ง */
-    justify-content: space-between; /* จัดเนื้อหาภายในให้อยู่ห่างกัน */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .video-preview {
-    width: 100%; /* กำหนดความกว้างให้เต็มพื้นที่ */
-    max-width: 720px; /* กำหนดความกว้างสูงสุด */
-    height: 400px; /* กำหนดความสูง */
-    margin: 20px auto; /* จัดให้อยู่กลางหน้าจอ */
-    display: block; /* ทำให้เป็นบล็อก */
-    border-radius: 10px; /* เพิ่มมุมมนให้กับวีดีโอ */
+    width: 100%;
+    max-width: 720px;
+    height: 400px;
+    margin: 20px auto;
+    display: block;
+    border-radius: 10px;
 }
 
 .gallery {
-    display: flex; /* ใช้ flexbox เพื่อจัดเรียงภาพ */
-    gap: 10px; /* เพิ่มระยะห่างระหว่างภาพ */
-    margin-bottom: 20px; /* เพิ่มระยะห่างด้านล่าง */
-    justify-content: center; /* จัดให้อยู่กลาง */
-    flex-wrap: wrap; /* ให้ภาพให้ภาพ
-/* =========================
-   1. General Styles
-   ========================= */
-body {
-    font-family: sans-serif; /* กำหนดฟอนต์ให้กับข้อความภายในหน้าเว็บ */
-    margin: 0; /* ลบ margin พื้นฐานของบราวเซอร์ */
-    padding: 0; /* ลบ padding พื้นฐานของบราวเซอร์ */
-    background-color: #f4f4f4; /* กำหนดสีพื้นหลังให้กับทั้งหน้า */
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
-img {
-    width: 100%; /* กำหนดความกว้างของภาพให้เต็มความกว้างของคอนเทนเนอร์ */
-    height: auto; /* ปรับความสูงให้เหมาะสมกับอัตราส่วนของภาพ */
+.gallery img {
+    width: 150px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
 }
 
-/* =========================
-   2. Header
-   ========================= */
-header {
-    display: flex; /* ใช้ flexbox เพื่อจัดเรียงเนื้อหาภายใน header */
-    align-items: center; /* จัดตำแหน่งเนื้อหาในแนวตั้งให้อยู่กลาง */
-    padding: 10px; /* เพิ่มระยะห่างรอบๆ เนื้อหาภายใน header */
-    background-color: #222; /* กำหนดสีพื้นหลังให้กับ header */
-    color: white; /* กำหนดสีข้อความให้เป็นสีขาว */
+.gallery img:hover {
+    border-color: #007bff;
 }
 
-.logo-img {
-    height: 60px; /* กำหนดความสูงของโลโก้ */
-    margin-right: 10px; /* เพิ่มระยะห่างระหว่างโลโก้กับข้อความ */
+.preview-large {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-header h1 {
-    font-size: 1.5em; /* กำหนดขนาดตัวอักษรของหัวข้อใน header */
+.preview-large img {
+    width: 90%;
+    max-width: 800px;
+    border-radius: 10px;
 }
 
 /* =========================
-   3. Navigation Bar (เมนูนำทาง)
+   12. Details Table
    ========================= */
-nav {
-    background-color: #222; /* กำหนดสีพื้นหลังให้กับเมนูนำทาง */
+.details-table {
+    width: 100%;
+    max-width: 700px;
+    margin: auto;
+    border-collapse: collapse;
+    background-color: #222;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-nav ul {
-    list-style: none; /* ลบเครื่องหมายจุดจากรายการในเมนู */
-    padding: 0; /* ลบ padding พื้นฐานของบราวเซอร์ */
-    display: flex; /* ใช้ flexbox เพื่อจัดเรียงรายการในเมนูให้อยู่ในแถวเดียวกัน */
-    justify-content: center; /* จัดตำแหน่งรายการในเมนูให้อยู่กลาง */
+.details-table th,
+.details-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #444;
 }
 
-nav ul li {
-    margin: 0 15px; /* เพิ่มระยะห่างระหว่างแต่ละรายการในเมนู */
-}
-
-nav ul li a {
-    color: white; /* กำหนดสีข้อความในลิงก์ให้เป็นสีขาว */
-    text-decoration: none; /* ลบเส้นใต้ในลิงก์ */
-    padding: 10px 15px; /* เพิ่มระยะห่างภายในลิงก์ */
-    display: inline-block; /* ทำให้ลิงก์มีลักษณะเป็นบล็อก */
-}
-
-nav ul li a:hover {
-    background-color: #444; /* เปลี่ยนสีพื้นหลังเมื่อเมาส์ hover อยู่บนลิงก์ */
-    border-radius: 5px; /* เพิ่มมุมมนให้กับลิงก์ */
+.details-table th {
+    background-color: #333;
+    color: #ddd;
 }
 
 /* =========================
-   4. Page Section
+   13. Responsive Design
    ========================= */
-.page {
-    display: none; /* ซ่อนเนื้อหาภายในหน้าโดยเริ่มต้น */
-    padding: 20px; /* เพิ่มระยะห่างรอบๆ เนื้อหาในหน้า */
-    background-color: white; /* กำหนดสีพื้นหลังให้กับหน้า */
+@media screen and (max-width: 768px) {
+    .game-item {
+        width: calc(50% - 20px);
+    }
 }
 
-.page.active {
-    display: block; /* เมื่อหน้า active จะแสดงผล */
-}
-
-.hidden {
-    display: none; /* ซ่อนองค์ประกอบที่ใช้คลาส .hidden */
-}
-
-/* =========================
-   5. Footer
-   ========================= */
-footer {
-    background-color: #222; /* กำหนดสีพื้นหลังให้กับ footer */
-    color: white; /* กำหนดสีข้อความให้เป็นสีขาว */
-    text-align: center; /* จัดข้อความใน footer ให้อยู่กลาง */
-    padding: 10px; /* เพิ่มระยะห่างภายใน footer */
-    position: fixed; /* ทำให้ footer คงที่ที่ด้านล่าง */
-
+@media screen and (max-width: 480px) {
+    .game-item {
+        width: 100%;
+    }
+   }
