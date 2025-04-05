@@ -70,22 +70,22 @@
             <div class="app-item">
                 <img src="app1.jpg" alt="App 1">
                 <h4>Hunter Killer of Krampus</h4>
-                <button onclick="showAppDetail('app1')">ดูรายละเอียดเพิ่มเติม</button>
+                <button class="detail-btn" data-app-id="app1" onclick="showAppDetail('app1')">ดูรายละเอียดเพิ่มเติม</button>
             </div>
             <div class="app-item">
                 <img src="app2.jpg" alt="App 2">
                 <h4>ชีวิตที่สมบูรณ์แบบ</h4>
-                <button onclick="showAppDetail('app2')">ดูรายละเอียดเพิ่มเติม</button>
+                <button class="detail-btn" data-app-id="app2" onclick="showAppDetail('app2')">ดูรายละเอียดเพิ่มเติม</button>
             </div>
             <div class="app-item">
                 <img src="shenwang-hub.jpg" alt="Shenwang Hub">
                 <h4>Shenwang Hub</h4>
-                <button onclick="showAppDetail('shenwangHub')">ดูรายละเอียดเพิ่มเติม</button>
+                <button class="detail-btn" data-app-id="shenwangHub" onclick="showAppDetail('shenwangHub')">ดูรายละเอียดเพิ่มเติม</button>
             </div>
             <div class="app-item">
                 <img src="shenwang-mobile.jpg" alt="Shenwang Mobile">
                 <h4>Shenwang Mobile</h4>
-                <button onclick="showAppDetail('shenwangMobile')">ดูรายละเอียดเพิ่มเติม</button>
+                <button class="detail-btn" data-app-id="shenwangMobile" onclick="showAppDetail('shenwangMobile')">ดูรายละเอียดเพิ่มเติม</button>
             </div>
         </div>
     </section>
@@ -108,5 +108,42 @@
     </footer>
 
     <script src="script.js"></script>
+
+    <script>
+        // โค้ด JavaScript สำหรับการแสดงรายละเอียดแอป
+        function showPage(pageId) {
+            // ซ่อนหน้าอื่น ๆ และแสดงหน้าที่เลือก
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        // ฟังก์ชันแสดงรายละเอียดแอป
+        function showAppDetail(appId) {
+            const appDetailSection = document.getElementById('app-detail');
+            const appDetailContent = document.getElementById('app-detail-content');
+            
+            // เนื้อหาของแอป
+            let appDetailText = "";
+            switch (appId) {
+                case 'app1':
+                    appDetailText = "<h3>Hunter Killer of Krampus</h3><p>รายละเอียดเกี่ยวกับเกม Hunter Killer of Krampus...</p>";
+                    break;
+                case 'app2':
+                    appDetailText = "<h3>ชีวิตที่สมบูรณ์แบบ</h3><p>รายละเอียดเกี่ยวกับเกม ชีวิตที่สมบูรณ์แบบ...</p>";
+                    break;
+                case 'shenwangHub':
+                    appDetailText = "<h3>Shenwang Hub</h3><p>รายละเอียดเกี่ยวกับ Shenwang Hub...</p>";
+                    break;
+                case 'shenwangMobile':
+                    appDetailText = "<h3>Shenwang Mobile</h3><p>รายละเอียดเกี่ยวกับ Shenwang Mobile...</p>";
+                    break;
+            }
+
+            appDetailContent.innerHTML = appDetailText;
+            showPage('app-detail');  // แสดงหน้ารายละเอียดแอป
+        }
+    </script>
+
 </body>
-</html>
+    </html>
