@@ -24,3 +24,36 @@ function changeBanner() {
 
 setInterval(changeBanner, 4000);
 changeBanner();
+
+document.addEventListener("DOMContentLoaded", function () {
+    const accessToken = "EAAS1TraTcEIBOwrZBE4OLdhFlXtZBupZCVazV04MgYN4T42Akm4ZBalODlvveAs2j5ueeIg8EoKp4LLUOFiJQImA4dKFjBVOkIzkuhLZBdCGZAwIZCrzfrs3eG7S9vgNapZCsC7A8Ex3INnkz3jSGKFY4iFS1MmTbrnJlyZAAXuHydY57mA9M2WspdxJa7nw4ULvzxVYZD";
+    const pageId = "me"; // ใช้ "me" ถ้า token เป็นของเพจ
+    const limit = 5;
+
+    fetch(`https://graph.facebook.com/v18.0/${pageId}/posts?fields=message,created_time,full_picture,permalink_url&access_token=${accessToken}&limit=${limit}`)
+        .then(res => res.json())
+        .then(data => {
+            const fbFeed = document.getElementById("fb-feed");
+            data.data.forEach(post => {
+                const postDiv = document.createElement("div");
+                postDiv.className = "fb-post";
+                postDiv.style.border = "1px solid #ddd";
+                postDiv.style.padding = "10px";
+                postDiv.style.marginBottom = "15px";
+                postDiv.style.background = "#fff";
+                postDiv.style.borderRadius = "10px";
+
+                postDiv.innerHTML = `
+                    <p>${post.message || "(ไม่มีข้อความ)"}</p>
+                    ${post.full_picture ? `<img src="${post.full_picture}" style="max-width: 100%; border-radius: 5px;">` : ""}
+                    <p><small>${new Date(post.created_time).toLocaleString()}</small></p>
+                    <a href="${post.permalink_url}" target="_blank">ดูบน Facebook</a>
+                `;
+                fbFeed.appendChild(postDiv);
+            });
+        })
+        .catch(err => {
+            console.error("Error loading FB feed", err);
+            document.getElementById("fb-feed").innerHTML = "<p>ไม่สามารถโหลดโพสต์ Facebook ได้ในขณะนี้</p>";
+        });
+});
