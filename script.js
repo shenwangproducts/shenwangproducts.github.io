@@ -38,32 +38,18 @@ changeBanner();
 // ข้อมูลแอป (สามารถเพิ่มได้)
 const apps = [
     {
-        id: 'app1',
-        name: 'Hunter Killer of Krampus',
-        description: 'รายละเอียดเกี่ยวกับเกม Hunter Killer of Krampus...',
-        image: 'assets/img/app1.jpg',
+        id: '1',
+        name: 'ชื่อแอป 1',
+        description: 'รายละเอียดของแอป 1',
+        image: 'img/app1.jpg',
         downloadLink: 'https://yourdownloadlink1.com'
     },
     {
-        id: 'app2',
-        name: 'ชีวิตที่สมบูรณ์แบบ',
-        description: 'รายละเอียดเกี่ยวกับเกม ชีวิตที่สมบูรณ์แบบ...',
-        image: 'assets/img/app2.jpg',
+        id: '2',
+        name: 'ชื่อแอป 2',
+        description: 'รายละเอียดของแอป 2',
+        image: 'img/app2.jpg',
         downloadLink: 'https://yourdownloadlink2.com'
-    },
-    {
-        id: 'shenwangHub',
-        name: 'Shenwang Hub',
-        description: 'รายละเอียดเกี่ยวกับ Shenwang Hub...',
-        image: 'assets/img/shenwang-hub.jpg',
-        downloadLink: 'https://yourdownloadlink3.com'
-    },
-    {
-        id: 'shenwangMobile',
-        name: 'Shenwang Mobile',
-        description: 'รายละเอียดเกี่ยวกับ Shenwang Mobile...',
-        image: 'assets/img/shenwang-mobile.jpg',
-        downloadLink: 'https://yourdownloadlink4.com'
     }
 ];
 
@@ -87,7 +73,7 @@ function showAppDetail(appId) {
 document.addEventListener("DOMContentLoaded", function () {
     showPage('home'); // เริ่มที่หน้า Home
 
-    const accessToken = "YOUR_FACEBOOK_ACCESS_TOKEN";
+    const accessToken = "EAAS1TraTcEIBOwrZBE4OLdhFlXtZBupZCVazV04MgYN4T42Akm4ZBalODlvveAs2j5ueeIg8EoKp4LLUOFiJQImA4dKFjBVOkIzkuhLZBdCGZAwIZCrzfrs3eG7S9vgNapZCsC7A8Ex3INnkz3jSGKFY4iFS1MmTbrnJlyZAAXuHydY57mA9M2WspdxJa7nw4ULvzxVYZD";
     const pageId = "me"; // หรือใส่ Page ID
     const limit = 5;
 
