@@ -56,6 +56,7 @@ nav ul li a:hover {
 /* Content Section */
 #content {
     padding: 20px;
+    padding-bottom: 60px;
     min-height: 80vh;
 }
 
@@ -157,23 +158,24 @@ nav ul li a:hover {
     margin-top: 30px;
     color: #C0C0C0;
 }
-
-/* Game Preview Section */
-.game-preview {
-    text-align: center;
-    margin-top: 30px;
-    color: #fff;
+/* Video Container */
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* อัตราส่วน 16:9 */
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+    background: #000;
+    margin-bottom: 30px; /* เพิ่มช่องว่างด้านล่าง */
 }
 
-.game-preview h2 {
-    font-size: 1.8rem;
-    color: #f39c12;
-    margin-bottom: 20px;
-}
-
-/* Video Preview */
-.video-preview {
-    margin-bottom: 0.1px;
+/* Make iframe responsive */
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 /* Image Previews */
