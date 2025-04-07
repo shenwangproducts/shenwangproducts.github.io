@@ -14,15 +14,37 @@
         header, footer {
             background-color: #1a1a1a;
             padding: 15px 20px;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
-        header h1, footer p {
-            margin: 0;
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .logo span {
+            font-size: 20px;
             color: #ff3333;
+            font-weight: bold;
+        }
+        .back-btn {
+            background: #ff1a1a;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
         }
         .container {
             padding: 30px 20px;
-            max-width: 800px;
+            max-width: 900px;
             margin: auto;
         }
         h2 {
@@ -39,6 +61,26 @@
         .section p {
             margin: 5px 0;
         }
+        .section img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+        .partner-logos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .partner-logos .partner {
+            text-align: center;
+        }
+        .partner-logos img {
+            width: 80px;
+            height: auto;
+            filter: grayscale(20%);
+        }
         .contact-link a {
             color: #ff6666;
             text-decoration: none;
@@ -51,40 +93,63 @@
 <body>
 
 <header>
-    <h1>ติดต่อ Shenwang Media</h1>
+    <div class="logo">
+        <img src="assets/img/received.jpg" alt="Logo">
+        <span>Shenwang Media</span>
+    </div>
+    <a href="index.html" class="back-btn">ย้อนกลับ</a>
 </header>
 
 <div class="container">
 
     <div class="section">
-        <h2>ผู้ก่อตั้ง / ผู้ถือหุ้นรายใหญ่</h2>
-        <p>ชื่อ: [ใส่ชื่อผู้ก่อตั้ง]</p>
-        <p>อีเมล: [ใส่อีเมล]</p>
+        <h2>ผู้ก่อตั้ง</h2>
+        <p>ชื่อ: Wang Houmingjun</p>
+        <img src="assets/img/founder.jpg" alt="ผู้ก่อตั้ง">
     </div>
 
     <div class="section">
-        <h2>ตำแหน่งปัจจุบัน</h2>
-        <p>CEO & Creative Director: [ใส่ชื่อ]</p>
-        <p>ติดต่อผ่าน: เพจ Facebook หรือ WeChat</p>
+        <h2>ผู้ถือหุ้นรายใหญ่</h2>
+        <p>ชื่อ: ธนวัฒน์ เจริญสุข</p>
+        <img src="assets/img/shareholder.jpg" alt="ผู้ถือหุ้นรายใหญ่">
+    </div>
+
+    <div class="section">
+        <h2>ประธานบริษัท (CEO)</h2>
+        <p>ชื่อ: วีรยุทธ เชนหวัง</p>
+        <img src="assets/img/ceo.jpg" alt="ประธานบริษัท">
     </div>
 
     <div class="section">
         <h2>บริษัทในเครือ</h2>
-        <p>- Shenwang Games Studio</p>
-        <p>- Shenwang Entertainment</p>
+        <p>- 深王工作室 (Holding Company)</p>
+        <p>- Z Game Thailand</p>
+        <p>- Shen Wang Interactive Entertainment Co., Ltd</p>
+        <p>-Zeegodstudio04 Pte. Ltd. </p>
     </div>
 
     <div class="section">
         <h2>พาร์ทเนอร์</h2>
-        <p>- InfinityFree Hosting</p>
-        <p>- GitHub Pages</p>
-        <p>- Struckd Game Engine</p>
+        <div class="partner-logos">
+            <div class="partner">
+                <img src="assets/img/infinityfree.png" alt="InfinityFree">
+                <p>InfinityFree</p>
+            </div>
+            <div class="partner">
+                <img src="assets/img/github.png" alt="GitHub">
+                <p>GitHub Pages</p>
+            </div>
+            <div class="partner">
+                <img src="assets/img/struckd.png" alt="Struckd">
+                <p>Struckd</p>
+            </div>
+        </div>
     </div>
 
     <div class="section contact-link">
         <h2>ช่องทางการติดต่อ</h2>
         <p>Facebook Page: <a href="https://facebook.com/yourpage" target="_blank">facebook.com/yourpage</a></p>
-        <p>WeChat ID: [ใส่ WeChat ID]</p>
+        <p>WeChat ID: shenwang-media</p>
     </div>
 
 </div>
@@ -94,4 +159,4 @@
 </footer>
 
 </body>
-</html>
+    </html>
