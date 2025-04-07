@@ -344,4 +344,22 @@ footer .footer-content {
         width: 150px; /* Adjust image size for mobile */
     }
 }
+.footer-content {
+    text-align: center;
+    color: #ccc;
+}
 
+.footer-logos {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.footer-logos img {
+    width: 60px;
+    height: auto;
+    border-radius: 10px;
+    background: #fff;
+    padding: 5px;
+}
