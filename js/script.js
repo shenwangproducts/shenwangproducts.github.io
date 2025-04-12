@@ -46,7 +46,7 @@ function changePage(page) {
       message.text = "กำลังเข้าสู่หน้าติดต่อเรา";
       break;
     default:
-      message.text = กำลังย้อนไปหน้าแรก";
+      message.text = "กำลังย้อนไปหน้าแรก";
   }
 
   // พูดก่อน redirect
