@@ -7,13 +7,21 @@
   // ฟังก์ชันเลือกเสียงผู้หญิงที่นุ่มนวล
   function getFriendlyThaiVoice() {
     const voices = speechSynthesis.getVoices();
-    return voices.find(voice =>
+    // ค้นหาเสียงที่เหมาะสม
+    let selectedVoice = voices.find(voice =>
       voice.lang === 'th-TH' &&
       (
         voice.name.toLowerCase().includes("female") ||      
         voice.name.includes("Pattara")
       )
     );
+    
+    // ถ้าไม่พบเสียงที่ต้องการ, ให้เลือกเสียงอื่นที่มีอยู่
+    if (!selectedVoice) {
+      selectedVoice = voices.find(voice => voice.lang === 'th-TH');
+    }
+
+    return selectedVoice;
   }
 
   // ฟังก์ชันพูดด้วยสไตล์นุ่มนวล
@@ -71,19 +79,19 @@
     speakWithStyle(message, () => {
       switch (page) {
         case 'promo':
-          window.location.href = 'index.html';
+          window.location.replace('index.html');
           break;
         case 'news':
-          window.location.href = 'news.html';
+          window.location.replace('news.html');
           break;
         case 'download':
-          window.location.href = 'download.html';
+          window.location.replace('download.html');
           break;
         case 'contact':
-          window.location.href = 'contact.html';
+          window.location.replace('contact.html');
           break;
         default:
-          window.location.href = 'index.html';
+          window.location.replace('index.html');
       }
     });
   }
