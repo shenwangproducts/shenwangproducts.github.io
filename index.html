@@ -8,7 +8,16 @@
   <link rel="icon" href="assets/img/received.jpg" />
 </head>
 <body>
-
+!-- Language Selector -->
+  <div>
+    <label for="languageSelect">เลือกภาษา: </label>
+    <select id="languageSelect" onchange="changeLanguage(this.value)">
+      <option value="th">ภาษาไทย</option>
+      <option value="en">English</option>
+      <option value="zh">中文</option>
+    </select>
+  </div>
+  
   <!-- Top Bar -->
   <header>
     <div class="logo">
