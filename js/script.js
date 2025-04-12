@@ -46,3 +46,43 @@
     getFriendlyThaiVoice(); 
   };
 </script>
+// ฟังก์ชันเปลี่ยนหน้า + พูดก่อนเปลี่ยน  
+function changePage(page) {  
+  let message = "";  
+  switch (page) {  
+    case 'promo':  
+      message = "กำลังเข้าสู่หน้าหลัก โปรโมทแอปของเรา";  
+      break;  
+    case 'news':  
+      message = "กำลังเข้าสู่หน้าข่าวสาร";  
+      break;  
+    case 'dowload':  
+      message = "กำลังเข้าสู่หน้าดาวน์โหลด กรุณาอ่านข้อตกลงก่อนดาวน์โหลด";  
+      break;  
+    case 'contact':  
+      message = "กำลังเข้าสู่หน้าติดต่อเรา";  
+      break;  
+    default:  
+      message = "กลับสู่หน้าหลัก";  
+  }  
+  
+  speakWithStyle(message, 'th-TH', () => {  
+    switch (page) {  
+      case 'promo':  
+        window.location.href = 'index.html';  
+        break;  
+      case 'news':  
+        window.location.href = 'news.html';  
+        break;  
+      case 'download':  
+        window.location.href = 'download.html';  
+        break;  
+      case 'contact':  
+        window.location.href = 'contact.html';  
+        break;  
+      default:  
+        window.location.href = 'index.html';  
+    }  
+  });  
+}  
+  
