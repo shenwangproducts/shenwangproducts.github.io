@@ -39,14 +39,14 @@ function changePage(page) {
     case 'news':
       message.text = "กำลังเข้าสู่หน้าข่าวสาร";
       break;
-    case 'download':
+    case 'dowload':
       message.text = "กำลังเข้าสู่หน้าดาวน์โหลด กรุณาอ่านข้อตกลงก่อนดาวน์โหลด";
       break;
     case 'contact':
       message.text = "กำลังเข้าสู่หน้าติดต่อเรา";
       break;
     default:
-      message.text = "กลับสู่หน้าหลัก";
+      message.text = กำลังย้อนไปหน้าแรก";
   }
 
   // พูดก่อน redirect
@@ -61,7 +61,7 @@ function changePage(page) {
       case 'news':
         window.location.href = 'news.html';
         break;
-      case 'download':
+      case 'dowload':
         window.location.href = 'download.html';
         break;
       case 'contact':
