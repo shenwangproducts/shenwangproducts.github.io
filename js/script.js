@@ -1,7 +1,7 @@
 // ฟังก์ชันแนะนำตัว AI
 function speakIntro() {
   const intro = new SpeechSynthesisUtterance(
-    "สวัสดี ฉันชื่อเสี่ยวหมิง ฉันเป็น AI ของเว็บไซต์นี้ รุ่นที่ 2 คุณสามารถถามฉันได้ทุกเรื่องที่คุณสนใจ"
+    "你好，我是零曦，网站的第二代AI。你可以问我任何你感兴趣的事情"
   );
   intro.lang = 'th-TH';
 
@@ -33,7 +33,7 @@ function changePage(page) {
     case 'news':
       message.text = "กำลังเข้าสู่หน้าข่าวสาร";
       break;
-    case 'download':
+    case 'dowload':
       message.text = "กำลังเข้าสู่หน้าดาวน์โหลด กรุณาอ่านข้อตกลงก่อนดาวน์โหลด";
       break;
     case 'contact':
