@@ -1,10 +1,28 @@
 function changePage(page) {
-  // พูดก่อนเปลี่ยนหน้า
-  playWelcomeMessage(page);
+  const message = new SpeechSynthesisUtterance("");
+  message.lang = 'th-TH';
 
-  // รอให้เสียงเริ่มพูดก่อนค่อยเปลี่ยนหน้า (ประมาณ 0.5 วินาที)
-  setTimeout(function () {
-    switch (page) {
+  switch(page) {
+    case 'promo':
+      message.text = "กำลังเข้าสู่หน้าหลัก โปรโมทแอปของเรา";
+      break;
+    case 'news':
+      message.text = "กำลังเข้าสู่หน้าข่าวสาร";
+      break;
+    case 'download':
+      message.text = "กำลังเข้าสู่หน้าดาวน์โหลด กรุณาอ่านข้อตกลงก่อนดาวน์โหลด";
+      break;
+    case 'contact':
+      message.text = "กำลังเข้าสู่หน้าติดต่อเรา";
+      break;
+    default:
+      message.text = "กลับสู่หน้าหลัก";
+      break;
+  }
+
+  // เมื่อพูดจบแล้วค่อยเปลี่ยนหน้า
+  message.onend = function () {
+    switch(page) {
       case 'promo':
         window.location.href = 'index.html';
         break;
@@ -20,30 +38,8 @@ function changePage(page) {
       default:
         window.location.href = 'index.html';
     }
-  }, 500); // รอครึ่งวินาที
-}
+  };
 
-function playWelcomeMessage(page) {
-  let message = '';
-
-  switch (page) {
-    case 'promo':
-      message = 'ยินดีต้อนรับสู่หน้าโปรโมท';
-      break;
-    case 'news':
-      message = 'ยินดีต้อนรับสู่หน้าข่าวสาร';
-      break;
-    case 'download':
-      message = 'ยินดีต้อนรับสู่หน้าดาวน์โหลด';
-      break;
-    case 'contact':
-      message = 'ยินดีต้อนรับสู่หน้าติดต่อ';
-      break;
-    default:
-      message = 'ยินดีต้อนรับสู่เว็บไซต์ของเรา';
-  }
-
-  const utterance = new SpeechSynthesisUtterance(message);
-  utterance.lang = 'th-TH';
-  window.speechSynthesis.speak(utterance);
+  speechSynthesis.cancel(); // ล้างคิวเสียงก่อนหน้า (กันพูดซ้อน)
+  speechSynthesis.speak(message);
 }
