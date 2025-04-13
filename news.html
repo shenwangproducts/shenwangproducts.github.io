@@ -1,58 +1,167 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ข่าวสาร - Shenwang Media</title>
-    <link rel="stylesheet" href="style.css"> <!-- ใช้ relative path -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ข่าวสาร - Shenwang Media</title>
+  
+  <style>
+    /* พื้นหลังและพื้นผิว */
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif; /* ใช้ฟอนต์ไซไฟ */
+      background: radial-gradient(circle at center, #010130 0%, #001d56 100%); /* พื้นหลังแนวไซไฟ */
+      background-size: cover;
+      background-attachment: fixed;
+      color: #ffffff;
+      height: 100vh;
+    }
+
+    /* เอฟเฟกต์แสง / Neon */
+    .neon-text {
+      color: #00d9ff;
+      text-shadow: 0 0 5px #00d9ff, 0 0 10px #00d9ff, 0 0 20px #00d9ff, 0 0 40px #ff1a1a, 0 0 80px #ff1a1a;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(to bottom, #003366, #002a44);
+      padding: 30px 20px;
+      text-align: center;
+      border-bottom: 2px solid #ff1a1a;
+    }
+
+    .logo-center img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+      box-shadow: 0 0 20px rgba(255, 26, 26, 0.7);
+    }
+
+    .logo-center h1 {
+      font-family: 'Noto Sans SC', sans-serif; /* ฟอนต์จีน */
+      font-size: 3rem;
+      margin: 0;
+      color: #f39c12;
+      text-shadow: 0 0 10px rgba(255, 26, 26, 0.9), 0 0 20px rgba(255, 26, 26, 0.9);
+    }
+
+    /* ข่าวสาร */
+    .hud-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin: 40px;
+    }
+
+    .hud-item {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 10px;
+      border: 2px solid #00d9ff;
+      box-shadow: 0 0 15px rgba(0, 0, 255, 0.5);
+      color: #ffffff;
+      text-align: center;
+    }
+
+    .hud-item h3 {
+      font-size: 1.5rem;
+      color: #ff1a1a;
+      margin-bottom: 10px;
+    }
+
+    .hud-item p {
+      font-size: 1rem;
+      color: #bfbfbf;
+    }
+
+    .hud-item:hover {
+      box-shadow: 0 0 20px rgba(255, 26, 26, 0.8);
+    }
+
+    /* ลิงก์ "อ่านต่อ" */
+    .read-more {
+      font-size: 1rem;
+      color: #ff1a1a;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 10px;
+    }
+
+    .read-more:hover {
+      color: #00d9ff;
+      text-decoration: underline;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #002a44;
+      color: #ffffff;
+    }
+
+    footer .footer-content {
+      font-size: 1rem;
+    }
+
+    /* เอฟเฟกต์พื้นหลัง/การเคลื่อนไหว */
+    @keyframes glow {
+      0% {
+        text-shadow: 0 0 5px #00d9ff, 0 0 10px #00d9ff, 0 0 20px #ff1a1a;
+      }
+      50% {
+        text-shadow: 0 0 15px #ff1a1a, 0 0 25px #ff1a1a, 0 0 35px #ff1a1a;
+      }
+      100% {
+        text-shadow: 0 0 5px #00d9ff, 0 0 10px #00d9ff, 0 0 20px #ff1a1a;
+      }
+    }
+
+    .glow-text {
+      animation: glow 1.5s infinite alternate;
+    }
+  </style>
 </head>
 <body>
-    <!-- Top Bar -->
-    <header>
-        <div class="logo">
-            <img src="img/assets/App_shenwang_hub.jpg" alt="Shenwang Media Logo">
-            <span>Shenwang Media</span>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="index.html">โปรโมท</a></li>
-                <li><a href="news.html">ข่าวสาร</a></li>
-                <li><a href="dowload.html">ดาวน์โหลด</a></li>
-                <li><a href="contact.html">ติดต่อ</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <!-- Main Content Section -->
-    <div id="content" class="content">
-        <h1>ข่าวสารล่าสุดจาก Shenwang Media</h1>
-
-        <!-- News Feed Container -->
-        <div class="news-feed">
-            <div class="news-item">
-                <h2 class="news-title">ข่าวสารที่ 1: การอัปเดตใหม่ของ Shenwang Media</h2>
-                <p class="news-summary">Shenwang Media ได้ปล่อยอัปเดตใหม่ที่เพิ่มฟีเจอร์ใหม่ๆ ที่จะทำให้การใช้งานสะดวกและมีประสิทธิภาพมากขึ้น...</p>
-                <a href="https://www.facebook.com/share/p/15yWpV7PnY/" class="read-more" target="_blank">อ่านต่อ</a>
-
-            </div>
-
-            <div class="news-item">
-                <h2 class="news-title">ข่าวสารที่ 2: ความสำเร็จในระดับโลกของ Shenwang Media</h2>
-                <p class="news-summary">Shenwang Media กำลังขยายตลาดในระดับโลกและได้รับความนิยมจากผู้ใช้มากขึ้น...</p>
-               <a href="https://www.facebook.com/zgame.company.official" class="read-more" target="_blank">อ่านต่อ</a>
-            </div>
-
-            <!-- เพิ่มข่าวสารอื่นๆ ตามต้องการ -->
-        </div>
+  <!-- Header -->
+  <header>
+    <div class="logo-center">
+      <img src="logo.png" alt="Shenwang Media Logo">
+      <h1 class="neon-text">Shenwang Media</h1>
     </div>
+  </header>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <span>Shenwang Media © 2025</span>
-        </div>
-    </footer>
+  <!-- Main Content Section -->
+  <div id="content" class="content">
+    <h1 class="neon-text">ข่าวสารล่าสุดจาก Shenwang Media</h1>
 
-    <script src="/js/script.js"></script> <!-- ใช้ relative path -->
+    <!-- News Feed Container -->
+    <div class="hud-container">
+      <div class="hud-item">
+        <h3 class="glow-text">ข่าวสารที่ 1: การอัปเดตใหม่ของ Shenwang Media</h3>
+        <p class="neon-text">Shenwang Media ได้ปล่อยอัปเดตใหม่ที่เพิ่มฟีเจอร์ใหม่ๆ ที่จะทำให้การใช้งานสะดวกและมีประสิทธิภาพมากขึ้น...</p>
+        <a href="https://www.facebook.com/share/p/15yWpV7PnY/" class="read-more" target="_blank">อ่านต่อ</a>
+      </div>
+
+      <div class="hud-item">
+        <h3 class="glow-text">ข่าวสารที่ 2: ความสำเร็จในระดับโลกของ Shenwang Media</h3>
+        <p class="neon-text">Shenwang Media กำลังขยายตลาดในระดับโลกและได้รับความนิยมจากผู้ใช้มากขึ้น...</p>
+        <a href="https://www.facebook.com/zgame.company.official" class="read-more" target="_blank">อ่านต่อ</a>
+      </div>
+
+      <!-- เพิ่มข่าวสารอื่นๆ ตามต้องการ -->
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <span class="neon-text">Shenwang Media © 2025</span>
+    </div>
+  </footer>
+ <script src="js/script.js"></script>
 </body>
-</html>
+        </html>
