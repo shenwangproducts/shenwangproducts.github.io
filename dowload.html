@@ -1,285 +1,346 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>หน้าดาวน์โหลด</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: 'Segoe UI', sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>หน้าดาวน์โหลด</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
 
-        body {
-            margin: 0;
-            background: #f4f4f4;
-            color: #333;
-        }
+    body {
+      margin: 0;
+      background: #f4f4f4;
+      color: #333;
+      animation: fadeIn 1s ease-in;
+    }
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #1a1a1a;
-            color: #fff;
-            padding: 10px 20px;
-        }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
 
-        .logo {
-            display: flex;
-            align-items: center;
-        }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #1a1a1a;
+      color: #fff;
+      padding: 10px 20px;
+      animation: slideDown 0.7s ease-out;
+    }
 
-        .logo img {
-            height: 40px;
-            margin-right: 10px;
-            border-radius: 6px;
-        }
+    @keyframes slideDown {
+      from {transform: translateY(-100%);}
+      to {transform: translateY(0);}
+    }
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            padding: 0;
-            margin: 0;
-        }
+    .logo {
+      display: flex;
+      align-items: center;
+    }
 
-        nav ul li {
-            margin: 0 10px;
-        }
+    .logo img {
+      height: 40px;
+      margin-right: 10px;
+      border-radius: 6px;
+    }
 
-        nav ul li a {
-            color: #fff;
-            text-decoration: none;
-        }
+    nav ul {
+      list-style: none;
+      display: flex;
+      padding: 0;
+      margin: 0;
+    }
 
-        #content {
-            padding: 20px;
-            max-width: 1000px;
-            margin: auto;
-        }
+    nav ul li {
+      margin: 0 10px;
+    }
 
-        .download-title {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
 
-        .download-description {
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
+    #content {
+      padding: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
 
-        .app-image-container img {
-            width: 100%;
-            max-width: 600px;
-            border-radius: 10px;
-            display: block;
-            margin: 20px auto;
-        }
+    .dowload-title {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
 
-        .platform-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
+    .dowload-description {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
 
-        .platform-btn {
-            background: #007bff;
-            color: #fff;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
+    .app-image-container img {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 10px;
+      display: block;
+      margin: 20px auto;
+      transition: transform 0.3s ease;
+    }
 
-        .platform-btn:hover {
-            background: #0056b3;
-        }
+    .app-image-container img:hover {
+      transform: scale(1.05);
+    }
 
-        .file-info p {
-            margin: 5px 0;
-        }
+    .platform-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
 
-        .game-preview {
-            margin-top: 30px;
-        }
+    .platform-btn {
+      background: #007bff;
+      color: #fff;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
 
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            max-width: 100%;
-        }
+    .platform-btn:hover {
+      background: #0056b3;
+      transform: translateY(-3px);
+    }
 
-        .video-container iframe {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-        }
+    .file-info p {
+      margin: 5px 0;
+    }
 
-        .image-previews {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 20px 0;
-            flex-wrap: wrap;
-        }
+    .game-preview {
+      margin-top: 30px;
+    }
 
-        .image-previews img {
-            width: 30%;
-            border-radius: 6px;
-        }
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      max-width: 100%;
+    }
 
-        .progress-bar {
-            width: 100%;
-            background: #ddd;
-            border-radius: 10px;
-            overflow: hidden;
-            height: 10px;
-            margin: 30px 0;
-        }
+    .video-container iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+    }
 
-        .progress {
-            width: 60%;
-            height: 100%;
-            background: #4caf50;
-        }
+    .image-previews {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
 
-        .share-section {
-            margin: 20px 0;
-            text-align: center;
-        }
+    .image-previews img {
+      width: 30%;
+      border-radius: 6px;
+      transition: transform 0.3s ease;
+    }
 
-        .share-btn {
-            background: #4267B2;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 6px;
-            margin: 0 5px;
-            cursor: pointer;
-        }
+    .image-previews img:hover {
+      transform: scale(1.03);
+    }
 
-        .share-btn:hover {
-            opacity: 0.8;
-        }
+    .progress-bar {
+      width: 100%;
+      background: #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+      height: 10px;
+      margin: 30px 0;
+    }
 
-        .warning {
-            margin-top: 30px;
-            text-align: center;
-        }
+    .progress {
+      width: 60%;
+      height: 100%;
+      background: #4caf50;
+      animation: progressAnim 2s ease-in-out forwards;
+    }
 
-        .support-link {
-            text-align: center;
-            margin-top: 30px;
-        }
+    @keyframes progressAnim {
+      from {width: 0;}
+      to {width: 60%;}
+    }
 
-        .support-link a {
-            text-decoration: none;
-            color: #007bff;
-        }
+    .share-section {
+      margin: 20px 0;
+      text-align: center;
+    }
 
-        footer {
-            background: #1a1a1a;
-            color: #fff;
-            text-align: center;
-            padding: 15px;
-            margin-top: 40px;
-        }
-    </style>
+    .share-btn {
+      background: #4267B2;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      margin: 0 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .share-btn:hover {
+      opacity: 0.8;
+    }
+
+    .warning {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .support-link {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .support-link a {
+      text-decoration: none;
+      color: #007bff;
+    }
+
+    footer {
+      background: #1a1a1a;
+      color: #fff;
+      text-align: center;
+      padding: 15px;
+      margin-top: 40px;
+    }
+
+    #dowload-btn {
+      background: #28a745;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: not-allowed;
+      opacity: 0.6;
+      transition: all 0.3s ease;
+    }
+
+    #dowload-btn.enabled {
+      cursor: pointer;
+      opacity: 1;
+    }
+
+    #dowload-btn.enabled:hover {
+      background: #218838;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <img src="assets/img/received.jpg" alt="Logo">
-            <span>Shenwang Media</span>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="index.html">กลับหน้าหลัก</a></li>
-                <li><a href="news.html">ข่าวสาร</a></li>
-                <li><a href="dowload.html">ดาวน์โหลด</a></li>
-                <li><a href="contact.html">ติดต่อ</a></li>
-            </ul>
-        </nav>
-    </header>
+  <header>
+    <div class="logo">
+      <img src="assets/img/received.jpg" alt="Logo">
+      <span>Shenwang Media</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">กลับหน้าหลัก</a></li>
+        <li><a href="news.html">ข่าวสาร</a></li>
+        <li><a href="dowload.html">ดาวน์โหลด</a></li>
+        <li><a href="contact.html">ติดต่อ</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <div id="content">
-        <h1 class="dowload-title">ดาวน์โหลดเกมของคุณ</h1>
-        <p class="dowload-description">ดาวน์โหลดเวอร์ชันล่าสุดของเกมของเราและสนุกไปกับประสบการณ์ใหม่ ๆ!</p>
+  <div id="content">
+    <h1 class="dowload-title">ดาวน์โหลดเกมของคุณ</h1>
+    <p class="dowload-description">ดาวน์โหลดเวอร์ชันล่าสุดของเกมของเราและสนุกไปกับประสบการณ์ใหม่ ๆ!</p>
 
-        <div class="app-image-container">
-            <img src="assets/img/App_shenwang_hub.jpg" alt="App Image">
-        </div>
-
-        <div class="dowload-section">
-            <div class="platform-options">
-                <button class="platform-btn" onclick="alert('กำลังดาวน์โหลด Windows.exe')">ดาวน์โหลดสำหรับ Windows</button>
-                <button class="platform-btn" onclick="alert('กำลังดาวน์โหลด macOS.dmg')">ดาวน์โหลดสำหรับ macOS</button>
-                <button class="platform-btn" onclick="alert('กำลังดาวน์โหลด Android.apk')">ดาวน์โหลดสำหรับ Android</button>
-            </div>
-        </div>
-
-        <div class="file-info">
-            <p><strong>ขนาดไฟล์:</strong> 1.5 GB</p>
-            <p><strong>เวอร์ชัน:</strong> 1.0.0</p>
-            <p><strong>คำแนะนำ:</strong> ทำการติดตั้งตามคำแนะนำในคู่มือ</p>
-        </div>
-
-        <div class="game-preview">
-            <h2>ตัวอย่างเกม</h2>
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/BO-ZbxR6IcA" frameborder="0" allowfullscreen></iframe>
-            </div>
-        </div>
-
-        <div class="image-previews">
-            <img src="assets/img/game1.jpg" alt="Game Image 1">
-            <img src="assets/img/game2.jpg" alt="Game Image 2">
-            <img src="assets/img/game3.jpg" alt="Game Image 3">
-        </div>
-
-        <div class="progress-bar">
-            <div class="progress"></div>
-        </div>
-
-        <div class="share-section">
-            <p>แชร์ลิงค์ดาวน์โหลด:</p>
-            <button class="share-btn">แชร์ทาง Facebook</button>
-            <button class="share-btn">แชร์ทาง Twitter</button>
-        </div>
-
-        <div class="warning">
-            <p>กรุณายอมรับข้อตกลงก่อนดาวน์โหลด</p>
-            <label><input type="checkbox" id="accept-terms"> ยอมรับข้อตกลง</label><br><br>
-            <button id="dowload-btn" disabled>ยืนยันดาวน์โหลด</button>
-        </div>
-
-        <div class="support-link">
-            <a href="support.html">หากพบปัญหาในการดาวน์โหลด คลิกที่นี่เพื่อขอความช่วยเหลือ</a>
-        </div>
+    <div class="app-image-container">
+      <img src="assets/img/App_shenwang_hub.jpg" alt="App Image">
     </div>
 
-    <footer>
-        <div class="footer-content">
-            <p>Shenwang Media © 2025</p>
-        </div>
-    </footer>
+    <div class="dowload-section">
+      <div class="platform-options">
+        <button class="platform-btn" onclick="alert('กำลังดาวน์โหลด Windows.exe')">ดาวน์โหลดสำหรับ Windows</button>
+        <button class="platform-btn" onclick="alert('กำลังดาวน์โหลด macOS.dmg')">ดาวน์โหลดสำหรับ macOS</button>
+        <button class="platform-btn" onclick="alert('กำลังดาวน์โหลด Android.apk')">ดาวน์โหลดสำหรับ Android</button>
+      </div>
+    </div>
 
-    <script>
-        const checkbox = document.getElementById('accept-terms');
-        const downloadBtn = document.getElementById('dowload-btn');
+    <div class="file-info">
+      <p><strong>ขนาดไฟล์:</strong> 1.5 GB</p>
+      <p><strong>เวอร์ชัน:</strong> 1.0.0</p>
+      <p><strong>คำแนะนำ:</strong> ทำการติดตั้งตามคำแนะนำในคู่มือ</p>
+    </div>
 
-        checkbox.addEventListener('change', function () {
-            dowloadBtn.disabled = !this.checked;
-        });
+    <div class="game-preview">
+      <h2>ตัวอย่างเกม</h2>
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/BO-ZbxR6IcA" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
 
-        dowloadBtn.addEventListener('click', function () {
-            alert('เริ่มการดาวน์โหลด...');
-        });
-    </script>
+    <div class="image-previews">
+      <img src="assets/img/game1.jpg" alt="Game Image 1">
+      <img src="assets/img/game2.jpg" alt="Game Image 2">
+      <img src="assets/img/game3.jpg" alt="Game Image 3">
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress"></div>
+    </div>
+
+    <div class="share-section">
+      <p>แชร์ลิงค์ดาวน์โหลด:</p>
+      <button class="share-btn">แชร์ทาง Facebook</button>
+      <button class="share-btn">แชร์ทาง Twitter</button>
+    </div>
+
+    <div class="warning">
+      <p>กรุณายอมรับข้อตกลงก่อนดาวน์โหลด</p>
+      <label><input type="checkbox" id="accept-terms"> ยอมรับข้อตกลง</label><br><br>
+      <button id="dowload-btn">ยืนยันดาวน์โหลด</button>
+    </div>
+
+    <div class="support-link">
+      <a href="support.html">หากพบปัญหาในการดาวน์โหลด คลิกที่นี่เพื่อขอความช่วยเหลือ</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <p>Shenwang Media © 2025</p>
+    </div>
+  </footer>
+
+  <script>
+    const checkbox = document.getElementById('accept-terms');
+    const dowloadBtn = document.getElementById('dowload-btn');
+
+    checkbox.addEventListener('change', function () {
+      if (this.checked) {
+        dowloadBtn.classList.add('enabled');
+        dowloadBtn.disabled = false;
+      } else {
+        dowloadBtn.classList.remove('enabled');
+        dowloadBtn.disabled = true;
+      }
+    });
+
+    dowloadBtn.addEventListener('click', function () {
+      if (checkbox.checked) {
+        alert('เริ่มการดาวน์โหลด...');
+      }
+    });
+
+    // เริ่มต้นปุ่มให้ไม่สามารถคลิกได้
+    dowloadBtn.disabled = true;
+  </script>
 </body>
-                   </html>
+          </html>
