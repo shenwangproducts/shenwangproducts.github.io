@@ -3,15 +3,15 @@ function speakIntro() {
   const intro = new SpeechSynthesisUtterance(
     "你好，我是零曦，网站的第二代AI。你可以问我任何你感兴趣的事情"
   );
-  intro.lang = 'zh-CN';  // เปลี่ยนให้เป็นภาษาจีน (ถ้าคุณต้องการเสียงที่เหมาะสม)
-  intro.pitch = 1.5;     // ปรับเสียงให้มีความนุ่มนวลขึ้น (1.5 จะทำให้เสียงไม่สูงเกินไป)
-  intro.rate = 1.1;      // ปรับความเร็วในการพูดให้ช้าลงเล็กน้อย
+  intro.lang = 'zh-CN';
+  intro.pitch = 1.5;
+  intro.rate = 1.1;
 
   intro.onend = function () {
     const next = new SpeechSynthesisUtterance("กรุณาเลือกเมนูที่คุณสนใจด้านบนได้เลย");
-    next.lang = 'th-TH';   // ภาษาไทยสำหรับข้อความนี้
-    next.pitch = 1.2;      // ปรับเสียงให้มีความละมุน
-    next.rate = 1.1;       // ความเร็วการพูดที่ช้าลงเล็กน้อย
+    next.lang = 'th-TH';
+    next.pitch = 1.2;
+    next.rate = 1.1;
     speechSynthesis.speak(next);
   };
 
@@ -29,8 +29,8 @@ function closePopup() {
 function changePage(page) {
   const message = new SpeechSynthesisUtterance("");
   message.lang = 'th-TH';
-  message.pitch = 1.2;      // เสียงนุ่มนวล
-  message.rate = 1.1;       // ความเร็วพูดที่ช้าลงเล็กน้อย
+  message.pitch = 1.2;
+  message.rate = 1.1;
 
   switch (page) {
     case 'promo':
@@ -49,7 +49,6 @@ function changePage(page) {
       message.text = "กำลังย้อนไปหน้าแรก";
   }
 
-  // พูดก่อน redirect
   speechSynthesis.cancel();
   speechSynthesis.speak(message);
 
@@ -71,4 +70,9 @@ function changePage(page) {
         window.location.href = 'index.html';
     }
   };
+}
+
+// ฟังก์ชันเริ่มโปรโมท
+function startPromotion() {
+  alert("ระบบจะเปิดให้เริ่มโปรโมทเร็ว ๆ นี้!");
 }
