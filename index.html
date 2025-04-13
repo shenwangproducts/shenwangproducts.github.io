@@ -1,142 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Shenwang Media</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="assets/img/received.jpg" />
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
-  
-  <!-- Top Bar -->
   <header>
-    <div class="logo">
-      <img src="assets/img/received.jpg" alt="Shenwang Media Logo" />
-      <span>Shenwang Media</span>
+    <div class="header-container">
+      <div class="logo-center">
+        <img src="assets/img/received.jpg" alt="Shenwang Media Logo" />
+        <h1>Shenwang Media</h1>
+      </div>
+      <nav class="main-nav">
+        <a href="#" onclick="changePage('promo')">โปรโมท</a>
+        <a href="#" onclick="changePage('news')">ข่าวสาร</a>
+        <a href="dowload.html" onclick="changePage('dowload')">ดาวน์โหลด</a>
+        <a href="#" onclick="changePage('contact')">ติดต่อ</a>
+      </nav>
     </div>
-    <nav>
-      <ul>
-        <li><a href="#" onclick="changePage('promo')">โปรโมท</a></li>
-        <li><a href="#" onclick="changePage('news')">ข่าวสาร</a></li>
-        <li><a href="dowload.html" onclick="changePage('dowload')">ดาวน์โหลด</a></li>
-        <li><a href="#" onclick="changePage('contact')">ติดต่อ</a></li>
-      </ul>
-    </nav>
   </header>
 
-  <!-- Content Section -->
-  <div id="content">
-    <!-- โซนโปรโมท -->
-    <style>
-      .promo-section {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
-        padding: 30px;
-        background: #111;
-        color: #fff;
-      }
-
-      .promo-box {
-        background: #1c1c1c;
-        border: 2px solid red;
-        border-radius: 12px;
-        padding: 15px;
-        text-align: center;
-        transition: 0.3s;
-        position: relative;
-        overflow: hidden;
-        cursor: pointer;
-      }
-
-      .promo-box:hover {
-        transform: scale(1.03);
-        box-shadow: 0 0 20px red;
-      }
-
-      .promo-box img {
-        width: 100%;
-        border-radius: 8px;
-        margin-bottom: 10px;
-      }
-
-      .promo-box::before {
-        content: "";
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: linear-gradient(45deg, transparent, red, transparent);
-        animation: scan 3s linear infinite;
-        z-index: 0;
-      }
-
-      .promo-box * {
-        position: relative;
-        z-index: 1;
-      }
-
-      @keyframes scan {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-    </style>
-
-    <div class="promo-section">
-      <div class="promo-box" onclick="location.href='#'">
-        <img src="assets/img/promo1.jpg" alt="มาใหม่">
-        <h3>มาใหม่</h3>
-        <p>แอปล่าสุด! ห้ามพลาดเด็ดขาด</p>
-      </div>
-      <div class="promo-box" onclick="location.href='#'">
-        <img src="assets/img/promo2.jpg" alt="ลดแล้วลดอีก">
-        <h3>ลดแล้วลดอีก</h3>
-        <p>โปรโมชันแรง! ลดกระหน่ำ</p>
-      </div>
-      <div class="promo-box" onclick="location.href='#'">
-        <img src="assets/img/promo3.jpg" alt="มาแรง">
-        <h3>มาแรง</h3>
-        <p>ยอดโหลดพุ่งติดอันดับ</p>
-      </div>
-      <div class="promo-box" onclick="location.href='#'">
-        <img src="assets/img/promo4.jpg" alt="พึ่งปล่อยตัว">
-        <h3>พึ่งปล่อยตัว</h3>
-        <p>เปิดตัวแล้ววันนี้! ไปลองเลย</p>
-      </div>
+  <main>
+    <div class="promo-box">
+      <h2>เริ่มโปรโมทกับ Shenwang Media</h2>
+      <p>ปลดล็อกพลังของแพลตฟอร์มของเรา และเข้าถึงผู้คนทั่วโลกอย่างมีสไตล์</p>
+      <button onclick="startPromotion()">เริ่มโปรโมทเลย</button>
     </div>
-  </div>
+  </main>
 
-  <!-- Footer -->
-  <footer>
-    <div class="footer-content">
-      <span>Shenwang Media © 2025</span>
-    </div>
-  </footer>
+  <script>
+    function changePage(page) {
+      console.log("เปลี่ยนไปหน้า:", page);
+    }
 
-  <script src="js/script.js"></script>
-
-  <!-- Popup Notification -->
-  <div id="popup" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.9); display: flex; justify-content: center; align-items: center; z-index: 9999;">
-    <div style="background: #1c1c1c; color: #fff; padding: 25px; border-radius: 12px; max-width: 95%; width: 400px; text-align: center; box-shadow: 0 0 15px rgba(255, 0, 0, 0.5); border: 2px solid #ff1a1a;">
-      <h2 style="margin-top: 0; color: #ff4d4d;">แจ้งเตือนความปลอดภัย</h2>
-      <p>ทีมงาน Shenwang Media จะไม่ติดต่อผู้เล่นเพื่อขอรหัสผ่านหรือข้อมูลส่วนตัว</p>
-      <p>หากมีบุคคลแอบอ้างว่าเป็นทีมงาน โปรดอย่าหลงเชื่อเด็ดขาด</p>
-      <p>เว็บไซต์ทางการของเราคือ <strong style="color: #ff4d4d;">www.shenwang.wuaze.com</strong> เท่านั้น</p>
-      <hr style="margin: 15px 0; border-color: #444;">
-      <p><strong>สงวนลิขสิทธิ์</strong> © 2025 Shenwang Media</p>
-      <p>ห้ามคัดลอก ดัดแปลง หรือเผยแพร่เนื้อหาโดยไม่ได้รับอนุญาต</p>
-      <button onclick="closePopup()" style="margin-top: 15px; padding: 10px 20px; border: none; background: #ff1a1a; color: white; border-radius: 5px; cursor: pointer;">
-        ปิด
-      </button>
-    </div>
-  </div>
-
+    function startPromotion() {
+      alert("ระบบจะเปิดให้เริ่มโปรโมทเร็ว ๆ นี้!");
+    }
+  </script>
 </body>
 </html>
