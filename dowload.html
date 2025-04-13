@@ -4,10 +4,194 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>หน้าดาวน์โหลด</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1a1a1a;
+            color: #fff;
+            padding: 10px 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+            border-radius: 6px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            margin: 0 10px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        #content {
+            padding: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .download-title {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .download-description {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .app-image-container img {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 10px;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .platform-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .platform-btn {
+            background: #007bff;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .platform-btn:hover {
+            background: #0056b3;
+        }
+
+        .file-info p {
+            margin: 5px 0;
+        }
+
+        .game-preview {
+            margin-top: 30px;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+        }
+
+        .image-previews {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .image-previews img {
+            width: 30%;
+            border-radius: 6px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            background: #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 10px;
+            margin: 30px 0;
+        }
+
+        .progress {
+            width: 60%;
+            height: 100%;
+            background: #4caf50;
+        }
+
+        .share-section {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .share-btn {
+            background: #4267B2;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        .share-btn:hover {
+            opacity: 0.8;
+        }
+
+        .warning {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .support-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .support-link a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        footer {
+            background: #1a1a1a;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            margin-top: 40px;
+        }
+    </style>
 </head>
 <body>
-    <!-- Top Bar with Back Button -->
     <header>
         <div class="logo">
             <img src="assets/img/received.jpg" alt="Logo">
@@ -23,91 +207,79 @@
         </nav>
     </header>
 
-    <!-- Content Section -->
     <div id="content">
-        <!-- Download Title -->
-        <h1 class="download-title">ดาวน์โหลดเกมของคุณ</h1>
+        <h1 class="dowload-title">ดาวน์โหลดเกมของคุณ</h1>
+        <p class="dowload-description">ดาวน์โหลดเวอร์ชันล่าสุดของเกมของเราและสนุกไปกับประสบการณ์ใหม่ ๆ!</p>
 
-        <!-- Description -->
-        <p class="download-description">ดาวน์โหลดเวอร์ชันล่าสุดของเกมของเราและสนุกไปกับประสบการณ์ใหม่ ๆ!</p>
-
-        <!-- App Image Section -->
         <div class="app-image-container">
             <img src="assets/img/App_shenwang_hub.jpg" alt="App Image">
         </div>
 
-        <!-- Platform Options -->
-        <div class="download-section">
+        <div class="dowload-section">
             <div class="platform-options">
-                <button class="platform-btn">ดาวน์โหลดสำหรับ Windows</button>
-                <button class="platform-btn">ดาวน์โหลดสำหรับ macOS</button>
-                <button class="platform-btn">ดาวน์โหลดสำหรับ Android</button>
+                <button class="platform-btn" onclick="alert('กำลังดาวน์โหลด Windows.exe')">ดาวน์โหลดสำหรับ Windows</button>
+                <button class="platform-btn" onclick="alert('กำลังดาวน์โหลด macOS.dmg')">ดาวน์โหลดสำหรับ macOS</button>
+                <button class="platform-btn" onclick="alert('กำลังดาวน์โหลด Android.apk')">ดาวน์โหลดสำหรับ Android</button>
             </div>
         </div>
-        
-        <!-- File Info -->
-<div class="file-info">
-    <p><strong>ขนาดไฟล์:</strong> 1.5 GB</p>
-    <p><strong>เวอร์ชัน:</strong> 1.0.0</p>
-    <p><strong>คำแนะนำ:</strong> ทำการติดตั้งตามคำแนะนำในคู่มือ</p>
-</div>
 
-<!-- Game Preview Section -->
-<div class="game-preview">
-    <h2>ตัวอย่างเกม</h2>
-        <!-- ฝังวิดีโอ YouTube -->
-<div class="video-container">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/BO-ZbxR6IcA" frameborder="0" allowfullscreen></iframe>
-</div>
+        <div class="file-info">
+            <p><strong>ขนาดไฟล์:</strong> 1.5 GB</p>
+            <p><strong>เวอร์ชัน:</strong> 1.0.0</p>
+            <p><strong>คำแนะนำ:</strong> ทำการติดตั้งตามคำแนะนำในคู่มือ</p>
+        </div>
 
-    </div>
+        <div class="game-preview">
+            <h2>ตัวอย่างเกม</h2>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/BO-ZbxR6IcA" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
 
-    <!-- Image Previews -->
-    <div class="image-previews">
-        <img src="path-to-your-image1.jpg" alt="Game Image 1">
-        <img src="path-to-your-image2.jpg" alt="Game Image 2">
-        <img src="path-to-your-image3.jpg" alt="Game Image 3">
-    </div>
-</div>
+        <div class="image-previews">
+            <img src="assets/img/game1.jpg" alt="Game Image 1">
+            <img src="assets/img/game2.jpg" alt="Game Image 2">
+            <img src="assets/img/game3.jpg" alt="Game Image 3">
+        </div>
 
-        <!-- Download Progress Bar -->
         <div class="progress-bar">
             <div class="progress"></div>
         </div>
 
-        <!-- Share Section -->
         <div class="share-section">
             <p>แชร์ลิงค์ดาวน์โหลด:</p>
             <button class="share-btn">แชร์ทาง Facebook</button>
             <button class="share-btn">แชร์ทาง Twitter</button>
         </div>
 
-        <!-- Warning/Terms Section -->
-<div class="warning">
-    <p>กรุณายอมรับข้อตกลงก่อนดาวน์โหลด</p>
-    
-    <!-- Checkbox for accepting terms -->
-    <label for="accept-terms">
-        <input type="checkbox" id="accept-terms"> ยอมรับข้อตกลง
-    </label>
+        <div class="warning">
+            <p>กรุณายอมรับข้อตกลงก่อนดาวน์โหลด</p>
+            <label><input type="checkbox" id="accept-terms"> ยอมรับข้อตกลง</label><br><br>
+            <button id="dowload-btn" disabled>ยืนยันดาวน์โหลด</button>
+        </div>
 
-    <!-- Submit Button (hidden initially) -->
-    <button id="download-btn" disabled></button>
-</div>
-
-
-        <!-- Support Link -->
         <div class="support-link">
             <a href="support.html">หากพบปัญหาในการดาวน์โหลด คลิกที่นี่เพื่อขอความช่วยเหลือ</a>
         </div>
     </div>
 
-    <!-- Footer -->
     <footer>
         <div class="footer-content">
             <p>Shenwang Media © 2025</p>
-    <script src="js/script.js"></script>
         </div>
     </footer>
+
+    <script>
+        const checkbox = document.getElementById('accept-terms');
+        const downloadBtn = document.getElementById('dowload-btn');
+
+        checkbox.addEventListener('change', function () {
+            dowloadBtn.disabled = !this.checked;
+        });
+
+        dowloadBtn.addEventListener('click', function () {
+            alert('เริ่มการดาวน์โหลด...');
+        });
+    </script>
 </body>
-</html>
+                   </html>
