@@ -1,183 +1,83 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>เว็บไซต์อยู่ระหว่างการปรับปรุง</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(to bottom, #f0f0f0, #e0e0e0);
-      font-family: 'Arial', sans-serif;
-      text-align: center;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Under Maintenance</title>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; background-color: #f0f0f0; }
+        canvas { display: block; }
 
-    .container {
-      padding: 50px 20px;
-    }
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #333;
+        }
 
-    h1 {
-      font-size: 2.5em;
-      color: #333;
-    }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
 
-    p {
-      font-size: 1.2em;
-      color: #666;
-    }
+        p {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+        }
 
-    .character {
-      position: relative;
-      width: 150px;
-      height: 250px;
-      margin: 40px auto;
-    }
-
-    .head, .body, .arm-left, .arm-right, .leg-left, .leg-right, .tool {
-      position: absolute;
-      background: #555;
-      border-radius: 10px;
-    }
-
-    .head {
-      width: 60px;
-      height: 60px;
-      background: #ffcc99;
-      top: 0;
-      left: 45px;
-      border-radius: 50%;
-      animation: nod 2s infinite alternate;
-    }
-
-    .body {
-      width: 50px;
-      height: 80px;
-      top: 60px;
-      left: 50px;
-      background: #3b82f6;
-    }
-
-    .arm-left, .arm-right {
-      width: 20px;
-      height: 60px;
-      top: 60px;
-      background: #3b82f6;
-    }
-
-    .arm-left {
-      left: 20px;
-      transform-origin: top right;
-      animation: wave-left 2s infinite alternate;
-    }
-
-    .arm-right {
-      right: 20px;
-      transform-origin: top left;
-      animation: wave-right 2s infinite alternate;
-    }
-
-    .leg-left, .leg-right {
-      width: 20px;
-      height: 70px;
-      top: 140px;
-      background: #333;
-    }
-
-    .leg-left {
-      left: 45px;
-      animation: move-leg 2s infinite alternate;
-    }
-
-    .leg-right {
-      left: 85px;
-      animation: move-leg 2s infinite alternate-reverse;
-    }
-
-    .tool {
-      width: 20px;
-      height: 10px;
-      background: #333;
-      top: 60px;
-      left: 75px;
-      transform: rotate(45deg);
-      animation: hold-tool 2s infinite alternate;
-    }
-
-    .bug {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: #f44336;
-      position: absolute;
-      top: 100px;
-      left: 50%;
-      margin-left: -20px;
-      animation: move-bug 3s infinite alternate;
-    }
-
-    @keyframes nod {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(5px); }
-    }
-
-    @keyframes wave-left {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(-15deg); }
-    }
-
-    @keyframes wave-right {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(15deg); }
-    }
-
-    @keyframes move-leg {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(5deg); }
-    }
-
-    @keyframes hold-tool {
-      0% { transform: rotate(45deg); }
-      100% { transform: rotate(-45deg); }
-    }
-
-    @keyframes move-bug {
-      0% { transform: translateX(-100px); }
-      100% { transform: translateX(100px); }
-    }
-
-    .note {
-      font-size: 1em;
-      margin-top: 20px;
-      color: #999;
-    }
-
-    .bug-note {
-      font-size: 1.2em;
-      color: #f44336;
-      font-weight: bold;
-    }
-  </style>
+        .maintenance-img {
+            width: 200px;
+            margin: 20px;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>เว็บไซต์อยู่ระหว่างการปรับปรุงครั้งใหญ่</h1>
-    <p>มีข้อมูลสำคัญที่ไม่สามารถเปิดเผยได้ขณะนี้<br>จึงขอปิดให้บริการชั่วคราว</p>
+    <div class="container">
+        <h1>Website Under Maintenance</h1>
+        <p>We are performing major updates to the site. Please check back later!</p>
+        <p>Our team is working hard to improve the experience.</p>
 
-    <div class="character">
-      <div class="head"></div>
-      <div class="body"></div>
-      <div class="arm-left"></div>
-      <div class="arm-right"></div>
-      <div class="leg-left"></div>
-      <div class="leg-right"></div>
-      <div class="tool"></div>
+        <div id="loading">
+            <img src="https://example.com/under-construction.png" alt="Under Construction" class="maintenance-img" />
+        </div>
     </div>
 
-    <div class="bug"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/GLTFLoader.js"></script>
+    <script>
+        // Step 1: Set up the scene, camera, and renderer
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
 
-    <p class="bug-note">กำลังจัดการบัค... ขอโทษในความไม่สะดวก!</p>
-    <p class="note">ขออภัยในความไม่สะดวก แล้วพบกันใหม่เร็วๆ นี้!</p>
-  </div>
+        // Step 2: Create a simple 3D box that will represent a character or object
+        var geometry = new THREE.BoxGeometry();
+        var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        var cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+
+        // Step 3: Position the camera
+        camera.position.z = 5;
+
+        // Step 4: Animation function to make the box rotate
+        function animate() {
+            requestAnimationFrame(animate);
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+            renderer.render(scene, camera);
+        }
+        animate(); // Start animation
+
+        // Optional: Load 3D model (GLTF/GLB) to replace the box with a custom character
+        // var loader = new THREE.GLTFLoader();
+        // loader.load('path_to_model.glb', function (gltf) {
+        //     scene.add(gltf.scene);
+        //     animate();
+        // });
+    </script>
 </body>
 </html>
