@@ -1,56 +1,63 @@
-// ฟังก์ชันแนะนำตัว AI
+let hasSpokenIntro = false;  // สถานะการพูดแนะนำตัว
+
 function speakIntro() {
+  if (hasSpokenIntro) return; // ถ้าพูดไปแล้วไม่ให้พูดซ้ำ
+
   const intro = new SpeechSynthesisUtterance(
     "你好，我是零曦，网站的第二代AI。你可以问我任何你感兴趣的事情"
   );
   intro.lang = 'zh-CN';
-  intro.pitch = 1.5;
-  intro.rate = 1.1;
+  intro.pitch = 1.2;
+  intro.rate = 1.0;
 
   intro.onend = function () {
     const next = new SpeechSynthesisUtterance("Please select the menu you are interested in above.");
-    next.lang = 'Eg-Eg';
-    next.pitch = 1.2;
-    next.rate = 1.1;
+    next.lang = 'en-US';
+    next.pitch = 1.0;
+    next.rate = 1.0;
     speechSynthesis.speak(next);
   };
 
   speechSynthesis.cancel();
   speechSynthesis.speak(intro);
+  
+  hasSpokenIntro = true; // ตั้งค่าสถานะว่าได้พูดแนะนำตัวแล้ว
 }
 
-// ปิด popup และพูดแนะนำตัว
 function closePopup() {
   document.getElementById("popup").style.display = "none";
-  speakIntro();
+  speakIntro(); // เมื่อปิด popup จะพูดแนะนำตัว
 }
 
-// ฟังก์ชันเปลี่ยนหน้า + พูดก่อนเปลี่ยน
 function changePage(page) {
   const message = new SpeechSynthesisUtterance("");
   message.lang = 'th-TH';
-  message.pitch = 1.2;
+  message.pitch = 1.1;
   message.rate = 1.1;
 
+  let pageMessage = "";
+  
   switch (page) {
     case 'promo':
-      message.text = "กำลังเข้าสู่หน้าหลัก โปรโมทแอปของเรา";
+      pageMessage = "กำลังเข้าสู่หน้าหลัก โปรโมทแอปของเรา";
       break;
     case 'news':
-      message.text = "กำลังเข้าสู่หน้าข่าวสาร";
+      pageMessage = "กำลังเข้าสู่หน้าข่าวสาร";
       break;
-    case 'dowload':
-      message.text = "กำลังเข้าสู่หน้าดาวน์โหลด กรุณาอ่านข้อตกลงก่อนดาวน์โหลด";
+    case 'download':
+      pageMessage = "กำลังเข้าสู่หน้าดาวน์โหลด กรุณาอ่านข้อตกลงก่อนดาวน์โหลด";
       break;
     case 'contact':
-      message.text = "กำลังเข้าสู่หน้าติดต่อเรา";
+      pageMessage = "กำลังเข้าสู่หน้าติดต่อเรา";
       break;
     default:
-      message.text = "กำลังย้อนไปหน้าแรก";
+      pageMessage = "กำลังย้อนไปหน้าแรก";
   }
 
+  message.text = pageMessage;
   speechSynthesis.cancel();
   speechSynthesis.speak(message);
+  };
 
   message.onend = function () {
     switch (page) {
