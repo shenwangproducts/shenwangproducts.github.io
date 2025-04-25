@@ -1,5 +1,6 @@
 let hasSpokenIntro = false;  // สถานะการพูดแนะนำตัว
 
+// ฟังก์ชันพูดแนะนำตัว
 function speakIntro() {
   if (hasSpokenIntro) return; // ถ้าพูดไปแล้วไม่ให้พูดซ้ำ
 
@@ -24,11 +25,19 @@ function speakIntro() {
   hasSpokenIntro = true; // ตั้งค่าสถานะว่าได้พูดแนะนำตัวแล้ว
 }
 
+// ฟังก์ชันปิด Popup และพูดแนะนำตัวเมื่อปิด
 function closePopup() {
+  // Check if the "Don't show again" checkbox is checked
+  if (document.getElementById("dontShowAgain").checked) {
+    // Store the status to localStorage to prevent showing popup again
+    localStorage.setItem("popupShown", "true");
+  }
+  // Hide the popup
   document.getElementById("popup").style.display = "none";
   speakIntro(); // เมื่อปิด popup จะพูดแนะนำตัว
 }
 
+// ฟังก์ชันเปลี่ยนหน้า
 function changePage(page) {
   const message = new SpeechSynthesisUtterance("");
   message.lang = 'th-TH';
@@ -57,7 +66,6 @@ function changePage(page) {
   message.text = pageMessage;
   speechSynthesis.cancel();
   speechSynthesis.speak(message);
-  };
 
   message.onend = function () {
     switch (page) {
@@ -67,7 +75,7 @@ function changePage(page) {
       case 'news':
         window.location.href = 'news.html';
         break;
-      case 'dowload':
+      case 'download':
         window.location.href = 'download.html';
         break;
       case 'contact':
@@ -82,20 +90,10 @@ function changePage(page) {
 // ฟังก์ชันเริ่มโปรโมท
 function startPromotion() {
   alert("ระบบจะเปิดให้เริ่มโปรโมทเร็ว ๆ นี้!");
-}// Check if popup has been shown before
-if (!localStorage.getItem("popupShown")) {
-    // Show popup only if it hasn't been shown before
-    document.getElementById("popup").style.display = "flex";
 }
 
-// Close popup function
-function closePopup() {
-    // Check if the "Don't show again" checkbox is checked
-    if (document.getElementById("dontShowAgain").checked) {
-        // Store the status to localStorage to prevent showing popup again
-        localStorage.setItem("popupShown", "true");
-    }
-    // Hide the popup
-    document.getElementById("popup").style.display = "none";
-          }
-
+// เช็คว่า popup แสดงไปแล้วหรือยัง
+if (!localStorage.getItem("popupShown")) {
+  // แสดง popup เท่านั้นถ้ายังไม่เคยแสดง
+  document.getElementById("popup").style.display = "flex";
+}
