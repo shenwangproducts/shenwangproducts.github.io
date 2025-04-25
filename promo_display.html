@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>แอปที่โปรโมทแล้ว</title>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    .app { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 6px; }
+    img { max-width: 100%; height: auto; margin-top: 10px; }
+    iframe { width: 100%; height: 200px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h2>แอปที่ถูกโปรโมท</h2>
+  <div id="apps"></div>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    db.collection("promotions").orderBy("createdAt", "desc").onSnapshot(snapshot => {
+      const apps = document.getElementById("apps");
+      apps.innerHTML = "";
+      snapshot.forEach(doc => {
+        const app = doc.data();
+        const div = document.createElement("div");
+        div.className = "app";
+        div.innerHTML = `
+          <h3>${app.appName}</h3>
+          <p><strong>ผู้พัฒนา:</strong> ${app.developer}</p>
+          <p>${app.description}</p>
+          <p><strong>ประเภท:</strong> ${app.type}</p>
+          ${app.image ? `<img src="${app.image}" alt="รูปภาพ">` : ""}
+          ${app.video ? `<iframe src="${app.video}" allowfullscreen></iframe>` : ""}
+          <p><a href="${app.download}" target="_blank">ดาวน์โหลดแอป</a></p>
+        `;
+        apps.appendChild(div);
+      });
+    });
+  </script>
+</body>
+</html>
