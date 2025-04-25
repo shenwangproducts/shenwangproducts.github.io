@@ -82,4 +82,20 @@ function changePage(page) {
 // ฟังก์ชันเริ่มโปรโมท
 function startPromotion() {
   alert("ระบบจะเปิดให้เริ่มโปรโมทเร็ว ๆ นี้!");
+}// Check if popup has been shown before
+if (!localStorage.getItem("popupShown")) {
+    // Show popup only if it hasn't been shown before
+    document.getElementById("popup").style.display = "flex";
 }
+
+// Close popup function
+function closePopup() {
+    // Check if the "Don't show again" checkbox is checked
+    if (document.getElementById("dontShowAgain").checked) {
+        // Store the status to localStorage to prevent showing popup again
+        localStorage.setItem("popupShown", "true");
+    }
+    // Hide the popup
+    document.getElementById("popup").style.display = "none";
+          }
+
