@@ -89,7 +89,7 @@ function changePage(page) {
 
 // ฟังก์ชันเริ่มโปรโมท
 function startPromotion() {
-  alert("ระบบจะเปิดให้เริ่มโปรโมทเร็ว ๆ นี้!");
+  window.location.href = "promo_submit.html";
 }
 
 // เช็คว่า popup แสดงไปแล้วหรือยัง
