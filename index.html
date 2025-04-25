@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>อยู่ระหว่างการปรับปรุง</title>
+  <title>เว็บไซต์อยู่ระหว่างการปรับปรุง</title>
   <style>
     body {
       margin: 0;
@@ -18,7 +18,7 @@
     }
 
     h1 {
-      font-size: 2em;
+      font-size: 2.5em;
       color: #333;
     }
 
@@ -34,7 +34,7 @@
       margin: 40px auto;
     }
 
-    .head, .body, .arm-left, .arm-right, .leg-left, .leg-right {
+    .head, .body, .arm-left, .arm-right, .leg-left, .leg-right, .tool {
       position: absolute;
       background: #555;
       border-radius: 10px;
@@ -94,6 +94,28 @@
       animation: move-leg 2s infinite alternate-reverse;
     }
 
+    .tool {
+      width: 20px;
+      height: 10px;
+      background: #333;
+      top: 60px;
+      left: 75px;
+      transform: rotate(45deg);
+      animation: hold-tool 2s infinite alternate;
+    }
+
+    .bug {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #f44336;
+      position: absolute;
+      top: 100px;
+      left: 50%;
+      margin-left: -20px;
+      animation: move-bug 3s infinite alternate;
+    }
+
     @keyframes nod {
       0% { transform: translateY(0); }
       100% { transform: translateY(5px); }
@@ -114,10 +136,26 @@
       100% { transform: rotate(5deg); }
     }
 
+    @keyframes hold-tool {
+      0% { transform: rotate(45deg); }
+      100% { transform: rotate(-45deg); }
+    }
+
+    @keyframes move-bug {
+      0% { transform: translateX(-100px); }
+      100% { transform: translateX(100px); }
+    }
+
     .note {
       font-size: 1em;
       margin-top: 20px;
       color: #999;
+    }
+
+    .bug-note {
+      font-size: 1.2em;
+      color: #f44336;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -133,8 +171,12 @@
       <div class="arm-right"></div>
       <div class="leg-left"></div>
       <div class="leg-right"></div>
+      <div class="tool"></div>
     </div>
 
+    <div class="bug"></div>
+
+    <p class="bug-note">กำลังจัดการบัค... ขอโทษในความไม่สะดวก!</p>
     <p class="note">ขออภัยในความไม่สะดวก แล้วพบกันใหม่เร็วๆ นี้!</p>
   </div>
 </body>
