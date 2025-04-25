@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>ส่งข้อมูลโปรโมทแอป</title>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    input, textarea, select { width: 100%; margin: 8px 0; padding: 10px; }
+    button { padding: 10px 20px; }
+  </style>
+</head>
+<body>
+  <h2>แบบฟอร์มโปรโมทแอป</h2>
+  <form id="promoForm">
+    <input type="text" id="dev" placeholder="ชื่อผู้พัฒนา" required />
+    <input type="text" id="appName" placeholder="ชื่อแอป" required />
+    <textarea id="desc" placeholder="รายละเอียดแอป" required></textarea>
+    <select id="type" required>
+      <option value="">เลือกประเภทแอป</option>
+      <option value="เกม">เกม</option>
+      <option value="เครื่องมือ">เครื่องมือ</option>
+      <option value="อื่นๆ">อื่นๆ</option>
+    </select>
+    <input type="url" id="image" placeholder="ลิงก์รูปภาพประกอบ (url)" />
+    <input type="url" id="video" placeholder="ลิงก์วิดีโอ (ถ้ามี)" />
+    <input type="url" id="download" placeholder="ลิงก์ดาวน์โหลด" required />
+    <button type="submit">ส่งโปรโมท</button>
+  </form>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    document.getElementById("promoForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const data = {
+        developer: dev.value,
+        appName: appName.value,
+        description: desc.value,
+        type: type.value,
+        image: image.value,
+        video: video.value,
+        download: download.value,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      };
+      await db.collection("promotions").add(data);
+      alert("ส่งข้อมูลแล้ว รอตรวจสอบ...");
+      promoForm.reset();
+    });
+  </script>
+</body>
+                                    </html>
