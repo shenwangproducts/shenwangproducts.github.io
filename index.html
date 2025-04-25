@@ -1,125 +1,141 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>เว็บไซต์กำลังปรับปรุง</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>อยู่ระหว่างการปรับปรุง</title>
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: #f2f2f2;
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+      background: linear-gradient(to bottom, #f0f0f0, #e0e0e0);
+      font-family: 'Arial', sans-serif;
       text-align: center;
+    }
+
+    .container {
+      padding: 50px 20px;
     }
 
     h1 {
       font-size: 2em;
-      margin-bottom: 0.5em;
+      color: #333;
     }
 
     p {
       font-size: 1.2em;
-      max-width: 600px;
-      margin: 0 auto 2em;
+      color: #666;
     }
 
-    .worker {
+    .character {
       position: relative;
       width: 150px;
-      height: 200px;
-      margin-bottom: 1em;
-      animation: bounce 2s infinite;
+      height: 250px;
+      margin: 40px auto;
     }
 
-    .head, .body, .hat, .arm, .leg {
+    .head, .body, .arm-left, .arm-right, .leg-left, .leg-right {
       position: absolute;
-      background-color: #333;
+      background: #555;
+      border-radius: 10px;
     }
 
     .head {
+      width: 60px;
+      height: 60px;
+      background: #ffcc99;
       top: 0;
-      left: 40px;
-      width: 70px;
-      height: 70px;
+      left: 45px;
       border-radius: 50%;
-      background: #f1c27d;
-      z-index: 2;
-    }
-
-    .hat {
-      top: -10px;
-      left: 40px;
-      width: 70px;
-      height: 30px;
-      background: orange;
-      border-radius: 10px 10px 0 0;
-      z-index: 3;
+      animation: nod 2s infinite alternate;
     }
 
     .body {
-      top: 70px;
-      left: 35px;
-      width: 80px;
+      width: 50px;
       height: 80px;
-      background: #2e86de;
+      top: 60px;
+      left: 50px;
+      background: #3b82f6;
     }
 
-    .arm {
+    .arm-left, .arm-right {
       width: 20px;
       height: 60px;
-      background: #2e86de;
-      top: 80px;
+      top: 60px;
+      background: #3b82f6;
     }
 
-    .arm.left {
-      left: 10px;
-      transform: rotate(20deg);
+    .arm-left {
+      left: 20px;
+      transform-origin: top right;
+      animation: wave-left 2s infinite alternate;
     }
 
-    .arm.right {
-      right: 10px;
-      transform: rotate(-20deg);
+    .arm-right {
+      right: 20px;
+      transform-origin: top left;
+      animation: wave-right 2s infinite alternate;
     }
 
-    .leg {
+    .leg-left, .leg-right {
       width: 20px;
-      height: 60px;
-      background: #2c3e50;
-      bottom: 0;
+      height: 70px;
+      top: 140px;
+      background: #333;
     }
 
-    .leg.left {
-      left: 40px;
+    .leg-left {
+      left: 45px;
+      animation: move-leg 2s infinite alternate;
     }
 
-    .leg.right {
-      right: 40px;
+    .leg-right {
+      left: 85px;
+      animation: move-leg 2s infinite alternate-reverse;
     }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+    @keyframes nod {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(5px); }
+    }
+
+    @keyframes wave-left {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(-15deg); }
+    }
+
+    @keyframes wave-right {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(15deg); }
+    }
+
+    @keyframes move-leg {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(5deg); }
+    }
+
+    .note {
+      font-size: 1em;
+      margin-top: 20px;
+      color: #999;
     }
   </style>
 </head>
 <body>
-  <div class="worker">
-    <div class="hat"></div>
-    <div class="head"></div>
-    <div class="body"></div>
-    <div class="arm left"></div>
-    <div class="arm right"></div>
-    <div class="leg left"></div>
-    <div class="leg right"></div>
+  <div class="container">
+    <h1>เว็บไซต์อยู่ระหว่างการปรับปรุงครั้งใหญ่</h1>
+    <p>มีข้อมูลสำคัญที่ไม่สามารถเปิดเผยได้ขณะนี้<br>จึงขอปิดให้บริการชั่วคราว</p>
+
+    <div class="character">
+      <div class="head"></div>
+      <div class="body"></div>
+      <div class="arm-left"></div>
+      <div class="arm-right"></div>
+      <div class="leg-left"></div>
+      <div class="leg-right"></div>
+    </div>
+
+    <p class="note">ขออภัยในความไม่สะดวก แล้วพบกันใหม่เร็วๆ นี้!</p>
   </div>
-  <h1>เว็บไซต์อยู่ระหว่างการปรับปรุงครั้งใหญ่</h1>
-  <p>ขออภัยในความไม่สะดวก เว็บไซต์นี้อยู่ในระหว่างการปรับปรุงครั้งใหญ่และมีข้อมูลสำคัญที่ไม่สามารถเปิดเผยได้ขณะนี้  
-  กรุณากลับมาใหม่ภายหลัง ขอบคุณที่เข้าใจ</p>
 </body>
 </html>
