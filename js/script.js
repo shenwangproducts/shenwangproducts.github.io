@@ -8,8 +8,8 @@ function speakIntro() {
   intro.rate = 1.1;
 
   intro.onend = function () {
-    const next = new SpeechSynthesisUtterance("กรุณาเลือกเมนูที่คุณสนใจด้านบนได้เลย");
-    next.lang = 'th-TH';
+    const next = new SpeechSynthesisUtterance("Please select the menu you are interested in above.");
+    next.lang = 'Eg-Eg';
     next.pitch = 1.2;
     next.rate = 1.1;
     speechSynthesis.speak(next);
