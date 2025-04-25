@@ -96,4 +96,4 @@ function startPromotion() {
 if (!localStorage.getItem("popupShown")) {
   // แสดง popup เท่านั้นถ้ายังไม่เคยแสดง
   document.getElementById("popup").style.display = "flex";
-}
+          }
