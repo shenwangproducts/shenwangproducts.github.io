@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Sign Up - Shenwang</title>
+
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-</head>
-<body>
-<style>
+
+  <style>
     body {
       font-family: 'Poppins', sans-serif;
       background: linear-gradient(135deg, #74ebd5, #acb6e5);
@@ -19,7 +19,7 @@
       justify-content: center;
     }
 
-    .login-container {
+    .signup-container {
       background: #fff;
       padding: 40px;
       border-radius: 15px;
@@ -28,11 +28,12 @@
       text-align: center;
     }
 
-    .login-container h2 {
+    h1 {
       margin-bottom: 20px;
       color: #333;
     }
 
+    input[type="text"],
     input[type="email"],
     input[type="password"] {
       width: 100%;
@@ -69,106 +70,107 @@
     .google-btn:hover {
       background: #c23321;
     }
+  </style>
+</head>
 
-    .link {
-      margin-top: 15px;
-      display: block;
-      font-size: 14px;
-      color: #666;
-      text-decoration: none;
-    }
+<body>
+  <div class="signup-container">
+    <h1>สมัครสมาชิก Shenwang</h1>
 
-    .link:hover {
-      text-decoration: underline;
-      color: #444;
-    }
-  <style> 
-  
-<h1>สมัครสมาชิก Shenwang</h1>
+    <!-- ฟอร์มสมัครด้วยอีเมล/รหัสผ่าน -->
+    <form id="signup-form">
+      <input type="text" id="username" placeholder="ชื่อผู้ใช้" required><br>
+      <input type="email" id="email" placeholder="อีเมล" required><br>
+      <input type="password" id="password" placeholder="รหัสผ่าน" required><br>
+      <button type="submit">สมัครสมาชิก</button>
+    </form>
 
-<!-- ฟอร์มสมัครด้วยอีเมล/รหัสผ่าน -->
-<form id="signup-form">
-  <input type="text" id="username" placeholder="ชื่อผู้ใช้" required><br><br>
-  <input type="email" id="email" placeholder="อีเมล" required><br><br>
-  <input type="password" id="password" placeholder="รหัสผ่าน" required><br><br>
-  <button type="submit">สมัครสมาชิก</button>
-</form>
+    <br>
 
-<br>
+    <!-- ปุ่มสมัครด้วย Google -->
+    <button id="google-signup-btn" class="google-btn">สมัครด้วย Google</button>
+  </div>
 
-<!-- ปุ่มสมัครด้วย Google -->
-<button id="google-signup-btn">สมัครด้วย Google</button>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyC-UwBguZRGdrIWLVkTsCRlt02vKOAlOlA",
+      authDomain: "shenwang-auth-user.firebaseapp.com",
+      projectId: "shenwang-auth-user",
+      storageBucket: "shenwang-auth-user.appspot.com",
+      messagingSenderId: "273542969972",
+      appId: "1:273542969972:web:4d6ce4edf5188b98dbef21"
+    };
 
-<script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyC-UwBguZRGdrIWLVkTsCRlt02vKOAlOlA",
-    authDomain: "shenwang-auth-user.firebaseapp.com",
-    projectId: "shenwang-auth-user",
-    storageBucket: "shenwang-auth-user.appspot.com",
-    messagingSenderId: "273542969972",
-    appId: "1:273542969972:web:4d6ce4edf5188b98dbef21"
-  };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
 
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-  const db = firebase.firestore();
-
-  // สมัครสมาชิกแบบอีเมล/รหัสผ่าน
-  document.getElementById('signup-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const username = document.getElementById('username').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value.trim();
-
-    try {
-      const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-      const user = userCredential.user;
-
-      await user.updateProfile({ displayName: username });
+    // ฟังก์ชันเก็บ user ลง Firestore
+    async function saveUserToFirestore(user, provider) {
+      const signupIP = "IP-Placeholder";  // เอาไว้ใส่ภายหลังถ้าอยากดึง IP จริง
+      const userAgent = navigator.userAgent;
 
       await db.collection('users').doc(user.uid).set({
         uid: user.uid,
-        username: username,
-        email: email,
-        provider: "password", // บอกว่าใช้สมัครแบบอีเมล
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        displayName: user.displayName || "",
+        email: user.email || "",
+        emailVerified: user.emailVerified,
+        isBanned: false,
+        photoURL: user.photoURL || "",
+        provider: provider,
+        role: "user",
+        signupIP: signupIP,
+        userAgent: userAgent,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        lastLoginAt: firebase.firestore.FieldValue.serverTimestamp()
       });
-
-      alert('สมัครสมาชิกสำเร็จ!');
-      window.location.href = '/dashboard.html';
-    } catch (error) {
-      console.error(error);
-      alert('เกิดข้อผิดพลาด: ' + error.message);
     }
-  });
 
-  // สมัครสมาชิกด้วย Google
-  document.getElementById('google-signup-btn').addEventListener('click', async () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    try {
-      const result = await auth.signInWithPopup(provider);
-      const user = result.user;
+    // สมัครสมาชิกด้วยอีเมล/รหัสผ่าน
+    document.getElementById('signup-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
 
-      // เช็คว่า user ใหม่ไหม ถ้าใหม่ก็เพิ่มข้อมูลใน Firestore
-      const userDoc = await db.collection('users').doc(user.uid).get();
-      if (!userDoc.exists) {
-        await db.collection('users').doc(user.uid).set({
-          uid: user.uid,
-          username: user.displayName,
-          email: user.email,
-          provider: "google", // บอกว่าใช้สมัครด้วย Google
-          createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
+      try {
+        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        const user = userCredential.user;
+
+        await user.updateProfile({ displayName: username });
+        await user.sendEmailVerification(); // ส่งอีเมลยืนยันตัวตน
+
+        await saveUserToFirestore(user, "password");
+
+        alert('สมัครสมาชิกสำเร็จ! โปรดตรวจสอบอีเมลเพื่อยืนยันตัวตน');
+        window.location.href = '/dashboard.html';
+      } catch (error) {
+        console.error(error);
+        alert('เกิดข้อผิดพลาด: ' + error.message);
       }
+    });
 
-      alert('สมัครด้วย Google สำเร็จ!');
-      window.location.href = '/dashboard.html';
-    } catch (error) {
-      console.error(error);
-      alert('เกิดข้อผิดพลาด: ' + error.message);
-    }
-  });
-</script>
+    // สมัครด้วย Google
+    document.getElementById('google-signup-btn').addEventListener('click', async () => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      try {
+        const result = await auth.signInWithPopup(provider);
+        const user = result.user;
+
+        // เช็คว่า user ใหม่ไหม ถ้าใหม่ก็เก็บข้อมูล
+        const userDoc = await db.collection('users').doc(user.uid).get();
+        if (!userDoc.exists) {
+          await saveUserToFirestore(user, "google");
+        }
+
+        alert('สมัครด้วย Google สำเร็จ!');
+        window.location.href = '/dashboard.html';
+      } catch (error) {
+        console.error(error);
+        alert('เกิดข้อผิดพลาด: ' + error.message);
+      }
+    });
+  </script>
 
 </body>
 </html>
