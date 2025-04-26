@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>เว็บไซต์อยู่ระหว่างการปรับปรุง</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Arial", sans-serif;
+      background-color: #f7f7f7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+      font-size: 22px;
+      margin-bottom: 20px;
+      padding: 0 20px;
+    }
+
+    #game {
+      width: 100%;
+      max-width: 600px;
+      height: 200px;
+      background-color: #e2e2e2;
+      border: 3px solid #ccc;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #dino {
+      width: 50px;
+      height: 50px;
+      background-color: green;
+      position: absolute;
+      bottom: 0;
+      left: 50px;
+    }
+
+    #cactus {
+      width: 20px;
+      height: 30px;
+      background-color: red;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      animation: cactusMove 2s infinite linear;
+    }
+
+    @keyframes cactusMove {
+      0% { right: -20px; }
+      100% { right: 100%; }
+    }
+
+    .footer {
+      font-size: 12px;
+      color: #999;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <h1>
+    เว็บไซต์กำลังอยู่ในการปรับปรุงครั้งยิ่งใหญ่<br>
+    ข้อมูลสำคัญยังไม่สามารถเปิดเผยได้ในขณะนี้<br>
+    กรุณารอระบบกลับมาออนไลน์อีกครั้งเร็ว ๆ นี้
+  </h1>
+
+  <div id="game">
+    <div id="dino"></div>
+    <div id="cactus"></div>
+  </div>
+
+  <div class="footer">มินิเกม: กระโดดข้ามกระบองเพชรเพื่อฆ่าเวลา</div>
+
+  <script>
+    const dino = document.getElementById('dino');
+    let isJumping = false;
+
+    document.addEventListener('keydown', function (e) {
+      if (e.code === 'Space' && !isJumping) {
+        isJumping = true;
+        let jumpHeight = 0;
+        let upInterval = setInterval(() => {
+          if (jumpHeight >= 100) {
+            clearInterval(upInterval);
+            let downInterval = setInterval(() => {
+              if (jumpHeight <= 0) {
+                clearInterval(downInterval);
+                isJumping = false;
+              } else {
+                jumpHeight -= 5;
+                dino.style.bottom = jumpHeight + 'px';
+              }
+            }, 20);
+          } else {
+            jumpHeight += 5;
+            dino.style.bottom = jumpHeight + 'px';
+          }
+        }, 20);
+      }
+    });
+  </script>
+</body>
+</html>
