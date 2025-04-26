@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard - Shenwang</title>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+<h1>ยินดีต้อนรับเข้าสู่ Dashboard</h1>
+
+<p id="user-info"></p>
+
+<button id="logout-btn">ออกจากระบบ</button>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyC-UwBguZRGdrIWLVkTsCRlt02vKOAlOlA",
+    authDomain: "shenwang-auth-user.firebaseapp.com",
+    projectId: "shenwang-auth-user",
+    storageBucket: "shenwang-auth-user.firebasestorage.app",
+    messagingSenderId: "273542969972",
+    appId: "1:273542969972:web:4d6ce4edf5188b98dbef21"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+
+  auth.onAuthStateChanged(async user => {
+    if (user) {
+      document.getElementById('user-info').innerText = `Hello, ${user.displayName || 'User'}!`;
+    } else {
+      alert('โปรดเข้าสู่ระบบก่อน');
+      window.location.href = '/login.html'; // ส่งกลับไปที่หน้า Login
+    }
+  });
+
+  // ระบบออกจากระบบ
+  document.getElementById('logout-btn').addEventListener('click', async () => {
+    await auth.signOut();
+    alert('ออกจากระบบสำเร็จ');
+    window.location.href = '/login.html';
+  });
+</script>
+
+</body>
+</html>
