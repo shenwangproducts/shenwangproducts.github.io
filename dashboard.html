@@ -6,14 +6,57 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    .dashboard-container {
+      margin-top: 50px;
+      background: #fff;
+      display: inline-block;
+      padding: 30px 50px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .profile-img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 20px;
+    }
+    .user-info {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+    #logout-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #ff5c5c;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    #logout-btn:hover {
+      background-color: #ff1f1f;
+    }
+  </style>
 </head>
 <body>
 
-<h1>ยินดีต้อนรับเข้าสู่ Dashboard</h1>
-
-<p id="user-info"></p>
-
-<button id="logout-btn">ออกจากระบบ</button>
+<div class="dashboard-container">
+  <h1>ยินดีต้อนรับสู่ Dashboard</h1>
+  <img id="profile-pic" class="profile-img" src="https://via.placeholder.com/120" alt="Profile Picture">
+  <div id="user-info"></div>
+  <button id="logout-btn">ออกจากระบบ</button>
+</div>
 
 <script>
   const firebaseConfig = {
@@ -31,14 +74,24 @@
 
   auth.onAuthStateChanged(async user => {
     if (user) {
-      document.getElementById('user-info').innerText = `Hello, ${user.displayName || 'User'}!`;
+      const profilePic = document.getElementById('profile-pic');
+      const userInfo = document.getElementById('user-info');
+      
+      if (user.photoURL) {
+        profilePic.src = user.photoURL;
+      }
+
+      userInfo.innerHTML = `
+        <div class="user-info"><strong>ชื่อ:</strong> ${user.displayName || 'ไม่ระบุ'}</div>
+        <div class="user-info"><strong>อีเมล:</strong> ${user.email}</div>
+        <div class="user-info"><strong>รหัสผ่าน:</strong> ******** (ซ่อนเพื่อความปลอดภัย)</div>
+      `;
     } else {
-      alert('โปรดเข้าสู่ระบบก่อน');
-      window.location.href = '/login.html'; // ส่งกลับไปที่หน้า Login
+      alert('ยืนยันการออก และจะกลับไปหน้าล็อกอินทันที');
+      window.location.href = '/login.html';
     }
   });
 
-  // ระบบออกจากระบบ
   document.getElementById('logout-btn').addEventListener('click', async () => {
     await auth.signOut();
     alert('ออกจากระบบสำเร็จ');
