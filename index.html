@@ -7,106 +7,112 @@
   <style>
     body {
       margin: 0;
-      padding: 0;
       font-family: "Arial", sans-serif;
-      background-color: #f7f7f7;
+      background-color: #fefefe;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
+      overflow: hidden;
       text-align: center;
     }
 
     h1 {
       color: #333;
-      font-size: 22px;
-      margin-bottom: 20px;
       padding: 0 20px;
+      font-size: 18px;
+      margin-bottom: 20px;
     }
 
     #game {
       width: 100%;
       max-width: 600px;
       height: 200px;
-      background-color: #e2e2e2;
-      border: 3px solid #ccc;
+      background: linear-gradient(to top, #6a1b09, #fdd835);
+      border: 3px solid #aaa;
       position: relative;
       overflow: hidden;
     }
 
-    #dino {
+    #player {
       width: 50px;
       height: 50px;
-      background-color: green;
+      background-color: #008CBA;
       position: absolute;
       bottom: 0;
       left: 50px;
+      border-radius: 10px;
     }
 
-    #cactus {
-      width: 20px;
-      height: 30px;
-      background-color: red;
+    .lava-hole {
+      width: 60px;
+      height: 20px;
+      background: radial-gradient(circle at center, #ff5722, #b71c1c);
       position: absolute;
       bottom: 0;
-      right: 0;
-      animation: cactusMove 2s infinite linear;
+      left: 100%;
+      animation: moveHole 3s infinite linear;
+      border-radius: 30% 30% 0 0;
     }
 
-    @keyframes cactusMove {
-      0% { right: -20px; }
-      100% { right: 100%; }
+    @keyframes moveHole {
+      0% { left: 100%; }
+      100% { left: -60px; }
     }
 
     .footer {
       font-size: 12px;
-      color: #999;
-      margin-top: 40px;
+      color: #666;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
-  <h1>
-    เว็บไซต์กำลังอยู่ในการปรับปรุงครั้งยิ่งใหญ่<br>
-    ข้อมูลสำคัญยังไม่สามารถเปิดเผยได้ในขณะนี้<br>
-    กรุณารอระบบกลับมาออนไลน์อีกครั้งเร็ว ๆ นี้
-  </h1>
+  <h1>เว็บไซต์กำลังอยู่ในการปรับปรุงครั้งยิ่งใหญ่<br>ข้อมูลสำคัญยังไม่สามารถเปิดเผยได้ในขณะนี้</h1>
 
   <div id="game">
-    <div id="dino"></div>
-    <div id="cactus"></div>
+    <div id="player"></div>
+    <div class="lava-hole" id="lavaHole"></div>
   </div>
 
-  <div class="footer">มินิเกม: กระโดดข้ามกระบองเพชรเพื่อฆ่าเวลา</div>
+  <div class="footer">แตะหน้าจอ หรือกด Space เพื่อกระโดดข้ามหลุมลาวา</div>
 
   <script>
-    const dino = document.getElementById('dino');
+    const player = document.getElementById("player");
+    const lavaHole = document.getElementById("lavaHole");
     let isJumping = false;
 
-    document.addEventListener('keydown', function (e) {
-      if (e.code === 'Space' && !isJumping) {
-        isJumping = true;
-        let jumpHeight = 0;
-        let upInterval = setInterval(() => {
-          if (jumpHeight >= 100) {
-            clearInterval(upInterval);
-            let downInterval = setInterval(() => {
-              if (jumpHeight <= 0) {
-                clearInterval(downInterval);
-                isJumping = false;
-              } else {
-                jumpHeight -= 5;
-                dino.style.bottom = jumpHeight + 'px';
-              }
-            }, 20);
-          } else {
-            jumpHeight += 5;
-            dino.style.bottom = jumpHeight + 'px';
-          }
-        }, 20);
-      }
+    function jump() {
+      if (isJumping) return;
+      isJumping = true;
+      let position = 0;
+      let up = setInterval(() => {
+        if (position >= 100) {
+          clearInterval(up);
+          let down = setInterval(() => {
+            if (position <= 0) {
+              clearInterval(down);
+              isJumping = false;
+            } else {
+              position -= 5;
+              player.style.bottom = position + "px";
+            }
+          }, 20);
+        } else {
+          position += 5;
+          player.style.bottom = position + "px";
+        }
+      }, 20);
+    }
+
+    // PC: Spacebar
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "Space") jump();
     });
+
+    // Mobile: tap screen
+    document.addEventListener("touchstart", jump);
   </script>
 </body>
 </html>
