@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js"></script>
+  <script>
+ const firebaseConfig = {
+
+  apiKey: "AIzaSyAT7SebrpGQlmGpL78Hc1tU8tHoX9LdIYg",
+
+  authDomain: "platform-dabc0.firebaseapp.com",
+  projectId: "platform-dabc0",
+  storageBucket: "platform-dabc0.firebasestorage.app",
+  messagingSenderId: "210971684025",
+  appId: "1:210971684025:web:e2186cde81b2c07da37f68",
+  measurementId: "G-NJRHYHQ26D"
+};
+    
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    function login() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      auth.signInWithEmailAndPassword(email, password)
+        .then(userCredential => {
+          const user = userCredential.user;
+          console.log('User logged in: ', user);
+          // Redirect to home page or dashboard
+        })
+        .catch(error => {
+          console.error(error.message);
+        });
+    }
+
+    function googleSignIn() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider)
+        .then(result => {
+          const user = result.user;
+          console.log('Google Sign-In successful: ', user);
+          // Redirect to home page or dashboard
+        })
+        .catch(error => {
+          console.error(error.message);
+        });
+    }
+  </script>
+</head>
+<body>
+  <h2>Login</h2>
+  <input type="email" id="email" placeholder="Email" required><br><br>
+  <input type="password" id="password" placeholder="Password" required><br><br>
+  <button onclick="login()">Login</button>
+  <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
+
+  <hr>
+
+  <h3>Or Sign In with Google</h3>
+  <button onclick="googleSignIn()">Sign In with Google</button>
+</body>
+</html>
