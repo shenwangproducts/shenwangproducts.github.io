@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>ส่งข้อมูลโปรโมทแอป</title>
+  <!-- Firebase SDK (Compat Version) -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
   <style>
@@ -30,17 +31,25 @@
   </form>
 
   <script>
+    // Firebase Config ของคุณ
     const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_AUTH_DOMAIN",
-      projectId: "YOUR_PROJECT_ID",
+      apiKey: "AIzaSyDSO0rFMvm89TycPLZIeNxNhmQTNXXVdM4",
+      authDomain: "shenwang-app-promotion.firebaseapp.com",
+      projectId: "shenwang-app-promotion",
+      storageBucket: "shenwang-app-promotion.firebasestorage.app",
+      messagingSenderId: "75453176370",
+      appId: "1:75453176370:web:74769018418fa5e468ba2b"
     };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore(); 
 
-    document.getElementById("promoForm").addEventListener("submit", async (e) => {
+    // เริ่มต้น Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // จัดการเมื่อกดส่งฟอร์ม
+    document.getElementById("promoForm").addEventListener("submit", async function (e) {
       e.preventDefault();
 
+      // ดึงค่าจากฟอร์ม
       const dev = document.getElementById("dev").value;
       const appName = document.getElementById("appName").value;
       const desc = document.getElementById("desc").value;
@@ -49,14 +58,15 @@
       const video = document.getElementById("video").value;
       const download = document.getElementById("download").value;
 
+      // เตรียมข้อมูล
       const data = {
         devname: dev,
         appName: appName,
         appdescription: desc,
         appTyp: type,
         appVideo: video,
-        dowloadLink: download,
         image: image,
+        dowloadLink: download,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       };
 
@@ -66,10 +76,9 @@
         document.getElementById("promoForm").reset();
       } catch (error) {
         console.error("เกิดข้อผิดพลาด:", error);
-        alert("ส่งข้อมูลไม่สำเร็จ ลองใหม่อีกครั้ง");
+        alert("เกิดข้อผิดพลาดในการส่งข้อมูล");
       }
     });
   </script>
 </body>
 </html>
-
