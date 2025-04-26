@@ -5,10 +5,14 @@
   <title>ส่งข้อมูลโปรโมทแอป</title>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
   <style>
     body { font-family: sans-serif; padding: 20px; }
     input, textarea, select { width: 100%; margin: 8px 0; padding: 10px; }
     button { padding: 10px 20px; }
+    .image-preview { display: flex; margin-top: 10px; }
+    .image-preview img { max-width: 100px; margin-right: 10px; }
+    .image-preview button { background: red; color: white; padding: 5px; border: none; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -23,40 +27,134 @@
       <option value="เครื่องมือ">เครื่องมือ</option>
       <option value="อื่นๆ">อื่นๆ</option>
     </select>
-    <input type="url" id="image" placeholder="ลิงก์รูปภาพประกอบ (url)" />
-    <input type="url" id="video" placeholder="ลิงก์วิดีโอ (ถ้ามี)" />
+
+    <!-- Input for image files -->
+    <input type="file" id="imageUpload" accept="image/*" multiple />
+    <div id="imagePreview" class="image-preview"></div>
+
+    <!-- Input for video file -->
+    <input type="file" id="videoUpload" accept="video/*" />
+    <div id="videoPreview"></div>
+
     <input type="url" id="download" placeholder="ลิงก์ดาวน์โหลด" required />
     <button type="submit">ส่งโปรโมท</button>
   </form>
 
   <script>
     const firebaseConfig = {
-      apiKey: "AIzaSyDSO0rFMvm89TycPLZIeNxNhmQTNXXVdM4",
-      authDomain: "shenwang-app-promotion.firebaseapp.com",
-      projectId: "shenwang-app-promotion",
-      storageBucket: "shenwang-app-promotion.appspot.com",
-      messagingSenderId: "75453176370",
-      appId: "1:75453176370:web:74769018418fa5e468ba2b"
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
     };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
+    const storage = firebase.storage();
 
-    document.getElementById("promoForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const data = {
-        devname: document.getElementById("dev").value,
-        appName: document.getElementById("appName").value,
-        appdescription: document.getElementById("desc").value,
-        appTyp: document.getElementById("type").value,
-        image: document.getElementById("image").value,
-        appVideo: document.getElementById("video").value,
-        dowloadLink: document.getElementById("download").value,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      };
-      await db.collection("promotions").add(data);
-      alert("ส่งข้อมูลแล้ว รอตรวจสอบ...");
-      document.getElementById("promoForm").reset();
+    // Handle image upload preview
+    const imageUpload = document.getElementById('imageUpload');
+    const imagePreview = document.getElementById('imagePreview');
+    const videoUpload = document.getElementById('videoUpload');
+    const videoPreview = document.getElementById('videoPreview');
+    let imageFiles = [];
+
+    imageUpload.addEventListener('change', (e) => {
+      imageFiles = e.target.files;
+      updateImagePreview();
     });
+
+    function updateImagePreview() {
+      imagePreview.innerHTML = '';  // Clear previous preview
+      Array.from(imageFiles).forEach((file, index) => {
+        const imgElement = document.createElement('img');
+        imgElement.src = URL.createObjectURL(file);
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'ลบ';
+        removeButton.onclick = () => removeImage(index);
+
+        const div = document.createElement('div');
+        div.appendChild(imgElement);
+        div.appendChild(removeButton);
+        imagePreview.appendChild(div);
+      });
+    }
+
+    function removeImage(index) {
+      const newFiles = Array.from(imageFiles).filter((_, i) => i !== index);
+      imageFiles = newFiles;
+      updateImagePreview();
+    }
+
+    // Handle video upload preview
+    videoUpload.addEventListener('change', (e) => {
+      const videoFile = e.target.files[0];
+      if (videoFile) {
+        const videoElement = document.createElement('video');
+        videoElement.src = URL.createObjectURL(videoFile);
+        videoElement.controls = true;
+        videoPreview.innerHTML = '';  // Clear previous preview
+        videoPreview.appendChild(videoElement);
+      }
+    });
+
+    // Handle form submission
+    document.getElementById('promoForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Prepare data
+      const data = {
+        devname: document.getElementById('dev').value,
+        appName: document.getElementById('appName').value,
+        appdescription: document.getElementById('desc').value,
+        appTyp: document.getElementById('type').value,
+        dowloadLink: document.getElementById('download').value,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      };
+
+      // Upload images to Firebase Storage
+      const imageUrls = await uploadImages();
+
+      // Upload video to Firebase Storage
+      const videoUrl = await uploadVideo();
+
+      // Add image and video URLs to data
+      data.imageUrls = imageUrls;
+      data.videoUrl = videoUrl;
+
+      // Save data to Firestore
+      await db.collection("promotions").add(data);
+
+      alert("ส่งข้อมูลแล้ว รอตรวจสอบ...");
+      document.getElementById('promoForm').reset();
+      imagePreview.innerHTML = '';
+      videoPreview.innerHTML = '';
+    });
+
+    // Upload images to Firebase Storage
+    async function uploadImages() {
+      const imageUrls = [];
+      for (const file of imageFiles) {
+        const storageRef = storage.ref().child('images/' + file.name);
+        await storageRef.put(file);
+        const url = await storageRef.getDownloadURL();
+        imageUrls.push(url);
+      }
+      return imageUrls;
+    }
+
+    // Upload video to Firebase Storage
+    async function uploadVideo() {
+      const videoFile = videoUpload.files[0];
+      if (videoFile) {
+        const storageRef = storage.ref().child('videos/' + videoFile.name);
+        await storageRef.put(videoFile);
+        const url = await storageRef.getDownloadURL();
+        return url;
+      }
+      return null;
+    }
   </script>
 </body>
 </html>
