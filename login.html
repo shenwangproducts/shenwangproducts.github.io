@@ -1,115 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login - Shenwang Platform</title>
-  
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js"></script>
-  
-  <style>
-    /* Custom styling */
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #74ebd5, #acb6e5);
-      height: 100vh;
-      margin: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .login-container {
-      background: #fff;
-      padding: 40px;
-      border-radius: 15px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-      width: 350px;
-      text-align: center;
-    }
-    .login-container h2 {
-      margin-bottom: 20px;
-      color: #333;
-    }
-    input[type="email"], input[type="password"] {
-      width: 100%;
-      padding: 12px 15px;
-      margin: 8px 0 20px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      box-sizing: border-box;
-    }
-    button {
-      background: #6a11cb;
-      background: linear-gradient(to right, #2575fc, #6a11cb);
-      color: #fff;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 8px;
-      width: 100%;
-      cursor: pointer;
-      font-size: 16px;
-      transition: 0.3s ease;
-    }
-    button:hover {
-      background: linear-gradient(to right, #6a11cb, #2575fc);
-    }
-    .link {
-      margin-top: 15px;
-      display: block;
-      font-size: 14px;
-      color: #666;
-      text-decoration: none;
-    }
-    .link:hover {
-      text-decoration: underline;
-      color: #444;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <script src="firebase-config.js" defer></script>
+    <script src="auth.js" defer></script>
 </head>
 <body>
-
-  <div class="login-container">
     <h2>Login</h2>
-    <input type="email" id="email" placeholder="Email" required><br>
-    <input type="password" id="password" placeholder="Password" required><br>
+    <input type="email" id="loginEmail" placeholder="Email">
+    <input type="password" id="loginPassword" placeholder="Password">
     <button onclick="login()">Login</button>
-
-    <a href="signup.html" class="link">Don't have an account? Sign Up</a>
-  </div>
-
-  <script>
-    // Firebase config
- const firebaseConfig = {
-  apiKey: "AIzaSyC-UwBguZRGdrIWLVkTsCRlt02vKOAlOlA",
-  authDomain: "shenwang-auth-user.firebaseapp.com",
-  projectId: "shenwang-auth-user",
-  storageBucket: "shenwang-auth-user.firebasestorage.app",
-  messagingSenderId: "273542969972",
-  appId: "1:273542969972:web:4d6ce4edf5188b98dbef21"
-};
-
-    // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-
-    function login() {
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-
-      auth.signInWithEmailAndPassword(email, password)
-        .then(userCredential => {
-          const user = userCredential.user;
-          alert('Login Successful!');
-          // Redirect to dashboard or other page
-        })
-        .catch(error => {
-          alert(error.message);
-        });
-    }
-  </script>
-
+    <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
 </body>
 </html>
-
