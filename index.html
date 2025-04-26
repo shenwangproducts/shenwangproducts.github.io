@@ -1,204 +1,177 @@
-<!DOCTYPE html><html lang="th">
+<!DOCTYPE html>
+<html lang="th">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>เลือกตัวละคร - มินิเกม</title>
+  <title>กำลังปรับปรุงเว็บไซต์</title>
   <style>
     body {
+      font-family: 'Kanit', sans-serif;
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #fefefe;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
+      padding: 0;
+      background: linear-gradient(to bottom, #e0e0e0, #f5f5f5);
+      color: #333;
       text-align: center;
-    }h1 {
-  color: #333;
-  margin-top: 20px;
-}
+    }
 
-.character-select {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin: 20px 0;
-}
+    h1 {
+      font-size: 2em;
+      margin-top: 20px;
+      color: #d9534f;
+    }
 
-.char {
-  width: 60px;
-  height: 60px;
-  border: 2px solid #ccc;
-  cursor: pointer;
-  border-radius: 10px;
-}
+    p {
+      font-size: 1.1em;
+      margin-bottom: 20px;
+    }
 
-#game {
-  position: relative;
-  width: 100%;
-  max-width: 600px;
-  height: 200px;
-  background: linear-gradient(to top, #6a1b09, #fdd835);
-  border: 3px solid #aaa;
-  overflow: hidden;
-  display: none;
-}
+    #game-container {
+      margin-top: 20px;
+    }
 
-#player {
-  width: 50px;
-  height: 50px;
-  position: absolute;
-  bottom: 0;
-  left: 50px;
-  border-radius: 10px;
-}
+    canvas {
+      background: #fff;
+      border: 2px solid #333;
+      margin: auto;
+      display: block;
+    }
 
-.lava-hole {
-  width: 60px;
-  height: 20px;
-  background: radial-gradient(circle at center, #ff5722, #b71c1c);
-  position: absolute;
-  bottom: 0;
-  left: 100%;
-  border-radius: 30% 30% 0 0;
-}
+    .score {
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
 
-#game-over {
-  display: none;
-  position: absolute;
-  top: 30%;
-  left: 0;
-  width: 100%;
-  color: #fff;
-  background-color: rgba(0,0,0,0.6);
-  font-size: 22px;
-  padding: 20px 0;
-}
+    #character-select {
+      margin: 10px;
+    }
 
-button {
-  margin-top: 10px;
-  padding: 8px 20px;
-  font-size: 14px;
-  border: none;
-  background: #009688;
-  color: white;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-#score {
-  margin: 10px;
-  font-size: 16px;
-}
-
+    button {
+      padding: 8px 16px;
+      font-size: 1em;
+      margin-top: 10px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
-  <h1>เลือกตัวละครของคุณ</h1>
-  <div class="character-select">
-    <div class="char" style="background-color: orange" onclick="selectCharacter('orange')"></div>
-    <div class="char" style="background-color: saddlebrown" onclick="selectCharacter('saddlebrown')"></div>
-    <div class="char" style="background-color: pink" onclick="selectCharacter('pink')"></div>
-  </div>  <div id="score">ระยะทาง: 0 เมตร</div>
-  <div id="game">
-    <div id="player"></div>
-    <div class="lava-hole" id="lavaHole"></div>
-    <div id="game-over">
-      เกมจบแล้ว!<br>
-      <button onclick="restartGame()">เล่นอีกครั้ง</button>
+
+  <div style="padding: 20px;">
+    <h1>เว็บไซต์กำลังอยู่ในการปรับปรุงครั้งยิ่งใหญ่</h1>
+    <p>ขออภัยในความไม่สะดวก ขณะนี้ระบบอยู่ระหว่างการอัปเกรดขั้นสูง<br>
+    ข้อมูลบางส่วนไม่สามารถเปิดเผยได้ในตอนนี้<br>
+    ระหว่างรอ คุณสามารถเล่นมินิเกมเพื่อความเพลิดเพลินได้ด้านล่าง</p>
+  </div>
+
+  <div id="game-container">
+    <div id="character-select">
+      <label>เลือกตัวละคร: </label>
+      <select id="character">
+        <option value="cat">แมวสี่เหลี่ยม</option>
+        <option value="dog">สุนัขสี่เหลี่ยม</option>
+        <option value="dragon">มังกรจิ๋ว</option>
+      </select>
+      <button onclick="startGame()">เริ่มเกม</button>
     </div>
-  </div>  <script>
-    const player = document.getElementById("player");
-    const lavaHole = document.getElementById("lavaHole");
-    const gameOverText = document.getElementById("game-over");
-    const scoreText = document.getElementById("score");
-    const game = document.getElementById("game");
+
+    <canvas id="gameCanvas" width="600" height="200"></canvas>
+    <div class="score" id="scoreDisplay">คะแนน: 0 | เวลา: 0s</div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    const scoreDisplay = document.getElementById("scoreDisplay");
+    const characterSelect = document.getElementById("character");
 
     let isJumping = false;
-    let gameRunning = false;
+    let jumpHeight = 0;
+    let gravity = 2;
     let score = 0;
-    let lavaX = 600;
-    let interval;
-    let selectedColor = 'orange';
+    let time = 0;
+    let character = "cat";
+    let gameInterval;
+    let lavaHoles = [];
 
-    function selectCharacter(color) {
-      selectedColor = color;
-      player.style.backgroundColor = color;
-      document.querySelector(".character-select").style.display = "none";
-      game.style.display = "block";
-      startGame();
+    const characters = {
+      cat: "#FF6F61",
+      dog: "#7AC74F",
+      dragon: "#00BFFF"
+    };
+
+    function drawPlayer(y) {
+      ctx.fillStyle = characters[character];
+      ctx.fillRect(50, y, 30, 30);
     }
 
-    function jump() {
-      if (!gameRunning || isJumping) return;
-      isJumping = true;
-      let position = 0;
-      let up = setInterval(() => {
-        if (position >= 100) {
-          clearInterval(up);
-          let down = setInterval(() => {
-            if (position <= 0) {
-              clearInterval(down);
-              isJumping = false;
-            } else {
-              position -= 5;
-              player.style.bottom = position + "px";
-            }
-          }, 20);
-        } else {
-          position += 5;
-          player.style.bottom = position + "px";
-        }
-      }, 20);
+    function drawLavaHoles() {
+      ctx.fillStyle = "#ff4500";
+      lavaHoles.forEach(hole => {
+        ctx.fillRect(hole.x, 180, 40, 20);
+        hole.x -= 5;
+      });
     }
 
-    document.addEventListener("keydown", (e) => {
-      if (e.code === "Space") jump();
-    });
-
-    document.addEventListener("touchstart", jump);
-
-    function updateLava() {
-      lavaX -= 5;
-      if (lavaX < -60) lavaX = 600;
-      lavaHole.style.left = lavaX + "px";
-      checkCollision();
-    }
-
-    function updateScore() {
-      score++;
-      scoreText.textContent = "ระยะทาง: " + score + " เมตร";
-    }
-
-    function checkCollision() {
-      const playerTop = parseInt(player.style.bottom || 0);
-      if (lavaX < 100 && lavaX > 50 && playerTop <= 20) {
-        gameOver();
+    function generateLavaHole() {
+      if (Math.random() < 0.02) {
+        lavaHoles.push({ x: 600 });
       }
     }
 
-    function gameOver() {
-      gameRunning = false;
-      clearInterval(interval);
-      gameOverText.style.display = "block";
-    }
-
-    function restartGame() {
-      score = 0;
-      lavaX = 600;
-      player.style.backgroundColor = selectedColor;
-      gameOverText.style.display = "none";
-      scoreText.textContent = "ระยะทาง: 0 เมตร";
-      startGame();
+    function checkCollision(y) {
+      return lavaHoles.some(hole => hole.x < 80 && hole.x + 40 > 50 && y + 30 > 180);
     }
 
     function startGame() {
-      gameRunning = true;
-      interval = setInterval(() => {
-        updateLava();
-        updateScore();
-      }, 50);
+      character = characterSelect.value;
+      lavaHoles = [];
+      score = 0;
+      time = 0;
+      let playerY = 170;
+
+      clearInterval(gameInterval);
+      gameInterval = setInterval(() => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Update jump
+        if (isJumping) {
+          jumpHeight += 6;
+          playerY -= jumpHeight;
+          if (playerY <= 100) {
+            isJumping = false;
+            jumpHeight = 0;
+          }
+        } else if (playerY < 170) {
+          playerY += gravity;
+        }
+
+        drawPlayer(playerY);
+        drawLavaHoles();
+        generateLavaHole();
+
+        if (checkCollision(playerY)) {
+          clearInterval(gameInterval);
+          alert("Game Over! คะแนน: " + score + " | เวลา: " + time + "s");
+          return;
+        }
+
+        score++;
+        time += 1 / 60;
+        scoreDisplay.textContent = `คะแนน: ${score} | เวลา: ${Math.floor(time)}s`;
+      }, 1000 / 60);
     }
-  </script></body>
+
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "Space" && !isJumping) {
+        isJumping = true;
+      }
+    });
+
+    document.addEventListener("touchstart", () => {
+      if (!isJumping) {
+        isJumping = true;
+      }
+    });
+  </script>
+
+</body>
 </html>
