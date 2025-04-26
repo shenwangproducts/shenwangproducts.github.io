@@ -7,7 +7,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
   <style>
     body { font-family: sans-serif; padding: 20px; }
-    .app { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 6px; }
+    .app { border: 1px solid #ccc; padding: 10px; margin-bottom: 15px; border-radius: 8px; }
     img { max-width: 100%; height: auto; margin-top: 10px; }
     iframe { width: 100%; height: 200px; margin-top: 10px; }
   </style>
@@ -18,14 +18,17 @@
 
   <script>
     const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_AUTH_DOMAIN",
-      projectId: "YOUR_PROJECT_ID",
+      apiKey: "AIzaSyDSO0rFMvm89TycPLZIeNxNhmQTNXXVdM4",
+      authDomain: "shenwang-app-promotion.firebaseapp.com",
+      projectId: "shenwang-app-promotion",
+      storageBucket: "shenwang-app-promotion.appspot.com",
+      messagingSenderId: "75453176370",
+      appId: "1:75453176370:web:74769018418fa5e468ba2b"
     };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    db.collection("promotions").orderBy("createdAt", "desc").onSnapshot(snapshot => {
+    db.collection("promotions").orderBy("timestamp", "desc").onSnapshot(snapshot => {
       const apps = document.getElementById("apps");
       apps.innerHTML = "";
       snapshot.forEach(doc => {
@@ -34,12 +37,12 @@
         div.className = "app";
         div.innerHTML = `
           <h3>${app.appName}</h3>
-          <p><strong>ผู้พัฒนา:</strong> ${app.developer}</p>
-          <p>${app.description}</p>
-          <p><strong>ประเภท:</strong> ${app.type}</p>
+          <p><strong>ผู้พัฒนา:</strong> ${app.devname}</p>
+          <p>${app.appdescription}</p>
+          <p><strong>ประเภท:</strong> ${app.appTyp}</p>
           ${app.image ? `<img src="${app.image}" alt="รูปภาพ">` : ""}
-          ${app.video ? `<iframe src="${app.video}" allowfullscreen></iframe>` : ""}
-          <p><a href="${app.download}" target="_blank">ดาวน์โหลดแอป</a></p>
+          ${app.appVideo ? `<iframe src="${app.appVideo}" allowfullscreen></iframe>` : ""}
+          <p><a href="${app.dowloadLink}" target="_blank">ดาวน์โหลดแอป</a></p>
         `;
         apps.appendChild(div);
       });
