@@ -36,24 +36,40 @@
       projectId: "YOUR_PROJECT_ID",
     };
     firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+    const db = firebase.firestore(); 
 
     document.getElementById("promoForm").addEventListener("submit", async (e) => {
       e.preventDefault();
+
+      const dev = document.getElementById("dev").value;
+      const appName = document.getElementById("appName").value;
+      const desc = document.getElementById("desc").value;
+      const type = document.getElementById("type").value;
+      const image = document.getElementById("image").value;
+      const video = document.getElementById("video").value;
+      const download = document.getElementById("download").value;
+
       const data = {
-        developer: dev.value,
-        appName: appName.value,
-        description: desc.value,
-        type: type.value,
-        image: image.value,
-        video: video.value,
-        download: download.value,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        devname: dev,
+        appName: appName,
+        appdescription: desc,
+        appTyp: type,
+        appVideo: video,
+        dowloadLink: download,
+        image: image,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
       };
-      await db.collection("promotions").add(data);
-      alert("ส่งข้อมูลแล้ว รอตรวจสอบ...");
-      promoForm.reset();
+
+      try {
+        await db.collection("promotions").add(data);
+        alert("ส่งข้อมูลแล้ว รอตรวจสอบ...");
+        document.getElementById("promoForm").reset();
+      } catch (error) {
+        console.error("เกิดข้อผิดพลาด:", error);
+        alert("ส่งข้อมูลไม่สำเร็จ ลองใหม่อีกครั้ง");
+      }
     });
   </script>
 </body>
-                                    </html>
+</html>
+
