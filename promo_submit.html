@@ -5,7 +5,6 @@
   <title>เพิ่มแอปใหม่</title>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
   <style>
     body { font-family: sans-serif; padding: 20px; }
     input, textarea, select { width: 100%; margin-bottom: 15px; padding: 8px; }
@@ -30,8 +29,8 @@
   </select>
 
   <input type="text" id="appVideo" placeholder="ลิ้งวีดีโอ (เช่น YouTube)">
-  <label>เลือกรูปหลัก:</label><input type="file" id="imageFile">
-  <label>เลือกรูปโปรไฟล์แอป:</label><input type="file" id="profileImageFile">
+  <input type="text" id="image" placeholder="ลิ้งรูปภาพหลักของแอป">
+  <input type="text" id="profileImage" placeholder="ลิ้งรูปโปรไฟล์แอป">
   <input type="text" id="dowloadLink" placeholder="ลิ้งดาวน์โหลด">
 
   <button onclick="uploadApp()">อัปโหลดแอป</button>
@@ -48,13 +47,6 @@
 
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
-    const storage = firebase.storage();
-
-    async function uploadFile(file, path) {
-      const storageRef = storage.ref(`${path}/${Date.now()}_${file.name}`);
-      await storageRef.put(file);
-      return storageRef.getDownloadURL();
-    }
 
     async function uploadApp() {
       const devname = document.getElementById("devname").value;
@@ -62,28 +54,24 @@
       const appdescription = document.getElementById("appdescription").value;
       const appTyp = document.getElementById("appTyp").value;
       const appVideo = document.getElementById("appVideo").value;
+      const image = document.getElementById("image").value;
+      const profileImage = document.getElementById("profileImage").value;
       const dowloadLink = document.getElementById("dowloadLink").value;
 
-      const imageFile = document.getElementById("imageFile").files[0];
-      const profileImageFile = document.getElementById("profileImageFile").files[0];
-
-      if (!imageFile || !profileImageFile) {
-        alert("กรุณาเลือกรูปภาพทั้งสองภาพ");
+      if (!image || !profileImage) {
+        alert("กรุณากรอกลิ้งรูปภาพทั้งสองภาพ");
         return;
       }
 
       try {
-        const imageURL = await uploadFile(imageFile, "images");
-        const profileImageURL = await uploadFile(profileImageFile, "profileImages");
-
         const data = {
           devname,
           appName,
           appdescription,
           appTyp,
           appVideo,
-          image: imageURL,
-          profileImage: profileImageURL,
+          image,
+          profileImage,
           dowloadLink,
           timestamp: firebase.firestore.FieldValue.serverTimestamp()
         };
