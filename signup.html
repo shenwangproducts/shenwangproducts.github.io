@@ -8,7 +8,81 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
+<style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #74ebd5, #acb6e5);
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
+    .login-container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      width: 350px;
+      text-align: center;
+    }
+
+    .login-container h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 8px 0 20px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background: #6a11cb;
+      background: linear-gradient(to right, #2575fc, #6a11cb);
+      color: #fff;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      width: 100%;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+    }
+
+    .google-btn {
+      margin-top: 15px;
+      background: #db4437;
+      font-weight: bold;
+    }
+
+    .google-btn:hover {
+      background: #c23321;
+    }
+
+    .link {
+      margin-top: 15px;
+      display: block;
+      font-size: 14px;
+      color: #666;
+      text-decoration: none;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+      color: #444;
+    }
+ <style> 
 <h1>สมัครสมาชิก Shenwang</h1>
 
 <!-- ฟอร์มสมัครด้วยอีเมล/รหัสผ่าน -->
