@@ -8,22 +8,102 @@
 </head>
 <body>
 
-<h1>เข้าสู่ระบบ</h1>
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #acb6e5);
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-<form id="login-form">
-  <input type="email" id="email" placeholder="Email" required><br>
-  <input type="password" id="password" placeholder="Password" required><br>
-  <button type="submit">เข้าสู่ระบบ</button>
-</form>
+  .login-container {
+    background: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    text-align: center;
+  }
 
-<button id="google-login-btn">เข้าสู่ระบบด้วย Google</button>
+  .login-container h1 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 8px 0 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+  }
+
+  button {
+    background: #6a11cb;
+    background: linear-gradient(to right, #2575fc, #6a11cb);
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s ease;
+    margin-top: 10px;
+  }
+
+  button:hover {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+  }
+
+  .google-btn {
+    background: #db4437;
+    font-weight: bold;
+  }
+
+  .google-btn:hover {
+    background: #c23321;
+  }
+
+  .link {
+    margin-top: 15px;
+    display: block;
+    font-size: 14px;
+    color: #666;
+    text-decoration: none;
+  }
+
+  .link:hover {
+    text-decoration: underline;
+    color: #444;
+  }
+</style>
+
+<div class="login-container">
+  <h1>เข้าสู่ระบบ Shenwang</h1>
+
+  <form id="login-form">
+    <input type="email" id="email" placeholder="Email" required><br>
+    <input type="password" id="password" placeholder="Password" required><br>
+    <button type="submit">เข้าสู่ระบบ</button>
+  </form>
+
+  <a href="#" id="forgot-password" class="link">ลืมรหัสผ่าน?</a>
+
+  <button id="google-login-btn" class="google-btn">เข้าสู่ระบบด้วย Google</button>
+</div>
 
 <script>
   const firebaseConfig = {
     apiKey: "AIzaSyC-UwBguZRGdrIWLVkTsCRlt02vKOAlOlA",
     authDomain: "shenwang-auth-user.firebaseapp.com",
     projectId: "shenwang-auth-user",
-    storageBucket: "shenwang-auth-user.firebasestorage.app",
+    storageBucket: "shenwang-auth-user.appspot.com",
     messagingSenderId: "273542969972",
     appId: "1:273542969972:web:4d6ce4edf5188b98dbef21"
   };
@@ -35,8 +115,8 @@
   document.getElementById('login-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
     
     try {
       await auth.signInWithEmailAndPassword(email, password);
@@ -59,6 +139,21 @@
     } catch (error) {
       console.error(error);
       alert('เกิดข้อผิดพลาด: ' + error.message);
+    }
+  });
+
+  // ลืมรหัสผ่าน
+  document.getElementById('forgot-password').addEventListener('click', async (e) => {
+    e.preventDefault();
+    const email = prompt('กรุณาใส่อีเมลที่ใช้สมัครสมาชิก:');
+    if (email) {
+      try {
+        await auth.sendPasswordResetEmail(email.trim());
+        alert('เราได้ส่งลิงก์รีเซ็ตรหัสผ่านไปที่อีเมลของคุณแล้ว!');
+      } catch (error) {
+        console.error(error);
+        alert('เกิดข้อผิดพลาด: ' + error.message);
+      }
     }
   });
 </script>
