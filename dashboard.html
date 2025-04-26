@@ -33,19 +33,35 @@
       font-size: 18px;
       margin: 10px 0;
     }
-    #logout-btn {
-      margin-top: 20px;
+    button {
+      margin: 10px 5px;
       padding: 10px 20px;
       font-size: 16px;
-      background-color: #ff5c5c;
-      color: white;
       border: none;
       border-radius: 8px;
       cursor: pointer;
       transition: background-color 0.3s;
     }
+    #logout-btn {
+      background-color: #ff5c5c;
+      color: white;
+    }
     #logout-btn:hover {
       background-color: #ff1f1f;
+    }
+    #home-btn {
+      background-color: #4CAF50;
+      color: white;
+    }
+    #home-btn:hover {
+      background-color: #388e3c;
+    }
+    #edit-profile-btn, #change-password-btn, #change-email-btn {
+      background-color: #2196F3;
+      color: white;
+    }
+    #edit-profile-btn:hover, #change-password-btn:hover, #change-email-btn:hover {
+      background-color: #1565c0;
     }
   </style>
 </head>
@@ -55,7 +71,14 @@
   <h1>ยินดีต้อนรับสู่ Dashboard</h1>
   <img id="profile-pic" class="profile-img" src="https://via.placeholder.com/120" alt="Profile Picture">
   <div id="user-info"></div>
-  <button id="logout-btn">ออกจากระบบ</button>
+
+  <div>
+    <button id="home-btn">กลับหน้าหลัก</button>
+    <button id="edit-profile-btn">แก้ไขโปรไฟล์</button>
+    <button id="change-password-btn">เปลี่ยนรหัสผ่าน</button>
+    <button id="change-email-btn">แก้ไขอีเมล</button>
+    <button id="logout-btn">ออกจากระบบ</button>
+  </div>
 </div>
 
 <script>
@@ -76,7 +99,7 @@
     if (user) {
       const profilePic = document.getElementById('profile-pic');
       const userInfo = document.getElementById('user-info');
-      
+
       if (user.photoURL) {
         profilePic.src = user.photoURL;
       }
@@ -87,7 +110,7 @@
         <div class="user-info"><strong>รหัสผ่าน:</strong> ******** (ซ่อนเพื่อความปลอดภัย)</div>
       `;
     } else {
-      alert('ยืนยันการออก และจะกลับไปหน้าล็อกอินทันที');
+      alert('โปรดเข้าสู่ระบบก่อน');
       window.location.href = '/login.html';
     }
   });
@@ -96,6 +119,70 @@
     await auth.signOut();
     alert('ออกจากระบบสำเร็จ');
     window.location.href = '/login.html';
+  });
+
+  document.getElementById('home-btn').addEventListener('click', () => {
+    window.location.href = '/index.html'; // เปลี่ยน path ไปที่หน้าหลักที่ตั้งชื่อไฟล์ไว้
+  });
+
+  document.getElementById('edit-profile-btn').addEventListener('click', async () => {
+    const newName = prompt('กรุณากรอกชื่อใหม่:');
+    const newPhotoURL = prompt('กรุณากรอก URL ของรูปโปรไฟล์ใหม่ (ปล่อยว่างถ้าไม่เปลี่ยน):');
+    
+    if (newName || newPhotoURL) {
+      const user = auth.currentUser;
+      try {
+        await user.updateProfile({
+          displayName: newName || user.displayName,
+          photoURL: newPhotoURL || user.photoURL
+        });
+        alert('อัปเดตโปรไฟล์สำเร็จ! รีเฟรชหน้าเพื่อดูผล');
+        location.reload();
+      } catch (error) {
+        console.error(error);
+        alert('เกิดข้อผิดพลาด: ' + error.message);
+      }
+    }
+  });
+
+  document.getElementById('change-password-btn').addEventListener('click', async () => {
+    const email = auth.currentUser.email;
+    try {
+      await auth.sendPasswordResetEmail(email);
+      alert('ส่งลิงก์เปลี่ยนรหัสผ่านไปที่อีเมลแล้ว!');
+    } catch (error) {
+      console.error(error);
+      alert('เกิดข้อผิดพลาด: ' + error.message);
+    }
+  });
+
+  document.getElementById('change-email-btn').addEventListener('click', async () => {
+    const user = auth.currentUser;
+    const newEmail = prompt('กรุณากรอกอีเมลใหม่:');
+    
+    if (newEmail) {
+      const password = prompt('เพื่อความปลอดภัย กรุณากรอกรหัสผ่านปัจจุบัน:');
+      if (!password) {
+        alert('ต้องกรอกรหัสผ่านเพื่อดำเนินการเปลี่ยนอีเมล');
+        return;
+      }
+      
+      const credential = firebase.auth.EmailAuthProvider.credential(
+        user.email,
+        password
+      );
+
+      try {
+        await user.reauthenticateWithCredential(credential);
+        await user.updateEmail(newEmail);
+        await user.sendEmailVerification();
+        alert('เปลี่ยนอีเมลสำเร็จ! กรุณาตรวจสอบอีเมลใหม่เพื่อยืนยันตัวตน');
+        location.reload();
+      } catch (error) {
+        console.error(error);
+        alert('เกิดข้อผิดพลาด: ' + error.message);
+      }
+    }
   });
 </script>
 
