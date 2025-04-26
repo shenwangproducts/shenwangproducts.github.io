@@ -3,17 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>ส่งข้อมูลโปรโมทแอป</title>
+  <!-- Firebase SDK (Compat Version) -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
   <style>
     body { font-family: sans-serif; padding: 20px; }
     input, textarea, select { width: 100%; margin: 8px 0; padding: 10px; }
     button { padding: 10px 20px; }
-    .image-preview { display: flex; flex-wrap: wrap; gap: 10px; }
-    .image-preview img { max-width: 100px; max-height: 100px; object-fit: cover; }
-    .image-preview button { background-color: red; color: white; padding: 5px; border: none; cursor: pointer; }
-    #profileImagePreview { max-width: 150px; margin-top: 10px; }
   </style>
 </head>
 <body>
@@ -28,26 +24,15 @@
       <option value="เครื่องมือ">เครื่องมือ</option>
       <option value="อื่นๆ">อื่นๆ</option>
     </select>
-    
-    <!-- ช่องโปรไฟล์แอป -->
-    <input type="file" id="profileImage" accept="image/*" />
-    <img id="profileImagePreview" alt="โปรไฟล์แอป" />
-
-    <!-- ช่องอัพโหลดรูป -->
-    <input type="file" id="imageUploads" accept="image/*" multiple />
-    <div id="imagePreview" class="image-preview"></div>
-    
-    <!-- ช่องอัพโหลดวีดีโอ -->
-    <input type="file" id="videoUpload" accept="video/*" />
-    <video id="videoPreview" width="300" controls></video>
-    
+    <input type="url" id="image" placeholder="ลิงก์รูปภาพประกอบ (url)" />
+    <input type="url" id="video" placeholder="ลิงก์วิดีโอ (ถ้ามี)" />
     <input type="url" id="download" placeholder="ลิงก์ดาวน์โหลด" required />
-    
     <button type="submit">ส่งโปรโมท</button>
   </form>
 
   <script>
-   const firebaseConfig = {
+    // Firebase Config ของคุณ
+    const firebaseConfig = {
       apiKey: "AIzaSyDSO0rFMvm89TycPLZIeNxNhmQTNXXVdM4",
       authDomain: "shenwang-app-promotion.firebaseapp.com",
       projectId: "shenwang-app-promotion",
@@ -56,124 +41,43 @@
       appId: "1:75453176370:web:74769018418fa5e468ba2b"
     };
 
+    // เริ่มต้น Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
-    const storage = firebase.storage();
 
-    // อัพโหลดไฟล์โปรไฟล์แอป
-    const profileImage = document.getElementById("profileImage");
-    const profileImagePreview = document.getElementById("profileImagePreview");
-
-    profileImage.addEventListener("change", (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          profileImagePreview.src = event.target.result; // แสดงตัวอย่างโปรไฟล์
-        };
-        reader.readAsDataURL(file);
-      }
-    });
-
-    // อัพโหลดรูปและแสดงภาพตัวอย่าง
-    const imageUploads = document.getElementById("imageUploads");
-    const imagePreview = document.getElementById("imagePreview");
-    const imageFiles = [];
-
-    imageUploads.addEventListener("change", (e) => {
-      const files = e.target.files;
-      imagePreview.innerHTML = ""; // Clear previous previews
-
-      // จำกัดการเลือกสูงสุด 6 รูป
-      if (files.length > 6) {
-        alert("เลือกได้สูงสุด 6 รูป");
-        return;
-      }
-
-      Array.from(files).forEach((file, index) => {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          const imgElement = document.createElement("img");
-          imgElement.src = event.target.result;
-          
-          const deleteButton = document.createElement("button");
-          deleteButton.innerText = "ลบ";
-          deleteButton.addEventListener("click", () => {
-            imageFiles.splice(index, 1);
-            imagePreview.removeChild(imgElement);
-            imagePreview.removeChild(deleteButton);
-          });
-          
-          imagePreview.appendChild(imgElement);
-          imagePreview.appendChild(deleteButton);
-        };
-        reader.readAsDataURL(file);
-        imageFiles.push(file);
-      });
-    });
-
-    // อัพโหลดวีดีโอและแสดงตัวอย่าง
-    const videoUpload = document.getElementById("videoUpload");
-    const videoPreview = document.getElementById("videoPreview");
-
-    videoUpload.addEventListener("change", (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        const videoURL = URL.createObjectURL(file);
-        videoPreview.src = videoURL;
-      }
-    });
-
-    // เมื่อกดส่งข้อมูล
-    document.getElementById("promoForm").addEventListener("submit", async (e) => {
+    // จัดการเมื่อกดส่งฟอร์ม
+    document.getElementById("promoForm").addEventListener("submit", async function (e) {
       e.preventDefault();
 
-      // อัพโหลดรูปไปยัง Firebase Storage
-      const imageUrls = [];
-      for (const file of imageFiles) {
-        const storageRef = storage.ref().child(`images/${file.name}`);
-        await storageRef.put(file);
-        const imageUrl = await storageRef.getDownloadURL();
-        imageUrls.push(imageUrl);
-      }
+      // ดึงค่าจากฟอร์ม
+      const dev = document.getElementById("dev").value;
+      const appName = document.getElementById("appName").value;
+      const desc = document.getElementById("desc").value;
+      const type = document.getElementById("type").value;
+      const image = document.getElementById("image").value;
+      const video = document.getElementById("video").value;
+      const download = document.getElementById("download").value;
 
-      // อัพโหลดวีดีโอไปยัง Firebase Storage
-      let videoUrl = "";
-      if (videoUpload.files.length > 0) {
-        const videoFile = videoUpload.files[0];
-        const videoRef = storage.ref().child(`videos/${videoFile.name}`);
-        await videoRef.put(videoFile);
-        videoUrl = await videoRef.getDownloadURL();
-      }
-
-      // อัพโหลดโปรไฟล์แอปไปยัง Firebase Storage
-      let profileImageUrl = "";
-      if (profileImage.files.length > 0) {
-        const profileFile = profileImage.files[0];
-        const profileRef = storage.ref().child(`profile_images/${profileFile.name}`);
-        await profileRef.put(profileFile);
-        profileImageUrl = await profileRef.getDownloadURL();
-      }
-
-      // สร้างข้อมูลที่จะส่งไปยัง Firestore
+      // เตรียมข้อมูล
       const data = {
-        devname: document.getElementById("dev").value,
-        appName: document.getElementById("appName").value,
-        appdescription: document.getElementById("desc").value,
-        appTyp: document.getElementById("type").value,
-        appVideo: videoUrl,
-        imageUrls: imageUrls, // เก็บลิงก์ภาพทั้งหมด
-        profileImage: profileImageUrl, // ลิงก์โปรไฟล์แอป
-        dowloadLink: document.getElementById("download").value,
+        devname: dev,
+        appName: appName,
+        appdescription: desc,
+        appTyp: type,
+        appVideo: video,
+        image: image,
+        dowloadLink: download,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       };
 
-      // ส่งข้อมูลไปยัง Firestore
-      await db.collection("promotions").add(data);
-      alert("ส่งข้อมูลแล้ว รอตรวจสอบ...");
-      document.getElementById("promoForm").reset();
-      imagePreview.innerHTML = ""; // ล้างการแสดงผลรูปที่เลือก
-      profileImagePreview.src = ""; // ล้างตัวอย่างโปรไฟล์
+      try {
+        await db.collection("promotions").add(data);
+        alert("ส่งข้อมูลแล้ว รอตรวจสอบ...");
+        document.getElementById("promoForm").reset();
+      } catch (error) {
+        console.error("เกิดข้อผิดพลาด:", error);
+        alert("เกิดข้อผิดพลาดในการส่งข้อมูล");
+      }
     });
   </script>
 </body>
