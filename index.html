@@ -1,90 +1,137 @@
-<!DOCTYPE html>
-<html lang="th">
+<!DOCTYPE html><html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>เว็บไซต์อยู่ระหว่างการปรับปรุง</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>เลือกตัวละคร - มินิเกม</title>
   <style>
     body {
       margin: 0;
-      font-family: "Arial", sans-serif;
+      font-family: 'Segoe UI', sans-serif;
       background-color: #fefefe;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: 100vh;
-      overflow: hidden;
+      justify-content: flex-start;
+      min-height: 100vh;
       text-align: center;
-    }
+    }h1 {
+  color: #333;
+  margin-top: 20px;
+}
 
-    h1 {
-      color: #333;
-      padding: 0 20px;
-      font-size: 18px;
-      margin-bottom: 20px;
-    }
+.character-select {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px 0;
+}
 
-    #game {
-      width: 100%;
-      max-width: 600px;
-      height: 200px;
-      background: linear-gradient(to top, #6a1b09, #fdd835);
-      border: 3px solid #aaa;
-      position: relative;
-      overflow: hidden;
-    }
+.char {
+  width: 60px;
+  height: 60px;
+  border: 2px solid #ccc;
+  cursor: pointer;
+  border-radius: 10px;
+}
 
-    #player {
-      width: 50px;
-      height: 50px;
-      background-color: #008CBA;
-      position: absolute;
-      bottom: 0;
-      left: 50px;
-      border-radius: 10px;
-    }
+#game {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  height: 200px;
+  background: linear-gradient(to top, #6a1b09, #fdd835);
+  border: 3px solid #aaa;
+  overflow: hidden;
+  display: none;
+}
 
-    .lava-hole {
-      width: 60px;
-      height: 20px;
-      background: radial-gradient(circle at center, #ff5722, #b71c1c);
-      position: absolute;
-      bottom: 0;
-      left: 100%;
-      animation: moveHole 3s infinite linear;
-      border-radius: 30% 30% 0 0;
-    }
+#player {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  bottom: 0;
+  left: 50px;
+  border-radius: 10px;
+}
 
-    @keyframes moveHole {
-      0% { left: 100%; }
-      100% { left: -60px; }
-    }
+.lava-hole {
+  width: 60px;
+  height: 20px;
+  background: radial-gradient(circle at center, #ff5722, #b71c1c);
+  position: absolute;
+  bottom: 0;
+  left: 100%;
+  border-radius: 30% 30% 0 0;
+}
 
-    .footer {
-      font-size: 12px;
-      color: #666;
-      margin-top: 20px;
-    }
+#game-over {
+  display: none;
+  position: absolute;
+  top: 30%;
+  left: 0;
+  width: 100%;
+  color: #fff;
+  background-color: rgba(0,0,0,0.6);
+  font-size: 22px;
+  padding: 20px 0;
+}
+
+button {
+  margin-top: 10px;
+  padding: 8px 20px;
+  font-size: 14px;
+  border: none;
+  background: #009688;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#score {
+  margin: 10px;
+  font-size: 16px;
+}
+
   </style>
 </head>
 <body>
-  <h1>เว็บไซต์กำลังอยู่ในการปรับปรุงครั้งยิ่งใหญ่<br>ข้อมูลสำคัญยังไม่สามารถเปิดเผยได้ในขณะนี้</h1>
-
+  <h1>เลือกตัวละครของคุณ</h1>
+  <div class="character-select">
+    <div class="char" style="background-color: orange" onclick="selectCharacter('orange')"></div>
+    <div class="char" style="background-color: saddlebrown" onclick="selectCharacter('saddlebrown')"></div>
+    <div class="char" style="background-color: pink" onclick="selectCharacter('pink')"></div>
+  </div>  <div id="score">ระยะทาง: 0 เมตร</div>
   <div id="game">
     <div id="player"></div>
     <div class="lava-hole" id="lavaHole"></div>
-  </div>
-
-  <div class="footer">แตะหน้าจอ หรือกด Space เพื่อกระโดดข้ามหลุมลาวา</div>
-
-  <script>
+    <div id="game-over">
+      เกมจบแล้ว!<br>
+      <button onclick="restartGame()">เล่นอีกครั้ง</button>
+    </div>
+  </div>  <script>
     const player = document.getElementById("player");
     const lavaHole = document.getElementById("lavaHole");
+    const gameOverText = document.getElementById("game-over");
+    const scoreText = document.getElementById("score");
+    const game = document.getElementById("game");
+
     let isJumping = false;
+    let gameRunning = false;
+    let score = 0;
+    let lavaX = 600;
+    let interval;
+    let selectedColor = 'orange';
+
+    function selectCharacter(color) {
+      selectedColor = color;
+      player.style.backgroundColor = color;
+      document.querySelector(".character-select").style.display = "none";
+      game.style.display = "block";
+      startGame();
+    }
 
     function jump() {
-      if (isJumping) return;
+      if (!gameRunning || isJumping) return;
       isJumping = true;
       let position = 0;
       let up = setInterval(() => {
@@ -106,13 +153,52 @@
       }, 20);
     }
 
-    // PC: Spacebar
     document.addEventListener("keydown", (e) => {
       if (e.code === "Space") jump();
     });
 
-    // Mobile: tap screen
     document.addEventListener("touchstart", jump);
-  </script>
-</body>
+
+    function updateLava() {
+      lavaX -= 5;
+      if (lavaX < -60) lavaX = 600;
+      lavaHole.style.left = lavaX + "px";
+      checkCollision();
+    }
+
+    function updateScore() {
+      score++;
+      scoreText.textContent = "ระยะทาง: " + score + " เมตร";
+    }
+
+    function checkCollision() {
+      const playerTop = parseInt(player.style.bottom || 0);
+      if (lavaX < 100 && lavaX > 50 && playerTop <= 20) {
+        gameOver();
+      }
+    }
+
+    function gameOver() {
+      gameRunning = false;
+      clearInterval(interval);
+      gameOverText.style.display = "block";
+    }
+
+    function restartGame() {
+      score = 0;
+      lavaX = 600;
+      player.style.backgroundColor = selectedColor;
+      gameOverText.style.display = "none";
+      scoreText.textContent = "ระยะทาง: 0 เมตร";
+      startGame();
+    }
+
+    function startGame() {
+      gameRunning = true;
+      interval = setInterval(() => {
+        updateLava();
+        updateScore();
+      }, 50);
+    }
+  </script></body>
 </html>
