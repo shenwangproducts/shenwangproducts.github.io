@@ -1,16 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Signup</title>
-    <script src="firebase-config.js" defer></script>
-    <script src="auth.js" defer></script>
+  <meta charset="UTF-8">
+  <title>สมัครสมาชิก - Shenwang</title>
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
-    <h2>Signup</h2>
-    <input type="email" id="signupEmail" placeholder="Email">
-    <input type="password" id="signupPassword" placeholder="Password">
-    <button onclick="signup()">Sign Up</button>
-    <p>Already have an account? <a href="login.html">Login here</a></p>
+
+<h1>สมัครสมาชิก Shenwang</h1>
+
+<!-- แบบฟอร์มสมัคร -->
+<form id="signup-form">
+  <input type="email" id="email" placeholder="Email" required><br>
+  <input type="password" id="password" placeholder="Password" required><br>
+  <button type="submit">สมัครสมาชิก</button>
+</form>
+
+<script>
+  // 👉 ตั้งค่า Firebase ของคุณ
+  const firebaseConfig = {
+    apiKey: "AIzaSyC-UwBguZRGdrIWLVkTsCRlt02vKOAlOlA",
+    authDomain: "shenwang-auth-user.firebaseapp.com",
+    projectId: "shenwang-auth-user",
+    storageBucket: "shenwang-auth-user.firebasestorage.app",
+    messagingSenderId: "273542969972",
+    appId: "1:273542969972:web:4d6ce4edf5188b98dbef21"
+  };
+
+  // 👉 เริ่มต้น Firebase
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+
+  // 👉 ฟังก์ชันดึง IP ผู้ใช้
+  async function getIP() {
+    const res = await fetch('https://api.ipify.org?format=json');
+    const data = await res.json();
+    return data.ip;
+  }
+
+  // 👉 เมื่อผู้ใช้กดสมัคร
+  document.getElementById('signup-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    
+    try {
+      // สมัครสมาชิกด้วย Email/Password
+      const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+      const user = userCredential.user;
+
+      // ดึง IP และ UserAgent
+      const ip = await getIP();
+      const userAgent = navigator.userAgent;
+
+      // เขียนข้อมูลลง Firestore
+      await db.collection('users').doc(user.uid).set({
+        uid: user.uid,
+        email: user.email,
+        emailVerified: user.emailVerified,
+        displayName: "",
+        photoURL: "",
+        provider: "password",
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        lastLoginAt: firebase.firestore.FieldValue.serverTimestamp(),
+        signupIP: ip,
+        userAgent: userAgent,
+        isBanned: false,
+        role: "user"
+      }, { merge: true });
+
+      alert('สมัครสมาชิกเรียบร้อยแล้ว!');
+      window.location.href = '/'; // หรือเปลี่ยน URL ไปหน้าหลักตามที่คุณต้องการ
+    } catch (error) {
+      console.error(error);
+      alert('เกิดข้อผิดพลาด: ' + error.message);
+    }
+  });
+</script>
+
 </body>
 </html>
