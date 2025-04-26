@@ -5,9 +5,10 @@
   <title>เพิ่มแอปใหม่</title>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
   <style>
     body { font-family: sans-serif; padding: 20px; }
-    input, textarea { width: 100%; margin-bottom: 15px; padding: 8px; }
+    input, textarea, select { width: 100%; margin-bottom: 15px; padding: 8px; }
     button { padding: 10px 20px; font-size: 16px; }
   </style>
 </head>
@@ -18,16 +19,24 @@
   <input type="text" id="devname" placeholder="ชื่อผู้พัฒนาแอพ">
   <input type="text" id="appName" placeholder="ชื่อแอป">
   <textarea id="appdescription" placeholder="รายละเอียดแอป"></textarea>
-  <input type="text" id="appTyp" placeholder="ประเภทแอป">
-  <input type="text" id="appVideo" placeholder="ลิ้งวีดีโอประกอบ (เช่น YouTube)">
-  <input type="text" id="image" placeholder="ลิ้งรูปหลัก (โชว์ใหญ่)">
-  <input type="text" id="profileImage" placeholder="ลิ้งรูปโปรไฟล์แอป">
+
+  <select id="appTyp">
+    <option value="">เลือกประเภทแอป</option>
+    <option value="เกม">เกม</option>
+    <option value="การศึกษา">การศึกษา</option>
+    <option value="เครื่องมือ">เครื่องมือ</option>
+    <option value="โซเชียล">โซเชียล</option>
+    <option value="อื่นๆ">อื่นๆ</option>
+  </select>
+
+  <input type="text" id="appVideo" placeholder="ลิ้งวีดีโอ (เช่น YouTube)">
+  <label>เลือกรูปหลัก:</label><input type="file" id="imageFile">
+  <label>เลือกรูปโปรไฟล์แอป:</label><input type="file" id="profileImageFile">
   <input type="text" id="dowloadLink" placeholder="ลิ้งดาวน์โหลด">
 
   <button onclick="uploadApp()">อัปโหลดแอป</button>
 
   <script>
-    // ตั้งค่า Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyDSO0rFMvm89TycPLZIeNxNhmQTNXXVdM4",
       authDomain: "shenwang-app-promotion.firebaseapp.com",
@@ -36,32 +45,57 @@
       messagingSenderId: "75453176370",
       appId: "1:75453176370:web:74769018418fa5e468ba2b"
     };
+
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
+    const storage = firebase.storage();
 
-    // ฟังก์ชันอัปโหลดแอป
-    function uploadApp() {
-      const data = {
-        devname: document.getElementById("devname").value,
-        appName: document.getElementById("appName").value,
-        appdescription: document.getElementById("appdescription").value,
-        appTyp: document.getElementById("appTyp").value,
-        appVideo: document.getElementById("appVideo").value,
-        image: document.getElementById("image").value,
-        profileImage: document.getElementById("profileImage").value,
-        dowloadLink: document.getElementById("dowloadLink").value,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      };
+    async function uploadFile(file, path) {
+      const storageRef = storage.ref(`${path}/${Date.now()}_${file.name}`);
+      await storageRef.put(file);
+      return storageRef.getDownloadURL();
+    }
 
-      db.collection("promotions").add(data)
-        .then(() => {
-          alert("เพิ่มแอปสำเร็จ!");
-          document.querySelectorAll("input, textarea").forEach(el => el.value = ""); // ล้างฟอร์ม
-        })
-        .catch(error => {
-          console.error("เกิดข้อผิดพลาด: ", error);
-          alert("เพิ่มไม่สำเร็จ ดู console");
-        });
+    async function uploadApp() {
+      const devname = document.getElementById("devname").value;
+      const appName = document.getElementById("appName").value;
+      const appdescription = document.getElementById("appdescription").value;
+      const appTyp = document.getElementById("appTyp").value;
+      const appVideo = document.getElementById("appVideo").value;
+      const dowloadLink = document.getElementById("dowloadLink").value;
+
+      const imageFile = document.getElementById("imageFile").files[0];
+      const profileImageFile = document.getElementById("profileImageFile").files[0];
+
+      if (!imageFile || !profileImageFile) {
+        alert("กรุณาเลือกรูปภาพทั้งสองภาพ");
+        return;
+      }
+
+      try {
+        const imageURL = await uploadFile(imageFile, "images");
+        const profileImageURL = await uploadFile(profileImageFile, "profileImages");
+
+        const data = {
+          devname,
+          appName,
+          appdescription,
+          appTyp,
+          appVideo,
+          image: imageURL,
+          profileImage: profileImageURL,
+          dowloadLink,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        await db.collection("promotions").add(data);
+        alert("เพิ่มแอปสำเร็จ!");
+        document.querySelectorAll("input, textarea").forEach(el => el.value = "");
+        document.getElementById("appTyp").value = "";
+      } catch (err) {
+        console.error(err);
+        alert("เกิดข้อผิดพลาดในการอัปโหลด");
+      }
     }
   </script>
 
