@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js"></script>
+  <script>
+    // Firebase configuration
+const firebaseConfig = {
+
+  apiKey: "AIzaSyAT7SebrpGQlmGpL78Hc1tU8tHoX9LdIYg",
+  authDomain: "platform-dabc0.firebaseapp.com",
+  projectId: "platform-dabc0",
+  storageBucket: "platform-dabc0.firebasestorage.app",
+  messagingSenderId: "210971684025",
+  appId: "1:210971684025:web:e2186cde81b2c07da37f68",
+  measurementId: "G-NJRHYHQ26D"
+};
+
+    
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    function signUp() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      auth.createUserWithEmailAndPassword(email, password)
+        .then(userCredential => {
+          const user = userCredential.user;
+          console.log('User signed up: ', user);
+          // Redirect to login or dashboard page
+        })
+        .catch(error => {
+          console.error(error.message);
+        });
+    }
+  </script>
+</head>
+<body>
+  <h2>Sign Up</h2>
+  <input type="email" id="email" placeholder="Email" required><br><br>
+  <input type="password" id="password" placeholder="Password" required><br><br>
+  <button onclick="signUp()">Sign Up</button>
+
+  <p>Already have an account? <a href="login.html">Login here</a></p>
+</body>
+</html>
