@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>ส่งข้อมูลโปรโมทแอป</title>
-  <!-- Firebase SDK (Compat Version) -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
   <style>
@@ -31,53 +30,32 @@
   </form>
 
   <script>
-    // Firebase Config ของคุณ
     const firebaseConfig = {
       apiKey: "AIzaSyDSO0rFMvm89TycPLZIeNxNhmQTNXXVdM4",
       authDomain: "shenwang-app-promotion.firebaseapp.com",
       projectId: "shenwang-app-promotion",
-      storageBucket: "shenwang-app-promotion.firebasestorage.app",
+      storageBucket: "shenwang-app-promotion.appspot.com",
       messagingSenderId: "75453176370",
       appId: "1:75453176370:web:74769018418fa5e468ba2b"
     };
-
-    // เริ่มต้น Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // จัดการเมื่อกดส่งฟอร์ม
-    document.getElementById("promoForm").addEventListener("submit", async function (e) {
+    document.getElementById("promoForm").addEventListener("submit", async (e) => {
       e.preventDefault();
-
-      // ดึงค่าจากฟอร์ม
-      const dev = document.getElementById("dev").value;
-      const appName = document.getElementById("appName").value;
-      const desc = document.getElementById("desc").value;
-      const type = document.getElementById("type").value;
-      const image = document.getElementById("image").value;
-      const video = document.getElementById("video").value;
-      const download = document.getElementById("download").value;
-
-      // เตรียมข้อมูล
       const data = {
-        devname: dev,
-        appName: appName,
-        appdescription: desc,
-        appTyp: type,
-        appVideo: video,
-        image: image,
-        dowloadLink: download,
+        devname: document.getElementById("dev").value,
+        appName: document.getElementById("appName").value,
+        appdescription: document.getElementById("desc").value,
+        appTyp: document.getElementById("type").value,
+        image: document.getElementById("image").value,
+        appVideo: document.getElementById("video").value,
+        dowloadLink: document.getElementById("download").value,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       };
-
-      try {
-        await db.collection("promotions").add(data);
-        alert("ส่งข้อมูลแล้ว รอตรวจสอบ...");
-        document.getElementById("promoForm").reset();
-      } catch (error) {
-        console.error("เกิดข้อผิดพลาด:", error);
-        alert("เกิดข้อผิดพลาดในการส่งข้อมูล");
-      }
+      await db.collection("promotions").add(data);
+      alert("ส่งข้อมูลแล้ว รอตรวจสอบ...");
+      document.getElementById("promoForm").reset();
     });
   </script>
 </body>
