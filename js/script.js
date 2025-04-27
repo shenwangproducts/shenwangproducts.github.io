@@ -59,6 +59,9 @@ function changePage(page) {
     case 'contact':
       pageMessage = "กำลังเข้าสู่หน้าติดต่อเรา";
       break;
+    case 'signup':
+      pageMessage = "กำลังไปห้าลงทะเบียน";
+      break;
     default:
       pageMessage = "กำลังย้อนไปหน้าแรก";
   }
@@ -80,6 +83,9 @@ function changePage(page) {
         break;
       case 'contact':
         window.location.href = 'contact.html';
+        break;
+      case 'signup':
+        window.location.href = 'singup.html';
         break;
       default:
         window.location.href = 'index.html';
