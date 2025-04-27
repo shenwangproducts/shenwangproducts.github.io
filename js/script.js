@@ -85,7 +85,7 @@ function changePage(page) {
         window.location.href = 'contact.html';
         break;
       case 'signup':
-        window.location.href = 'singup.html';
+        window.location.href = 'signup.html';
         break;
       default:
         window.location.href = 'index.html';
