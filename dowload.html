@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>เชื่อมต่อระหว่างเซิฟเวอร์</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
     * {
       box-sizing: border-box;
       font-family: 'Orbitron', sans-serif;
@@ -17,8 +19,6 @@
       animation: fadeIn 1.5s ease;
       overflow-x: hidden;
     }
-
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
     @keyframes fadeIn {
       from {opacity: 0;}
@@ -282,6 +282,7 @@
 
     <div class="warning">
       <label><input type="checkbox" id="accept-terms"> ยอมรับข้อตกลงในการเข้าถึง</label><br><br>
+      <label><input type="checkbox" id="login-status"> เข้าสู่ระบบแล้ว</label><br><br>
       <button id="dowload-btn">ยืนยันการเชื่อมต่อ</button>
     </div>
 
@@ -295,22 +296,28 @@
   </footer>
 
   <script>
-    const checkbox = document.getElementById('accept-terms');
+    const acceptTerms = document.getElementById('accept-terms');
+    const loginStatus = document.getElementById('login-status');
     const dowloadBtn = document.getElementById('dowload-btn');
 
-    checkbox.addEventListener('change', () => {
-      if (checkbox.checked) {
+    function updateButtonState() {
+      if (acceptTerms.checked && loginStatus.checked) {
         dowloadBtn.classList.add('enabled');
         dowloadBtn.disabled = false;
       } else {
         dowloadBtn.classList.remove('enabled');
         dowloadBtn.disabled = true;
       }
-    });
+    }
+
+    acceptTerms.addEventListener('change', updateButtonState);
+    loginStatus.addEventListener('change', updateButtonState);
 
     dowloadBtn.addEventListener('click', () => {
-      if (checkbox.checked) {
+      if (acceptTerms.checked && loginStatus.checked) {
         alert("ยินดีต้อนรับสู่จักรวาล Shenwang");
+      } else {
+        alert("กรุณายอมรับข้อตกลงและเข้าสู่ระบบก่อน");
       }
     });
 
