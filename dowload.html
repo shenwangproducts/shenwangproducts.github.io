@@ -1,327 +1,44 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>เชื่อมต่อระหว่างเซิฟเวอร์</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-
-    * {
-      box-sizing: border-box;
-      font-family: 'Orbitron', sans-serif;
-    }
-
-    body {
-      margin: 0;
-      background: linear-gradient(180deg, #05010f, #0a0033);
-      color: #39ff14;
-      animation: fadeIn 1.5s ease;
-      overflow-x: hidden;
-    }
-
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
-    }
-
-    header {
-      background: rgba(0, 0, 0, 0.7);
-      padding: 15px 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 2px solid #00f7ff;
-      box-shadow: 0 0 20px #00f7ff;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-    }
-
-    .logo img {
-      height: 40px;
-      margin-right: 10px;
-      border-radius: 50%;
-      box-shadow: 0 0 15px #f0f;
-    }
-
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 20px;
-    }
-
-    nav ul li a {
-      color: #39ff14;
-      text-decoration: none;
-      transition: 0.3s;
-    }
-
-    nav ul li a:hover {
-      color: #f0f;
-      text-shadow: 0 0 5px #f0f;
-    }
-
-    #content {
-      padding: 40px 20px;
-      max-width: 1000px;
-      margin: auto;
-      text-align: center;
-    }
-
-    .dowload-title {
-      font-size: 32px;
-      color: #00f7ff;
-      text-shadow: 0 0 10px #00f7ff;
-    }
-
-    .dowload-description {
-      font-size: 18px;
-      color: #ccc;
-      margin-bottom: 30px;
-    }
-
-    .app-image-container img {
-      width: 100%;
-      max-width: 600px;
-      border-radius: 15px;
-      box-shadow: 0 0 25px #39ff14;
-      transition: 0.4s ease;
-    }
-
-    .app-image-container img:hover {
-      transform: scale(1.05);
-    }
-
-    .platform-options {
-      margin: 30px 0;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
-
-    .platform-btn {
-      background: linear-gradient(45deg, #00f7ff, #f0f);
-      color: #000;
-      padding: 15px 30px;
-      border: none;
-      border-radius: 50px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .platform-btn:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 20px #39ff14;
-    }
-
-    .file-info p {
-      margin: 8px 0;
-      color: #ccc;
-    }
-
-    .video-container {
-      margin: 30px 0;
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      overflow: hidden;
-      border-radius: 15px;
-      box-shadow: 0 0 30px #00f7ff;
-    }
-
-    .video-container iframe {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-    }
-
-    .image-previews {
-      margin-top: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-    }
-
-    .image-previews img {
-      width: 30%;
-      border-radius: 10px;
-      box-shadow: 0 0 15px #f0f;
-      transition: transform 0.3s ease;
-    }
-
-    .image-previews img:hover {
-      transform: scale(1.05);
-    }
-
-    .progress-bar {
-      background: #333;
-      height: 12px;
-      border-radius: 20px;
-      overflow: hidden;
-      margin: 40px auto;
-      max-width: 700px;
-    }
-
-    .progress {
-      background: linear-gradient(to right, #00f7ff, #f0f);
-      width: 60%;
-      height: 100%;
-      animation: loadAnim 3s ease-in-out forwards;
-    }
-
-    @keyframes loadAnim {
-      from {width: 0;}
-      to {width: 60%;}
-    }
-
-    .warning {
-      margin: 30px 0;
-    }
-
-    .warning label {
-      color: #ccc;
-    }
-
-    #dowload-btn {
-      background: #39ff14;
-      border: none;
-      padding: 10px 25px;
-      border-radius: 30px;
-      color: #000;
-      font-weight: bold;
-      cursor: not-allowed;
-      opacity: 0.5;
-      transition: all 0.3s ease;
-    }
-
-    #dowload-btn.enabled {
-      cursor: pointer;
-      opacity: 1;
-      background: #00ffcc;
-      box-shadow: 0 0 15px #00ffcc;
-    }
-
-    #dowload-btn.enabled:hover {
-      background: #0ff;
-    }
-
-    .support-link a {
-      color: #00f7ff;
-      text-decoration: none;
-    }
-
-    .support-link a:hover {
-      text-shadow: 0 0 10px #00f7ff;
-    }
-
-    footer {
-      background: #000;
-      padding: 20px;
-      color: #666;
-      text-align: center;
-      border-top: 1px solid #333;
-      margin-top: 50px;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <title>ระบบดาวน์โหลดเกม</title>
 </head>
 <body>
-  <header>
-    <div class="logo">
-      <img src="assets/img/received.jpg" alt="Logo">
-      <span>Shenwang Space Link</span>
-    </div>
-    <nav>
-      <ul>
-        <li><a href="index.html">หน้าหลัก</a></li>
-        <li><a href="news.html">ข่าวสาร</a></li>
-        <li><a href="dowload.html">ช่องเชื่อม</a></li>
-        <li><a href="contact.html">ติดต่อ</a></li>
-      </ul>
-    </nav>
-  </header>
 
-  <div id="content">
-    <h1 class="dowload-title">อยู่ในเขตการปกครองเกม</h1>
-    <p class="dowload-description">ก้าวข้ามพรมแดนแห่งอวกาศและเวลาผ่านแอปนี้แค่แอพเดียวเล่นได้ทุกเกม</p>
+<!-- ปุ่มดาวน์โหลด -->
+<button id="download-button">ดาวน์โหลดเกม</button>
 
-    <div class="app-image-container">
-      <img src="assets/img/App_shenwang_hub.jpg" alt="App Image">
-    </div>
+<script>
+  // สมมุติว่าเราเก็บสถานะการล็อกอินไว้ที่ localStorage
+  let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true'; // true หรือ false
 
-    <div class="platform-options">
-      <button class="platform-btn">Windows</button>
-      <button class="platform-btn">macOS</button>
-      <button class="platform-btn">Android</button>
-    </div>
-
-    <div class="file-info">
-      <p><strong>ขนาดไฟล์:</strong> 1.5 GB</p>
-      <p><strong>เวอร์ชัน:</strong> 1.0.0</p>
-      <p><strong>คู่มือการเชื่อมต่อ:</strong> ดูได้ในโฟลเดอร์หลังติดตั้ง</p>
-    </div>
-
-    <div class="video-container">
-      <iframe src="https://www.youtube.com/embed/BO-ZbxR6IcA" frameborder="0" allowfullscreen></iframe>
-    </div>
-
-    <div class="image-previews">
-      <img src="assets/img/game1.jpg" alt="Game 1">
-      <img src="assets/img/game2.jpg" alt="Game 2">
-      <img src="assets/img/game3.jpg" alt="Game 3">
-    </div>
-
-    <div class="progress-bar">
-      <div class="progress"></div>
-    </div>
-
-    <div class="warning">
-      <label><input type="checkbox" id="accept-terms"> ยอมรับข้อตกลงในการเข้าถึง</label><br><br>
-      <label><input type="checkbox" id="login-status"> เข้าสู่ระบบแล้ว</label><br><br>
-      <button id="dowload-btn">ยืนยันการเชื่อมต่อ</button>
-    </div>
-
-    <div class="support-link">
-      <a href="#">ขอความช่วยเหลือในการเดินทางย้ายเกมลงเครื่อง</a>
-    </div>
-  </div>
-
-  <footer>
-    <p>Shenwang Cosmic Channel © 2025</p>
-  </footer>
-
-  <script>
-    const acceptTerms = document.getElementById('accept-terms');
-    const loginStatus = document.getElementById('login-status');
-    const dowloadBtn = document.getElementById('dowload-btn');
-
-    function updateButtonState() {
-      if (acceptTerms.checked && loginStatus.checked) {
-        dowloadBtn.classList.add('enabled');
-        dowloadBtn.disabled = false;
-      } else {
-        dowloadBtn.classList.remove('enabled');
-        dowloadBtn.disabled = true;
-      }
+  function handleDownloadClick() {
+    if (isLoggedIn) {
+      // ถ้าล็อกอินแล้ว
+      downloadApp();
+    } else {
+      // ยังไม่ได้ล็อกอิน
+      openLoginPopup();
     }
+  }
 
-    acceptTerms.addEventListener('change', updateButtonState);
-    loginStatus.addEventListener('change', updateButtonState);
+  function downloadApp() {
+    // พาไปที่ลิงก์ดาวน์โหลดโดยตรง
+    window.location.href = "/download/your-app.zip";
+  }
 
-    dowloadBtn.addEventListener('click', () => {
-      if (acceptTerms.checked && loginStatus.checked) {
-        alert("ยินดีต้อนรับสู่จักรวาล Shenwang");
-      } else {
-        alert("กรุณายอมรับข้อตกลงและเข้าสู่ระบบก่อน");
-      }
-    });
+  function openLoginPopup() {
+    // เปิด popup หน้าล็อกอิน (เชื่อมกับไฟล์ที่มีอยู่แล้ว เช่น login.html)
+    window.open(
+      '/login.html', // เปลี่ยนเป็นไฟล์หน้าล็อกอินของคุณเอง
+      'LoginWindow',
+      'width=500,height=600,resizable=no'
+    );
+  }
 
-    dowloadBtn.disabled = true;
-  </script>
+  document.getElementById('download-button').addEventListener('click', handleDownloadClick);
+</script>
+
 </body>
 </html>
