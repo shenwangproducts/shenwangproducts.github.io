@@ -1,6 +1,20 @@
-let hasSpokenIntro = false;
+// Firebase Configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyC-UwBguZRGdrIWLVkTsCRlt02vKOAlOlA",
+  authDomain: "shenwang-auth-user.firebaseapp.com",
+  projectId: "shenwang-auth-user",
+  storageBucket: "shenwang-auth-user.firebasestorage.app",
+  messagingSenderId: "273542969972",
+  appId: "1:273542969972:web:4d6ce4edf5188b98dbef21"
+};
+
+// Initialize Firebase
+const app = firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
 
 // ฟังก์ชันพูดแนะนำตัว
+let hasSpokenIntro = false;
+
 function speakIntro() {
   if (hasSpokenIntro) return;
   const intro = new SpeechSynthesisUtterance("你好，我是零曦，网站的第二代AI。你可以问我任何你感兴趣的事情");
