@@ -1,16 +1,12 @@
-let hasSpokenIntro = false;  // สถานะการพูดแนะนำตัว
+let hasSpokenIntro = false;
 
 // ฟังก์ชันพูดแนะนำตัว
 function speakIntro() {
-  if (hasSpokenIntro) return; // ถ้าพูดไปแล้วไม่ให้พูดซ้ำ
-
-  const intro = new SpeechSynthesisUtterance(
-    "你好，我是零曦，网站的第二代AI。你可以问我任何你感兴趣的事情"
-  );
+  if (hasSpokenIntro) return;
+  const intro = new SpeechSynthesisUtterance("你好，我是零曦，网站的第二代AI。你可以问我任何你感兴趣的事情");
   intro.lang = 'zh-CN';
   intro.pitch = 1.2;
   intro.rate = 1.0;
-
   intro.onend = function () {
     const next = new SpeechSynthesisUtterance("Please select the menu you are interested in above.");
     next.lang = 'en-US';
@@ -18,23 +14,18 @@ function speakIntro() {
     next.rate = 1.0;
     speechSynthesis.speak(next);
   };
-
   speechSynthesis.cancel();
   speechSynthesis.speak(intro);
-  
-  hasSpokenIntro = true; // ตั้งค่าสถานะว่าได้พูดแนะนำตัวแล้ว
+  hasSpokenIntro = true;
 }
 
 // ฟังก์ชันปิด Popup และพูดแนะนำตัวเมื่อปิด
 function closePopup() {
-  // Check if the "Don't show again" checkbox is checked
   if (document.getElementById("dontShowAgain").checked) {
-    // Store the status to localStorage to prevent showing popup again
     localStorage.setItem("popupShown", "true");
   }
-  // Hide the popup
   document.getElementById("popup").style.display = "none";
-  speakIntro(); // เมื่อปิด popup จะพูดแนะนำตัว
+  speakIntro();
 }
 
 // ฟังก์ชันเปลี่ยนหน้า
@@ -45,7 +36,7 @@ function changePage(page) {
   message.rate = 1.1;
 
   let pageMessage = "";
-  
+
   switch (page) {
     case 'promo':
       pageMessage = "กำลังเข้าสู่หน้าหลัก โปรโมทแอปของเรา";
@@ -98,8 +89,37 @@ function startPromotion() {
   window.location.href = "promo_submit.html";
 }
 
-// เช็คว่า popup แสดงไปแล้วหรือยัง
+// เช็คว่าจะแสดง popup ไหม
 if (!localStorage.getItem("popupShown")) {
-  // แสดง popup เท่านั้นถ้ายังไม่เคยแสดง
   document.getElementById("popup").style.display = "flex";
-          }
+}
+
+// ตรวจสอบสถานะล็อกอิน
+document.addEventListener("DOMContentLoaded", function () {
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const signupButton = document.getElementById("signupButton");
+  if (isLoggedIn === "true") {
+    signupButton.textContent = "dashboard";
+    signupButton.onclick = function () {
+      window.location.href = "dashboard.html";
+    };
+  }
+});
+
+// ฟังก์ชันคุกกี้
+function acceptCookies() {
+  localStorage.setItem("cookiesAccepted", "true");
+  document.getElementById("cookieConsent").style.display = "none";
+}
+
+function declineCookies() {
+  localStorage.setItem("cookiesAccepted", "false");
+  document.getElementById("cookieConsent").style.display = "none";
+}
+
+// แสดงคุกกี้เมื่อโหลดหน้า
+window.addEventListener('load', function () {
+  if (!localStorage.getItem("cookiesAccepted")) {
+    document.getElementById("cookieConsent").style.display = "block";
+  }
+});
