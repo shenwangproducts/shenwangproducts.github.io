@@ -60,7 +60,7 @@ function changePage(page) {
       pageMessage = "กำลังเข้าสู่หน้าติดต่อเรา";
       break;
     case 'signup':
-      pageMessage = "กำลังไปห้าลงทะเบียน";
+      pageMessage = "กำลังไปหน้าลงทะเบียน";
       break;
     default:
       pageMessage = "กำลังย้อนไปหน้าแรก";
