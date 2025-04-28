@@ -37,6 +37,7 @@
             margin-bottom: 10px;
             border-radius: 5px;
             transition: background-color 0.3s, transform 0.2s;
+            cursor: pointer;
         }
 
         .sidebar a:hover {
@@ -48,8 +49,6 @@
         .content {
             flex-grow: 1;
             padding: 20px;
-            opacity: 0;
-            transition: opacity 0.5s ease;
             display: none; /* เริ่มต้นซ่อนไว้ */
         }
 
@@ -59,7 +58,6 @@
             border-radius: 10px;
             box-shadow: 0 8px 16px rgba(0,0,0,0.1);
             text-align: center;
-            animation: fadeIn 1s ease-out;
         }
 
         h2 {
@@ -94,23 +92,17 @@
             font-size: 0.9rem;
             color: #aaa;
         }
-
-        /* Animation */
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
     </style>
 </head>
 <body>
     <div class="sidebar">
         <h2>เมนูการตั้งค่า</h2>
-        <a href="#" onclick="showPage('maintenance')">ตั้งค่าปิดปรับปรุงเว็บไซต์</a>
-        <a href="#">การจัดการผู้ใช้งาน</a>
+        <a href="#" id="maintenanceLink">ตั้งค่าปิดปรับปรุงเว็บไซต์</a>
+        <a href="#" id="banListLink">การจัดการผู้ใช้งาน</a>
         <a href="#">การตั้งค่าระบบ</a>
     </div>
 
-    <div class="content">
+    <div class="content" id="maintenance">
         <div class="card">
             <h2>ตั้งค่าปิดปรับปรุงเว็บไซต์</h2>
             <span id="statusText">กำลังโหลด...</span>
@@ -121,26 +113,59 @@
         </div>
     </div>
 
-    <!-- ย้าย Script มาไว้ที่นี่ -->
+    <div class="content" id="banList">
+        <div class="card">
+            <h2>การจัดการผู้ใช้งานที่ถูกแบน</h2>
+            <div id="banListDetails">กำลังโหลดข้อมูล...</div>
+        </div>
+        <div class="footer">
+            Shenwang Admin Panel
+        </div>
+    </div>
+
     <script type="module">
+        // Firebase สำหรับ Authentication
+        const firebaseConfigAuth = {
+            apiKey: "AIzaSyC-UwBguZRGdrIWLVkTsCRlt02vKOAlOlA",
+            authDomain: "shenwang-auth-user.firebaseapp.com",
+            projectId: "shenwang-auth-user",
+            storageBucket: "shenwang-auth-user.firebasestorage.app",
+            messagingSenderId: "273542969972",
+            appId: "1:273542969972:web:4d6ce4edf5188b98dbef21"
+        };
+
+        // Firebase สำหรับ Firestore
+        const firebaseConfigFirestore = {
+            apiKey: "AIzaSyC3CZEV1yVSKa9MsO70B7usSVQiwJ1FwbI",
+            authDomain: "shenwang-admin.firebaseapp.com",
+            projectId: "shenwang-admin",
+            storageBucket: "shenwang-admin.firebasestorage.app",
+            messagingSenderId: "94650883832",
+            appId: "1:94650883832:web:f1423799237e5a44c9a50d"
+        };
+
+        // นำเข้า Firebase และเริ่มการเชื่อมต่อ
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
         import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+
+        // กำหนดแอป Firebase สำหรับ Authentication
+        const appAuth = initializeApp(firebaseConfigAuth, "authApp");
+
+        // กำหนดแอป Firebase สำหรับ Firestore
+        const appFirestore = initializeApp(firebaseConfigFirestore, "firestoreApp");
+
+        // การใช้งาน Firestore
+        const db = getFirestore(appFirestore);
+
+        // การใช้งาน Firebase Auth
+        const auth = getAuth(appAuth);
 
         window.addEventListener('DOMContentLoaded', async function() {
-            const firebaseConfig = {
-                apiKey: "AIzaSyC3CZEV1yVSKa9MsO70B7usSVQiwJ1FwbI",
-                authDomain: "shenwang-admin.firebaseapp.com",
-                projectId: "shenwang-admin",
-                storageBucket: "shenwang-admin.firebasestorage.app",
-                messagingSenderId: "94650883832",
-                appId: "1:94650883832:web:f1423799237e5a44c9a50d"
-            };
-            const app = initializeApp(firebaseConfig);
-            const db = getFirestore(app);
-
             const statusText = document.getElementById('statusText');
             const toggleButton = document.getElementById('toggleButton');
-            const content = document.querySelector('.content');
+            const banListDetails = document.getElementById('banListDetails');
+            const content = document.querySelectorAll('.content');
 
             let isMaintenance = false;
 
@@ -166,6 +191,22 @@
                 statusText.style.color = isMaintenance ? "#dc3545" : "#28a745";
             }
 
+            async function loadBanList() {
+                try {
+                    const banListRef = doc(db, "ban_list", "users");
+                    const docSnap = await getDoc(banListRef);
+
+                    if (docSnap.exists()) {
+                        const banListData = docSnap.data();
+                        banListDetails.innerHTML = JSON.stringify(banListData, null, 2); // แสดงข้อมูลที่ได้
+                    } else {
+                        console.log("ไม่พบข้อมูล ban list");
+                    }
+                } catch (error) {
+                    console.error("เกิดข้อผิดพลาดในการโหลด ban list:", error);
+                }
+            }
+
             async function toggleStatus() {
                 isMaintenance = !isMaintenance;
                 updateStatusText();
@@ -185,21 +226,27 @@
                 }
             }
 
+            // แสดงหน้า maintenance
             function showMaintenancePage() {
-                content.style.display = 'block';
-                content.style.opacity = '1';
+                content.forEach(page => page.style.display = 'none');
+                document.getElementById('maintenance').style.display = 'block';
             }
 
-            window.showPage = function(page) {
-                const allContents = document.querySelectorAll('.content');
-                allContents.forEach((content) => {
-                    content.style.display = 'none';
-                });
-
-                if (page === 'maintenance') {
-                    showMaintenancePage();
-                }
+            // แสดงหน้า ban list
+            function showBanListPage() {
+                content.forEach(page => page.style.display = 'none');
+                document.getElementById('banList').style.display = 'block';
+                loadBanList(); // โหลดข้อมูล Ban List
             }
+
+            // การคลิกเพื่อแสดงหน้าต่างๆ
+            document.getElementById('maintenanceLink').addEventListener('click', function() {
+                showMaintenancePage();
+            });
+
+            document.getElementById('banListLink').addEventListener('click', function() {
+                showBanListPage();
+            });
 
             toggleButton.addEventListener('click', toggleStatus);
 
