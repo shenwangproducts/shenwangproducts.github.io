@@ -59,6 +59,45 @@
     <button onclick="declineCookies()" style="padding: 8px 15px; background: #f44336; color: white; border: none; border-radius: 5px;">ปฏิเสธ</button>
   </div>
 
+  <!-- เช็คสถานะ Maintenance -->
+  <script type="module">
+    // Import Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC3CZEV1yVSKa9MsO70B7usSVQiwJ1FwbI",
+      authDomain: "shenwang-admin.firebaseapp.com",
+      projectId: "shenwang-admin",
+      storageBucket: "shenwang-admin.firebasestorage.app",
+      messagingSenderId: "94650883832",
+      appId: "1:94650883832:web:f1423799237e5a44c9a50d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function checkMaintenance() {
+      try {
+        const docRef = doc(db, "settings", "websiteStatus");
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          if (data.maintenance === true) {
+            window.location.href = "maintenance.html";
+          }
+        } else {
+          console.error("ไม่พบข้อมูล websiteStatus ในฐานข้อมูล");
+        }
+      } catch (error) {
+        console.error("เกิดข้อผิดพลาดในการเชื่อมต่อฐานข้อมูล:", error);
+      }
+    }
+
+    checkMaintenance();
+  </script>
+
   <script src="js/script.js"></script>
 </body>
-</html>
+  </html>
