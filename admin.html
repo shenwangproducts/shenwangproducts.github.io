@@ -2,13 +2,65 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shenwang Admin - ตั้งค่าปิดปรับปรุง</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem 3rem;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        #statusText {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: block;
+            color: #666;
+        }
+
+        #toggleButton {
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #toggleButton:hover {
+            background-color: #0056b3;
+        }
+
+        .footer {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+    </style>
     <script type="module">
-        // Import Firebase SDK
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
         import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
-        // เชื่อม Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyC3CZEV1yVSKa9MsO70B7usSVQiwJ1FwbI",
             authDomain: "shenwang-admin.firebaseapp.com",
@@ -20,53 +72,65 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // ดึง Element
         const statusText = document.getElementById('statusText');
         const toggleButton = document.getElementById('toggleButton');
 
         let isMaintenance = false;
 
         async function loadStatus() {
-            const docRef = doc(db, "settings", "maintenance");
-            const docSnap = await getDoc(docRef);
+            try {
+                const docRef = doc(db, "settings", "maintenance");
+                const docSnap = await getDoc(docRef);
 
-            if (docSnap.exists()) {
-                const data = docSnap.data();
-                isMaintenance = data.isMaintenance;
-                updateStatusText();
-            } else {
-                console.log("ไม่มีข้อมูล maintenance ในฐานข้อมูล");
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    isMaintenance = data.isMaintenance;
+                    updateStatusText();
+                } else {
+                    console.log("ไม่พบข้อมูล maintenance ใน Firestore");
+                }
+            } catch (error) {
+                console.error("เกิดข้อผิดพลาดในการโหลดสถานะ:", error);
             }
         }
 
         function updateStatusText() {
-            statusText.textContent = isMaintenance ? "กำลังปิดปรับปรุง" : "ออนไลน์ตามปกติ";
+            statusText.textContent = isMaintenance ? "กำลังปิดปรับปรุงเว็บไซต์" : "เว็บไซต์ออนไลน์ตามปกติ";
+            statusText.style.color = isMaintenance ? "#dc3545" : "#28a745";
         }
 
         async function toggleStatus() {
             isMaintenance = !isMaintenance;
             updateStatusText();
 
-            const docRef = doc(db, "settings", "maintenance");
-            await setDoc(docRef, {
-                isMaintenance: isMaintenance,
-                lastUpdate: new Date().toISOString(),
-                updatedBy: "Admin" // หรือเปลี่ยนเป็นชื่อ Admin ที่ Login ก็ได้
-            });
+            try {
+                const docRef = doc(db, "settings", "maintenance");
+                await setDoc(docRef, {
+                    isMaintenance: isMaintenance,
+                    lastUpdate: new Date().toISOString(),
+                    updatedBy: "Admin"
+                });
 
-            alert('อัปเดตสถานะเรียบร้อยแล้ว');
+                alert('อัปเดตสถานะเรียบร้อยแล้ว');
+            } catch (error) {
+                console.error("เกิดข้อผิดพลาดในการอัปเดตสถานะ:", error);
+                alert('เกิดข้อผิดพลาดในการอัปเดตสถานะ');
+            }
         }
 
         toggleButton.addEventListener('click', toggleStatus);
 
-        // โหลดสถานะตอนเปิดหน้า
         loadStatus();
     </script>
 </head>
 <body>
-    <h2>ตั้งค่าปิดปรับปรุงเว็บไซต์</h2>
-    <label>สถานะปัจจุบัน: <span id="statusText">กำลังโหลด...</span></label>
-    <br><br>
-    <button id="toggleButton">สลับสถานะ</button>
+    <div class="card">
+        <h2>ตั้งค่าปิดปรับปรุงเว็บไซต์</h2>
+        <span id="statusText">กำลังโหลด...</span>
+        <button id="toggleButton">สลับสถานะ</button>
+    </div>
+    <div class="footer">
+        Shenwang Admin Panel
+    </div>
 </body>
-  </html>
+</html>
