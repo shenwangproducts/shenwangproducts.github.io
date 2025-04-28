@@ -20,6 +20,9 @@
             padding: 20px;
             height: 100vh;
             transition: transform 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
         .sidebar h2 {
@@ -172,16 +175,20 @@
             content.classList.remove('hidden');
         }
 
-        toggleButton.addEventListener('click', toggleStatus);
-
-        // โค้ดเมนู
         function showPage(page) {
-            const content = document.querySelector('.content');
-            content.classList.add('hidden');  // ซ่อนเนื้อหาทุกอย่าง
+            // ซ่อนเนื้อหาทั้งหมด
+            const allContents = document.querySelectorAll('.content');
+            allContents.forEach((content) => {
+                content.classList.add('hidden');
+            });
+
+            // แสดงเนื้อหาของหน้าเมนูที่เลือก
             if (page === 'maintenance') {
                 showMaintenancePage();
             }
         }
+
+        toggleButton.addEventListener('click', toggleStatus);
 
         loadStatus();
     </script>
