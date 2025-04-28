@@ -12,7 +12,7 @@
             background-color: #f4f6f9;
         }
 
-        /* ซ้าย: เมนู */
+        /* Sidebar */
         .sidebar {
             width: 250px;
             background-color: #343a40;
@@ -44,7 +44,7 @@
             transform: scale(1.05);
         }
 
-        /* ขวา: เนื้อหา */
+        /* Content */
         .content {
             flex-grow: 1;
             padding: 20px;
@@ -95,100 +95,12 @@
             color: #aaa;
         }
 
-        /* Animation สำหรับการ Fade in */
+        /* Animation */
         @keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
     </style>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyC3CZEV1yVSKa9MsO70B7usSVQiwJ1FwbI",
-            authDomain: "shenwang-admin.firebaseapp.com",
-            projectId: "shenwang-admin",
-            storageBucket: "shenwang-admin.firebasestorage.app",
-            messagingSenderId: "94650883832",
-            appId: "1:94650883832:web:f1423799237e5a44c9a50d"
-        };
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        const statusText = document.getElementById('statusText');
-        const toggleButton = document.getElementById('toggleButton');
-        const content = document.querySelector('.content');
-
-        let isMaintenance = false;
-
-        async function loadStatus() {
-            try {
-                const docRef = doc(db, "settings", "maintenance");
-                const docSnap = await getDoc(docRef);
-
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    isMaintenance = data.isMaintenance;
-                    updateStatusText();
-                } else {
-                    console.log("ไม่พบข้อมูล maintenance ใน Firestore");
-                }
-            } catch (error) {
-                console.error("เกิดข้อผิดพลาดในการโหลดสถานะ:", error);
-            }
-        }
-
-        function updateStatusText() {
-            statusText.textContent = isMaintenance ? "กำลังปิดปรับปรุงเว็บไซต์" : "เว็บไซต์ออนไลน์ตามปกติ";
-            statusText.style.color = isMaintenance ? "#dc3545" : "#28a745";
-        }
-
-        async function toggleStatus() {
-            isMaintenance = !isMaintenance;
-            updateStatusText();
-
-            try {
-                const docRef = doc(db, "settings", "maintenance");
-                await setDoc(docRef, {
-                    isMaintenance: isMaintenance,
-                    lastUpdate: new Date().toISOString(),
-                    updatedBy: "Admin"
-                });
-
-                alert('อัปเดตสถานะเรียบร้อยแล้ว');
-            } catch (error) {
-                console.error("เกิดข้อผิดพลาดในการอัปเดตสถานะ:", error);
-                alert('เกิดข้อผิดพลาดในการอัปเดตสถานะ');
-            }
-        }
-
-        function showMaintenancePage() {
-            content.style.display = 'block'; // แสดงเนื้อหาที่เกี่ยวข้อง
-            content.classList.add('fadeIn');
-        }
-
-        function showPage(page) {
-            // ซ่อนเนื้อหาทั้งหมด
-            const allContents = document.querySelectorAll('.content');
-            allContents.forEach((content) => {
-                content.style.display = 'none'; // ซ่อนทั้งหมด
-            });
-
-            // แสดงเนื้อหาของหน้าเมนูที่เลือก
-            if (page === 'maintenance') {
-                showMaintenancePage();
-            }
-        }
-
-        toggleButton.addEventListener('click', toggleStatus);
-
-        loadStatus();
-    </script>
 </head>
 <body>
     <div class="sidebar">
@@ -208,5 +120,92 @@
             Shenwang Admin Panel
         </div>
     </div>
+
+    <!-- ย้าย Script มาไว้ที่นี่ -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
+        window.addEventListener('DOMContentLoaded', async function() {
+            const firebaseConfig = {
+                apiKey: "AIzaSyC3CZEV1yVSKa9MsO70B7usSVQiwJ1FwbI",
+                authDomain: "shenwang-admin.firebaseapp.com",
+                projectId: "shenwang-admin",
+                storageBucket: "shenwang-admin.firebasestorage.app",
+                messagingSenderId: "94650883832",
+                appId: "1:94650883832:web:f1423799237e5a44c9a50d"
+            };
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
+
+            const statusText = document.getElementById('statusText');
+            const toggleButton = document.getElementById('toggleButton');
+            const content = document.querySelector('.content');
+
+            let isMaintenance = false;
+
+            async function loadStatus() {
+                try {
+                    const docRef = doc(db, "settings", "maintenance");
+                    const docSnap = await getDoc(docRef);
+
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        isMaintenance = data.isMaintenance;
+                        updateStatusText();
+                    } else {
+                        console.log("ไม่พบข้อมูล maintenance ใน Firestore");
+                    }
+                } catch (error) {
+                    console.error("เกิดข้อผิดพลาดในการโหลดสถานะ:", error);
+                }
+            }
+
+            function updateStatusText() {
+                statusText.textContent = isMaintenance ? "กำลังปิดปรับปรุงเว็บไซต์" : "เว็บไซต์ออนไลน์ตามปกติ";
+                statusText.style.color = isMaintenance ? "#dc3545" : "#28a745";
+            }
+
+            async function toggleStatus() {
+                isMaintenance = !isMaintenance;
+                updateStatusText();
+
+                try {
+                    const docRef = doc(db, "settings", "maintenance");
+                    await setDoc(docRef, {
+                        isMaintenance: isMaintenance,
+                        lastUpdate: new Date().toISOString(),
+                        updatedBy: "Admin"
+                    });
+
+                    alert('อัปเดตสถานะเรียบร้อยแล้ว');
+                } catch (error) {
+                    console.error("เกิดข้อผิดพลาดในการอัปเดตสถานะ:", error);
+                    alert('เกิดข้อผิดพลาดในการอัปเดตสถานะ');
+                }
+            }
+
+            function showMaintenancePage() {
+                content.style.display = 'block';
+                content.style.opacity = '1';
+            }
+
+            window.showPage = function(page) {
+                const allContents = document.querySelectorAll('.content');
+                allContents.forEach((content) => {
+                    content.style.display = 'none';
+                });
+
+                if (page === 'maintenance') {
+                    showMaintenancePage();
+                }
+            }
+
+            toggleButton.addEventListener('click', toggleStatus);
+
+            // โหลดสถานะตอนเปิดหน้าเว็บ
+            await loadStatus();
+        });
+    </script>
 </body>
 </html>
