@@ -137,3 +137,27 @@ window.addEventListener('load', function () {
     document.getElementById("cookieConsent").style.display = "block";
   }
 });
+
+// ตรวจสอบสถานะการบำรุงรักษาเมื่อโหลดหน้า
+document.addEventListener("DOMContentLoaded", function() {
+  checkMaintenanceMode();
+});
+
+// ฟังก์ชันตรวจสอบสถานะการบำรุงรักษา
+function checkMaintenanceMode() {
+  const isMaintenance = localStorage.getItem("maintenanceMode");
+  
+  // ถ้าอยู่ในสถานะ Maintenance ให้พาผู้ใช้ไปหน้า maintenance.html
+  if (isMaintenance === "true") {
+    window.location.href = "maintenance.html";
+  }
+}
+
+// ฟังก์ชันเปลี่ยนสถานะการบำรุงรักษา (สามารถใช้สำหรับการทดสอบหรือจากแดชบอร์ด)
+function setMaintenanceMode(isActive) {
+  localStorage.setItem("maintenanceMode", isActive ? "true" : "false");
+  if (isActive) {
+    alert("เว็บไซต์อยู่ในสถานะการบำรุงรักษา");
+    window.location.href = "maintenance.html";
+  }
+}
