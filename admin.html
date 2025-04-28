@@ -7,13 +7,42 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
             margin: 0;
+            display: flex;
+            background-color: #f4f6f9;
+        }
+
+        /* ซ้าย: เมนู */
+        .sidebar {
+            width: 250px;
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+            height: 100vh;
+        }
+
+        .sidebar h2 {
+            margin-top: 0;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #007bff;
+        }
+
+        /* ขวา: เนื้อหา */
+        .content {
+            flex-grow: 1;
+            padding: 20px;
         }
 
         .card {
@@ -124,13 +153,22 @@
     </script>
 </head>
 <body>
-    <div class="card">
-        <h2>ตั้งค่าปิดปรับปรุงเว็บไซต์</h2>
-        <span id="statusText">กำลังโหลด...</span>
-        <button id="toggleButton">สลับสถานะ</button>
+    <div class="sidebar">
+        <h2>เมนูการตั้งค่า</h2>
+        <a href="#" onclick="loadStatus()">ตั้งค่าปิดปรับปรุงเว็บไซต์</a>
+        <a href="#">การจัดการผู้ใช้งาน</a>
+        <a href="#">การตั้งค่าระบบ</a>
     </div>
-    <div class="footer">
-        Shenwang Admin Panel
+
+    <div class="content">
+        <div class="card">
+            <h2>ตั้งค่าปิดปรับปรุงเว็บไซต์</h2>
+            <span id="statusText">กำลังโหลด...</span>
+            <button id="toggleButton">สลับสถานะ</button>
+        </div>
+        <div class="footer">
+            Shenwang Admin Panel
+        </div>
     </div>
 </body>
 </html>
