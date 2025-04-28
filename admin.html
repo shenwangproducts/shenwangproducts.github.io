@@ -50,6 +50,7 @@
             padding: 20px;
             opacity: 0;
             transition: opacity 0.5s ease;
+            display: none; /* เริ่มต้นซ่อนไว้ */
         }
 
         .card {
@@ -102,11 +103,6 @@
             100% {
                 opacity: 1;
             }
-        }
-
-        /* ซ่อนไว้เมื่อลิงก์ยังไม่ได้กด */
-        .hidden {
-            display: none;
         }
     </style>
     <script type="module">
@@ -172,14 +168,15 @@
         }
 
         function showMaintenancePage() {
-            content.classList.remove('hidden');
+            content.style.display = 'block'; // แสดงเนื้อหาที่เกี่ยวข้อง
+            content.classList.add('fadeIn');
         }
 
         function showPage(page) {
             // ซ่อนเนื้อหาทั้งหมด
             const allContents = document.querySelectorAll('.content');
             allContents.forEach((content) => {
-                content.classList.add('hidden');
+                content.style.display = 'none'; // ซ่อนทั้งหมด
             });
 
             // แสดงเนื้อหาของหน้าเมนูที่เลือก
@@ -201,7 +198,7 @@
         <a href="#">การตั้งค่าระบบ</a>
     </div>
 
-    <div class="content hidden">
+    <div class="content">
         <div class="card">
             <h2>ตั้งค่าปิดปรับปรุงเว็บไซต์</h2>
             <span id="statusText">กำลังโหลด...</span>
