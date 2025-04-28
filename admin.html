@@ -19,6 +19,7 @@
             color: white;
             padding: 20px;
             height: 100vh;
+            transition: transform 0.3s ease-in-out;
         }
 
         .sidebar h2 {
@@ -32,17 +33,20 @@
             padding: 10px;
             margin-bottom: 10px;
             border-radius: 5px;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.2s;
         }
 
         .sidebar a:hover {
             background-color: #007bff;
+            transform: scale(1.05);
         }
 
         /* ขวา: เนื้อหา */
         .content {
             flex-grow: 1;
             padding: 20px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
         }
 
         .card {
@@ -51,6 +55,7 @@
             border-radius: 10px;
             box-shadow: 0 8px 16px rgba(0,0,0,0.1);
             text-align: center;
+            animation: fadeIn 1s ease-out;
         }
 
         h2 {
@@ -85,6 +90,21 @@
             font-size: 0.9rem;
             color: #aaa;
         }
+
+        /* Animation สำหรับการ Fade in */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* ซ่อนไว้เมื่อลิงก์ยังไม่ได้กด */
+        .hidden {
+            display: none;
+        }
     </style>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
@@ -103,6 +123,7 @@
 
         const statusText = document.getElementById('statusText');
         const toggleButton = document.getElementById('toggleButton');
+        const content = document.querySelector('.content');
 
         let isMaintenance = false;
 
@@ -147,7 +168,20 @@
             }
         }
 
+        function showMaintenancePage() {
+            content.classList.remove('hidden');
+        }
+
         toggleButton.addEventListener('click', toggleStatus);
+
+        // โค้ดเมนู
+        function showPage(page) {
+            const content = document.querySelector('.content');
+            content.classList.add('hidden');  // ซ่อนเนื้อหาทุกอย่าง
+            if (page === 'maintenance') {
+                showMaintenancePage();
+            }
+        }
 
         loadStatus();
     </script>
@@ -155,12 +189,12 @@
 <body>
     <div class="sidebar">
         <h2>เมนูการตั้งค่า</h2>
-        <a href="#" onclick="loadStatus()">ตั้งค่าปิดปรับปรุงเว็บไซต์</a>
+        <a href="#" onclick="showPage('maintenance')">ตั้งค่าปิดปรับปรุงเว็บไซต์</a>
         <a href="#">การจัดการผู้ใช้งาน</a>
         <a href="#">การตั้งค่าระบบ</a>
     </div>
 
-    <div class="content">
+    <div class="content hidden">
         <div class="card">
             <h2>ตั้งค่าปิดปรับปรุงเว็บไซต์</h2>
             <span id="statusText">กำลังโหลด...</span>
