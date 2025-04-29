@@ -6,62 +6,7 @@
   <title>Shenwang Media</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
 </head>
-
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyC3CZEV1yVSKa9MsO70B7usSVQiwJ1FwbI",
-    authDomain: "shenwang-admin.firebaseapp.com",
-    projectId: "shenwang-admin",
-    storageBucket: "shenwang-admin.firebasestorage.app",
-    messagingSenderId: "94650883832",
-    appId: "1:94650883832:web:f1423799237e5a44c9a50d"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  async function checkMaintenance() {
-    try {
-      const docRef = doc(db, "settings", "maintenance_status"); // เรียกดูเอกสารที่มีชื่อว่า "maintenance_status"
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        console.log("Maintenance Data Retrieved:", data);  // แสดงข้อมูลที่ดึงมา
-
-        if (data.isMaintenance === true) {
-          console.log("The website is under maintenance. Redirecting..."); // แสดงว่าเว็บไซต์อยู่ในสถานะปิดปรับปรุง
-          window.location.href = "maintenance.html";
-        } else {
-          console.log("The website is operational."); // แสดงว่าเว็บไซต์ทำงานได้ปกติ
-        }
-
-        // แสดงข้อความหรือข้อมูลเพิ่มเติมเกี่ยวกับการปรับปรุง
-        if (data.note) {
-          console.log("Maintenance Note: " + data.note); // แสดงหมายเหตุการอัปเดต (ถ้ามี)
-        }
-
-        if (data.updatedBy) {
-          console.log("Updated By: " + data.updatedBy); // แสดงว่าใครอัปเดตข้อมูล
-        }
-      } else {
-        console.error("No maintenance status found in Firestore.");
-      }
-    } catch (error) {
-      console.error("Error connecting to Firestore:", error);
-    }
-  }
-
-  checkMaintenance();  // เรียกใช้ฟังก์ชันเพื่อตรวจสอบสถานะการ Maintenance
-</script>
-
 <body>
   <header>
     <div class="header-container">
@@ -110,6 +55,60 @@
     <button onclick="acceptCookies()" style="padding: 8px 15px; margin-right: 10px; background: #4CAF50; color: white; border: none; border-radius: 5px;">ยอมรับ</button>
     <button onclick="declineCookies()" style="padding: 8px 15px; background: #f44336; color: white; border: none; border-radius: 5px;">ปฏิเสธ</button>
   </div>
+
+  <!-- Firebase SDK Script (Import) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyC3CZEV1yVSKa9MsO70B7usSVQiwJ1FwbI",
+      authDomain: "shenwang-admin.firebaseapp.com",
+      projectId: "shenwang-admin",
+      storageBucket: "shenwang-admin.firebasestorage.app",
+      messagingSenderId: "94650883832",
+      appId: "1:94650883832:web:f1423799237e5a44c9a50d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Function to Check Maintenance Status
+    async function checkMaintenance() {
+      try {
+        const docRef = doc(db, "settings", "maintenance_status"); // เรียกดูเอกสารที่มีชื่อว่า "maintenance_status"
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          console.log("Maintenance Data Retrieved:", data);  // แสดงข้อมูลที่ดึงมา
+
+          if (data.isMaintenance === true) {
+            console.log("The website is under maintenance. Redirecting..."); // แสดงว่าเว็บไซต์อยู่ในสถานะปิดปรับปรุง
+            window.location.href = "maintenance.html";
+          } else {
+            console.log("The website is operational."); // แสดงว่าเว็บไซต์ทำงานได้ปกติ
+          }
+
+          // แสดงข้อความหรือข้อมูลเพิ่มเติมเกี่ยวกับการปรับปรุง
+          if (data.note) {
+            console.log("Maintenance Note: " + data.note); // แสดงหมายเหตุการอัปเดต (ถ้ามี)
+          }
+
+          if (data.updatedBy) {
+            console.log("Updated By: " + data.updatedBy); // แสดงว่าใครอัปเดตข้อมูล
+          }
+        } else {
+          console.error("No maintenance status found in Firestore.");
+        }
+      } catch (error) {
+        console.error("Error connecting to Firestore:", error);
+      }
+    }
+
+    checkMaintenance();  // เรียกใช้ฟังก์ชันเพื่อตรวจสอบสถานะการ Maintenance
+  </script>
 
   <script src="js/script.js"></script>
 </body>
