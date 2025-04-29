@@ -58,7 +58,7 @@ function changePage(page) {
     case 'news':
       pageMessage = "กำลังเข้าสู่หน้าข่าวสาร";
       break;
-    case 'dowload':
+    case 'download':
       pageMessage = "กำลังเข้าสู่หน้าดาวน์โหลด กรุณาอ่านข้อตกลงก่อนดาวน์โหลด";
       break;
     case 'contact':
@@ -84,7 +84,7 @@ function changePage(page) {
         window.location.href = 'news.html';
         break;
       case 'download':
-        window.location.href = 'dowload.html';
+        window.location.href = 'download.html';
         break;
       case 'contact':
         window.location.href = 'contact.html';
@@ -136,28 +136,4 @@ window.addEventListener('load', function () {
   if (!localStorage.getItem("cookiesAccepted")) {
     document.getElementById("cookieConsent").style.display = "block";
   }
-});
-
-// ตรวจสอบสถานะการบำรุงรักษาเมื่อโหลดหน้า
-document.addEventListener("DOMContentLoaded", function() {
-  checkMaintenanceMode();
-});
-
-// ฟังก์ชันตรวจสอบสถานะการบำรุงรักษา
-function checkMaintenanceMode() {
-  const isMaintenance = localStorage.getItem("maintenanceMode");
-  
-  // ถ้าอยู่ในสถานะ Maintenance ให้พาผู้ใช้ไปหน้า maintenance.html
-  if (isMaintenance === "true") {
-    window.location.href = "maintenance.html";
-  }
-}
-
-// ฟังก์ชันเปลี่ยนสถานะการบำรุงรักษา (สามารถใช้สำหรับการทดสอบหรือจากแดชบอร์ด)
-function setMaintenanceMode(isActive) {
-  localStorage.setItem("maintenanceMode", isActive ? "true" : "false");
-  if (isActive) {
-    alert("เว็บไซต์อยู่ในสถานะการบำรุงรักษา");
-    window.location.href = "maintenance.html";
-  }
-}
+}); 
