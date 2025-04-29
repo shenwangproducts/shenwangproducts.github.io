@@ -83,7 +83,7 @@ function changePage(page) {
       case 'news':
         window.location.href = 'news.html';
         break;
-      case 'download':
+      case 'dowload':
         window.location.href = 'dowload.html';
         break;
       case 'contact':
