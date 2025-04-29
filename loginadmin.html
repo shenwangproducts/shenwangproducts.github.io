@@ -15,7 +15,7 @@
 <body>
   <h2>เข้าสู่ระบบแอดมิน</h2>
   <input type="text" id="adminName" placeholder="ชื่อพนักงาน" />
-  <input type="text" id="adminId" placeholder="รหัสพนักงาน 16 หลัก" />
+  <input type="text" id="adminId" placeholder="idพนักงาน 16 หลัก" />
   <button onclick="loginAdmin()">เข้าสู่ระบบ</button>
 
   <script>
@@ -66,7 +66,7 @@
 
       if (condition) {
         Swal.fire('สำเร็จ', 'เข้าสู่ระบบเรียบร้อยแล้ว!', 'success').then(() => {
-          window.location.href = "loginadmin.html";
+          window.location.href = "admin.html";
         });
       } else {
         failCount++;
