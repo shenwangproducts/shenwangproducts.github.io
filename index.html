@@ -8,7 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
 </head>
 <body>
@@ -21,7 +20,7 @@
       <nav class="main-nav" id="mainNav">
         <a href="#" onclick="changePage('promo')">promote</a>
         <a href="#" onclick="changePage('news')">news</a>
-        <a href="#" onclick="changePage('dowload')">install</a>
+        <a href="#" onclick="changePage('download')">install</a>
         <a href="#" onclick="changePage('contact')">responsible</a>
         <a href="#" id="signupButton" onclick="changePage('signup')">signup</a>
       </nav>
@@ -37,7 +36,8 @@
   </main>
 
   <!-- Popup Notification -->
-  <div id="popup" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); display: flex; justify-content: center; align-items: center; z-index: 9999;">
+  <div id="popup" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.9); display: flex; justify-content: center; align-items: center; z-index: 9999;">
     <div style="background: #1c1c1c; color: #fff; padding: 25px; border-radius: 12px; max-width: 95%; width: 400px; text-align: center; box-shadow: 0 0 15px rgba(255, 0, 0, 0.5); border: 2px solid #ff1a1a;">
       <h2 style="margin-top: 0; color: #ff4d4d;">แจ้งเตือนความปลอดภัย</h2>
       <p>ทีมงาน Shenwang Media จะไม่ติดต่อผู้เล่นเพื่อขอรหัสผ่านหรือข้อมูลส่วนตัว</p>
@@ -59,8 +59,12 @@
     <button onclick="declineCookies()" style="padding: 8px 15px; background: #f44336; color: white; border: none; border-radius: 5px;">ปฏิเสธ</button>
   </div>
 
-  <!-- Firebase Initialization & Site Status Script -->
-  <script>
+  <!-- เช็คสถานะ Maintenance -->
+  <script type="module">
+    // Import Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
     const firebaseConfig = {
       apiKey: "AIzaSyC3CZEV1yVSKa9MsO70B7usSVQiwJ1FwbI",
       authDomain: "shenwang-admin.firebaseapp.com",
@@ -70,66 +74,30 @@
       appId: "1:94650883832:web:f1423799237e5a44c9a50d"
     };
 
-    // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-    // Function to check website status
-    function checkSiteStatus() {
-      db.collection("siteSettings").doc("status").get().then((doc) => {
-        if (doc.exists) {
-          const status = doc.data().isMaintenance;
-          if (status) {
-            // ถ้าเว็บไซต์อยู่ในสถานะปิดปรับปรุง
+    async function checkMaintenance() {
+      try {
+        const docRef = doc(db, "settings", "websiteStatus");
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          if (data.maintenance === true) {
             window.location.href = "maintenance.html";
           }
+        } else {
+          console.error("ไม่พบข้อมูล websiteStatus ในฐานข้อมูล");
         }
-      }).catch((error) => {
-        console.error("Error getting document: ", error);
-      });
-    }
-
-    // Call checkSiteStatus when the page is loaded
-    window.onload = checkSiteStatus;
-
-    // Function to toggle the site status (open or maintenance)
-    function toggleSiteStatus(isMaintenance, updatedBy, note) {
-      const timestamp = new Date();
-      db.collection("siteSettings").doc("status").set({
-        isMaintenance: isMaintenance,
-        lastUpdate: timestamp,
-        updatedBy: updatedBy,
-        note: note
-      }).then(() => {
-        alert("สถานะเว็บไซต์ถูกเปลี่ยนเรียบร้อย");
-      }).catch((error) => {
-        console.error("Error updating document: ", error);
-      });
-    }
-
-    // Function to handle the cookie consent
-    function acceptCookies() {
-      document.getElementById('cookieConsent').style.display = 'none';
-    }
-
-    function declineCookies() {
-      document.getElementById('cookieConsent').style.display = 'none';
-    }
-
-    // Function to close popup
-    function closePopup() {
-      if (document.getElementById('dontShowAgain').checked) {
-        localStorage.setItem("dontShowAgain", "true");
+      } catch (error) {
+        console.error("เกิดข้อผิดพลาดในการเชื่อมต่อฐานข้อมูล:", error);
       }
-      document.getElementById('popup').style.display = 'none';
     }
 
-    // Show popup if not dismissed before
-    if (!localStorage.getItem("dontShowAgain")) {
-      document.getElementById('popup').style.display = 'flex';
-    }
+    checkMaintenance();
   </script>
 
   <script src="js/script.js"></script>
 </body>
-        </html>
+</html>
