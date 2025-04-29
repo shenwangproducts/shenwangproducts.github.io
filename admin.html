@@ -1,452 +1,329 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shenwang Admin - ตั้งค่าปิดปรับปรุง</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            display: flex;
-            background-color: #f4f6f9;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shenwang Admin Panel</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      display: flex;
+      background-color: #f4f6f9;
+    }
 
-        /* Sidebar */
-        .sidebar {
-            width: 250px;
-            background-color: #343a40;
-            color: white;
-            padding: 20px;
-            height: 100vh;
-            transition: transform 0.3s ease-in-out;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+    .sidebar {
+      width: 250px;
+      background-color: #343a40;
+      color: white;
+      padding: 20px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-        .sidebar h2 {
-            margin-top: 0;
-        }
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
 
-        .sidebar a {
-            display: block;
-            color: white;
-            text-decoration: none;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s, transform 0.2s;
-            cursor: pointer;
-        }
+    .sidebar a:hover {
+      background-color: #007bff;
+    }
 
-        .sidebar a:hover {
-            background-color: #007bff;
-            transform: scale(1.05);
-        }
+    .content {
+      flex-grow: 1;
+      padding: 20px;
+      display: none;
+    }
 
-        /* Content */
-        .content {
-            flex-grow: 1;
-            padding: 20px;
-            display: none; /* เริ่มต้นซ่อนไว้ */
-        }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
 
-        .card {
-            background: white;
-            padding: 2rem 3rem;
-            border-radius: 10px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-            text-align: center;
-        }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
 
-        h2 {
-            margin-bottom: 1.5rem;
-            color: #333;
-        }
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      margin-right: 10px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
 
-        #statusText {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            display: block;
-            color: #666;
-        }
+    button:hover {
+      background-color: #218838;
+    }
 
-        #toggleButton {
-            padding: 0.8rem 2rem;
-            font-size: 1rem;
-            border: none;
-            background-color: #007bff;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
 
-        #toggleButton:hover {
-            background-color: #0056b3;
-        }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
 
-        .footer {
-            margin-top: 2rem;
-            font-size: 0.9rem;
-            color: #aaa;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        button {
-            padding: 10px 20px;
-            font-size: 1rem;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #218838;
-        }
-
-        .ban-form {
-            margin-top: 20px;
-        }
-    </style>
+    th {
+      background-color: #eee;
+    }
+  </style>
 </head>
 <body>
-    <div class="sidebar">
-        <h2>เมนูการตั้งค่า</h2>
-        <a href="#" id="maintenanceLink">ตั้งค่าปิดปรับปรุงเว็บไซต์</a>
-        <a href="#" id="banListLink">การจัดการผู้ใช้งาน</a>
-        <a href="#" id="userListLink">รายชื่อผู้ใช้งานที่ล็อกอิน</a>
-        <a href="#">การตั้งค่าระบบ</a>
+  <div class="sidebar">
+    <h2>เมนูการตั้งค่า</h2>
+    <a href="#" id="maintenanceLink">ตั้งค่าปิดปรับปรุงเว็บไซต์</a>
+    <a href="#" id="banListLink">การจัดการผู้ใช้งานที่ถูกแบน</a>
+    <a href="#" id="settingsLink">การตั้งค่าระบบ</a>
+    <a href="#" id="loginUsersLink">รายชื่อผู้ใช้งานที่ล็อกอิน</a>
+  </div>
+
+  <!-- Section: Maintenance -->
+  <div class="content" id="maintenanceSection">
+    <div class="card">
+      <h2>ตั้งค่าปิดปรับปรุงเว็บไซต์</h2>
+      <span id="statusText">กำลังโหลด...</span>
+      <button id="toggleButton">สลับสถานะ</button>
+    </div>
+  </div>
+
+  <!-- Section: Ban List -->
+  <div class="content" id="banListSection">
+    <div class="card">
+      <h2>การจัดการผู้ใช้งานที่ถูกแบน</h2>
+      <input type="text" id="uidInput" placeholder="กรอก UID ของผู้ใช้งาน" />
+      <input type="email" id="emailInput" placeholder="กรอก Email ของผู้ใช้งาน" />
+      <input type="text" id="reasonInput" placeholder="กรอกเหตุผลที่แบน" />
+      <textarea id="notesInput" placeholder="หมายเหตุเพิ่มเติม (ถ้ามี)"></textarea>
+      <button id="banButton">แบนผู้ใช้งาน</button>
+      <button id="unbanButton">ปลดแบนผู้ใช้งาน</button>
     </div>
 
-    <div class="content" id="maintenance">
-        <div class="card">
-            <h2>ตั้งค่าปิดปรับปรุงเว็บไซต์</h2>
-            <span id="statusText">กำลังโหลด...</span>
-            <button id="toggleButton">สลับสถานะ</button>
-        </div>
-        <div class="footer">
-            Shenwang Admin Panel
-        </div>
+    <div class="card">
+      <h3>รายชื่อผู้ใช้งานที่ถูกแบน</h3>
+      <table id="bannedUsersTable">
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>UID</th>
+            <th>เหตุผลการแบน</th>
+            <th>วันที่แบน</th>
+          </tr>
+        </thead>
+        <tbody id="bannedUsersTableBody">
+          <!-- Dynamic Content -->
+        </tbody>
+      </table>
     </div>
+  </div>
 
-    <div class="content" id="banList">
-        <div class="card">
-            <h2>การจัดการผู้ใช้งานที่ถูกแบน</h2>
-            <div id="banListDetails">กำลังโหลดข้อมูล...</div>
-            <div class="ban-form">
-                <h3>ฟอร์มการแบน/ปลดแบนผู้ใช้งาน</h3>
-                <input type="text" id="uidInput" placeholder="กรอก UID ของผู้ใช้งาน" />
-                <input type="email" id="emailInput" placeholder="กรอก Email ของผู้ใช้งาน" />
-                <input type="text" id="reasonInput" placeholder="กรอกเหตุผลที่แบน" />
-                <textarea id="notesInput" placeholder="กรอกหมายเหตุเพิ่มเติม (ถ้ามี)"></textarea>
-                <button id="banButton">แบนผู้ใช้งาน</button>
-                <button id="unbanButton">ปลดแบนผู้ใช้งาน</button>
-            </div>
-        </div>
-        <div class="footer">
-            Shenwang Admin Panel
-        </div>
+  <!-- Section: Login Users -->
+  <div class="content" id="loginUsersSection">
+    <div class="card">
+      <h2>รายชื่อผู้ใช้งานที่ล็อกอิน</h2>
+      <table id="loginUsersTable">
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>UID</th>
+            <th>เวลาเข้าใช้งานล่าสุด</th>
+          </tr>
+        </thead>
+        <tbody id="loginUsersTableBody">
+          <!-- Dynamic Content -->
+        </tbody>
+      </table>
     </div>
+  </div>
 
-    <div class="content" id="userList">
-        <div class="card">
-            <h2>รายชื่อผู้ใช้งานที่ล็อกอิน</h2>
-            <div id="userListDetails">กำลังโหลดข้อมูล...</div>
-        </div>
-        <div class="footer">
-            Shenwang Admin Panel
-        </div>
-    </div>
+  <!-- Firebase Logic -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+    import { getFirestore, doc, getDoc, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
-    <script type="module">
-        // Firebase สำหรับ Authentication
-        const firebaseConfigAuth = {
-            apiKey: "AIzaSyC-UwBguZRGdrIWLVkTsCRlt02vKOAlOlA",
-            authDomain: "shenwang-auth-user.firebaseapp.com",
-            projectId: "shenwang-auth-user",
-            storageBucket: "shenwang-auth-user.firebasestorage.app",
-            messagingSenderId: "273542969972",
-            appId: "1:273542969972:web:4d6ce4edf5188b98dbef21"
-        };
+    // ------------------ Firebase Configs ------------------
+    const firebaseConfig = {
+      apiKey: "AIzaSyC3CZEV1yVSKa9MsO70B7usSVQiwJ1FwbI",
+      authDomain: "shenwang-admin.firebaseapp.com",
+      projectId: "shenwang-admin",
+      storageBucket: "shenwang-admin.firebasestorage.app",
+      messagingSenderId: "94650883832",
+      appId: "1:94650883832:web:f1423799237e5a44c9a50d"
+    };
 
-        // Firebase สำหรับ Firestore
-        const firebaseConfigFirestore = {
-            apiKey: "AIzaSyC3CZEV1yVSKa9MsO70B7usSVQiwJ1FwbI",
-            authDomain: "shenwang-admin.firebaseapp.com",
-            projectId: "shenwang-admin",
-            storageBucket: "shenwang-admin.firebasestorage.app",
-            messagingSenderId: "94650883832",
-            appId: "1:94650883832:web:f1423799237e5a44c9a50d"
-        };
+    const firebaseConfigAuth = {
+      apiKey: "AIzaSyC-UwBguZRGdrIWLVkTsCRlt02vKOAlOlA",
+      authDomain: "shenwang-auth-user.firebaseapp.com",
+      projectId: "shenwang-auth-user",
+      storageBucket: "shenwang-auth-user.firebasestorage.app",
+      messagingSenderId: "273542969972",
+      appId: "1:273542969972:web:4d6ce4edf5188b98dbef21"
+    };
 
-        // นำเข้า Firebase และเริ่มการเชื่อมต่อ
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+    const platformConfig = {
+      apiKey: "AIzaSyAT7SebrpGQlmGpL78Hc1tU8tHoX9LdIYg",
+      authDomain: "platform-dabc0.firebaseapp.com",
+      projectId: "platform-dabc0",
+      storageBucket: "platform-dabc0.firebasestorage.app",
+      messagingSenderId: "210971684025",
+      appId: "1:210971684025:web:e2186cde81b2c07da37f68",
+      measurementId: "G-NJRHYHQ26D"
+    };
 
-        // กำหนดแอป Firebase สำหรับ Authentication
-        const appAuth = initializeApp(firebaseConfigAuth, "authApp");
+    // ------------------ Initialize Apps ------------------
+    const appMain = initializeApp(firebaseConfig, "mainApp");
+    const db = getFirestore(appMain);
 
-        // กำหนดแอป Firebase สำหรับ Firestore
-        const appFirestore = initializeApp(firebaseConfigFirestore, "firestoreApp");
+    const appAuth = initializeApp(firebaseConfigAuth, "authApp");
+    const auth = getAuth(appAuth);
 
-        // การใช้งาน Firestore
-        const db = getFirestore(appFirestore);
+    const appPlatform = initializeApp(platformConfig, "platformApp");
+    const dbPlatform = getFirestore(appPlatform);
 
-        // การใช้งาน Firebase Auth
-        const auth = getAuth(appAuth);
+    // ------------------ DOM Elements ------------------
+    const maintenanceSection = document.getElementById('maintenanceSection');
+    const banListSection = document.getElementById('banListSection');
+    const loginUsersSection = document.getElementById('loginUsersSection');
 
-        window.addEventListener('DOMContentLoaded', async function() {
-            const statusText = document.getElementById('statusText');
-            const toggleButton = document.getElementById('toggleButton');
-            const banListDetails = document.getElementById('banListDetails');
-            const userListDetails = document.getElementById('userListDetails');
-            const content = document.querySelectorAll('.content');
-            const uidInput = document.getElementById('uidInput');
-            const emailInput = document.getElementById('emailInput');
-            const reasonInput = document.getElementById('reasonInput');
-            const notesInput = document.getElementById('notesInput');
-            const banButton = document.getElementById('banButton');
-            const unbanButton = document.getElementById('unbanButton');
+    const maintenanceLink = document.getElementById('maintenanceLink');
+    const banListLink = document.getElementById('banListLink');
+    const loginUsersLink = document.getElementById('loginUsersLink');
 
-            let isMaintenance = false;
-            let usersList = [];
+    const toggleButton = document.getElementById('toggleButton');
+    const statusText = document.getElementById('statusText');
 
-            async function loadStatus() {
-                try {
-                    const docRef = doc(db, "settings", "maintenance");
-                    const docSnap = await getDoc(docRef);
+    const uidInput = document.getElementById('uidInput');
+    const emailInput = document.getElementById('emailInput');
+    const reasonInput = document.getElementById('reasonInput');
+    const notesInput = document.getElementById('notesInput');
+    const banButton = document.getElementById('banButton');
+    const unbanButton = document.getElementById('unbanButton');
 
-                    if (docSnap.exists()) {
-                        const data = docSnap.data();
-                        isMaintenance = data.isMaintenance;
-                        updateStatusText();
-                    } else {
-                        console.log("ไม่พบข้อมูล maintenance ใน Firestore");
-                    }
-                } catch (error) {
-                    console.error("เกิดข้อผิดพลาดในการโหลดสถานะ:", error);
-                }
-            }
+    const bannedUsersTableBody = document.querySelector('#bannedUsersTableBody');
+    const loginUsersTableBody = document.querySelector('#loginUsersTableBody');
 
-            function updateStatusText() {
-                statusText.textContent = isMaintenance ? "กำลังปิดปรับปรุงเว็บไซต์" : "เว็บไซต์ออนไลน์ตามปกติ";
-                statusText.style.color = isMaintenance ? "#dc3545" : "#28a745";
-            }
+    // ------------------ Menu Navigation ------------------
+    maintenanceLink.addEventListener('click', () => {
+      showSection(maintenanceSection);
+    });
+    banListLink.addEventListener('click', () => {
+      showSection(banListSection);
+      loadBannedUsers();
+    });
+    loginUsersLink.addEventListener('click', () => {
+      showSection(loginUsersSection);
+      loadLoginUsers();
+    });
 
-            async function loadBanList() {
-                try {
-                    const banListRef = doc(db, "ban_list", "users");
-                    const docSnap = await getDoc(banListRef);
+    function showSection(section) {
+      [maintenanceSection, banListSection, loginUsersSection].forEach(s => s.style.display = 'none');
+      section.style.display = 'block';
+    }
 
-                    if (docSnap.exists()) {
-                        const banListData = docSnap.data();
-                        const users = Object.values(banListData);
+    // ------------------ Maintenance ------------------
+    let isMaintenance = false;
 
-                        let html = `<table border="1" cellpadding="10" style="width:100%; border-collapse: collapse;">
-                            <thead>
-                                <tr>
-                                    <th>Email</th>
-                                    <th>UID</th>
-                                    <th>สถานะ</th>
-                                    <th>เหตุผล</th>
-                                    <th>หมายเหตุ</th>
-                                    <th>เริ่มแบน</th>
-                                    <th>หมดอายุ</th>
-                                    <th>แบนโดย</th>
-                                    <th>ปลดแบนโดย</th>
-                                    <th>ปลดแบนเมื่อ</th>
-                                </tr>
-                            </thead>
-                            <tbody>`;
+    async function loadMaintenanceStatus() {
+      const docRef = doc(db, "settings", "maintenance");
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        isMaintenance = docSnap.data().isMaintenance;
+        updateStatusText();
+      }
+    }
 
-                        for (const uid in banListData) {
-                            const user = banListData[uid];
-                            html += `
-                                <tr>
-                                    <td>${user.email || '-'}</td>
-                                    <td>${user.uid || '-'}</td>
-                                    <td>${user.status || '-'}</td>
-                                    <td>${user.reason || '-'}</td>
-                                    <td>${user.notes || '-'}</td>
-                                    <td>${user.bannedAt ? new Date(user.bannedAt.seconds * 1000).toLocaleString() : '-'}</td>
-                                    <td>${user.banExpiresAt ? new Date(user.banExpiresAt.seconds * 1000).toLocaleString() : '-'}</td>
-                                    <td>${user.bannedBy || '-'}</td>
-                                    <td>${user.unbannedBy || '-'}</td>
-                                    <td>${user.unbannedAt ? new Date(user.unbannedAt.seconds * 1000).toLocaleString() : '-'}</td>
-                                </tr>`;
-                        }
+    function updateStatusText() {
+      statusText.textContent = isMaintenance ? "เว็บไซต์อยู่ในโหมดปิดปรับปรุง" : "เว็บไซต์ออนไลน์ปกติ";
+      statusText.style.color = isMaintenance ? "red" : "green";
+    }
 
-                        html += '</tbody></table>';
-                        banListDetails.innerHTML = html;
-                    } else {
-                        console.log("ไม่พบข้อมูล ban list");
-                        banListDetails.textContent = "ไม่พบข้อมูลในระบบ";
-                    }
-                } catch (error) {
-                    console.error("เกิดข้อผิดพลาดในการโหลด ban list:", error);
-                    banListDetails.textContent = "เกิดข้อผิดพลาดในการโหลดข้อมูล";
-                }
-            }
+    toggleButton.addEventListener('click', async () => {
+      isMaintenance = !isMaintenance;
+      await setDoc(doc(db, "settings", "maintenance"), { isMaintenance });
+      updateStatusText();
+    });
 
-            async function loadUserList() {
-                try {
-                    // ฟังก์ชั่น onAuthStateChanged จะถูกเรียกเมื่อสถานะการล็อกอินของผู้ใช้เปลี่ยนแปลง
-                    onAuthStateChanged(auth, (user) => {
-                        if (user) {
-                            // ผู้ใช้งานที่ล็อกอินแล้ว
-                            console.log("ผู้ใช้งานที่ล็อกอิน:", user.email);
-                            // เพิ่มผู้ใช้งานเข้าในลิสต์
-                            usersList.push({
-                                email: user.email,
-                                uid: user.uid,
-                                displayName: user.displayName || 'ไม่มีชื่อ',
-                                lastSignInTime: user.metadata.lastSignInTime
-                            });
-                            displayUserList();
-                        } else {
-                            console.log("ไม่มีผู้ใช้งานที่ล็อกอิน");
-                        }
-                    });
-                } catch (error) {
-                    console.error("เกิดข้อผิดพลาดในการดึงข้อมูลผู้ใช้งาน:", error);
-                }
-            }
+    // ------------------ Ban User ------------------
+    banButton.addEventListener('click', async () => {
+      const uid = uidInput.value.trim();
+      const email = emailInput.value.trim();
+      const reason = reasonInput.value.trim();
+      const notes = notesInput.value.trim();
 
-            function displayUserList() {
-                const userListContainer = document.getElementById('userListDetails');
-                let html = `<table border="1" cellpadding="10" style="width:100%; border-collapse: collapse;">
-                    <thead>
-                        <tr>
-                            <th>Email</th>
-                            <th>UID</th>
-                            <th>ชื่อผู้ใช้งาน</th>
-                            <th>เวลาเข้าสู่ระบบล่าสุด</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
+      if (!uid || !email) return alert("กรอก UID และ Email ให้ครบ");
 
-                usersList.forEach(user => {
-                    html += `
-                        <tr>
-                            <td>${user.email}</td>
-                            <td>${user.uid}</td>
-                            <td>${user.displayName}</td>
-                            <td>${new Date(user.lastSignInTime).toLocaleString()}</td>
-                        </tr>`;
-                });
+      await setDoc(doc(db, "banned_users", uid), {
+        email,
+        reason,
+        notes,
+        bannedAt: new Date().toISOString()
+      });
+      alert("แบนผู้ใช้งานเรียบร้อย");
+      loadBannedUsers(); // Load updated ban list
+    });
 
-                html += '</tbody></table>';
-                userListContainer.innerHTML = html;
-            }
+    unbanButton.addEventListener('click', async () => {
+      const uid = uidInput.value.trim();
+      if (!uid) return alert("กรอก UID ก่อนปลดแบน");
+      await setDoc(doc(db, "banned_users", uid), {}, { merge: false });
+      alert("ปลดแบนเรียบร้อย");
+      loadBannedUsers(); // Load updated ban list
+    });
 
-            // ฟังก์ชั่นสลับสถานะการปิดปรับปรุง
-            toggleButton.addEventListener('click', async function() {
-                isMaintenance = !isMaintenance;
-                const docRef = doc(db, "settings", "maintenance");
-                await setDoc(docRef, { isMaintenance });
-                updateStatusText();
-            });
+    // ------------------ Load Banned Users ------------------
+    async function loadBannedUsers() {
+      bannedUsersTableBody.innerHTML = "";
+      const snapshot = await getDocs(collection(db, "banned_users"));
+      snapshot.forEach(docSnap => {
+        const data = docSnap.data();
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${data.email || "-"}</td>
+          <td>${docSnap.id}</td>
+          <td>${data.reason || "-"}</td>
+          <td>${new Date(data.bannedAt).toLocaleString() || "-"}</td>
+        `;
+        bannedUsersTableBody.appendChild(tr);
+      });
+    }
 
-            // ฟังก์ชั่นการแบนผู้ใช้งาน
-            banButton.addEventListener('click', async function() {
-                const uid = uidInput.value.trim();
-                const email = emailInput.value.trim();
-                const reason = reasonInput.value.trim();
-                const notes = notesInput.value.trim();
+    // ------------------ Load Logged In Users ------------------
+    async function loadLoginUsers() {
+      loginUsersTableBody.innerHTML = "";
+      const snapshot = await getDocs(collection(dbPlatform, "users"));
+      snapshot.forEach(docSnap => {
+        const data = docSnap.data();
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${data.email || "-"}</td>
+          <td>${docSnap.id}</td>
+          <td>${data.lastLogin || "-"}</td>
+        `;
+        loginUsersTableBody.appendChild(tr);
+      });
+    }
 
-                if (uid && email && reason) {
-                    try {
-                        const banListRef = doc(db, "ban_list", "users");
-                        const docSnap = await getDoc(banListRef);
-
-                        if (docSnap.exists()) {
-                            const banListData = docSnap.data();
-                            banListData[uid] = {
-                                email,
-                                uid,
-                                status: 'แบน',
-                                reason,
-                                notes,
-                                bannedAt: new Date(),
-                                bannedBy: "Admin"
-                            };
-
-                            await setDoc(banListRef, banListData);
-                            alert("แบนผู้ใช้งานสำเร็จ!");
-                            loadBanList();
-                        }
-                    } catch (error) {
-                        console.error("เกิดข้อผิดพลาดในการแบนผู้ใช้งาน:", error);
-                    }
-                } else {
-                    alert("กรุณากรอกข้อมูลให้ครบถ้วน!");
-                }
-            });
-
-            // ฟังก์ชั่นการปลดแบนผู้ใช้งาน
-            unbanButton.addEventListener('click', async function() {
-                const uid = uidInput.value.trim();
-
-                if (uid) {
-                    try {
-                        const banListRef = doc(db, "ban_list", "users");
-                        const docSnap = await getDoc(banListRef);
-
-                        if (docSnap.exists()) {
-                            const banListData = docSnap.data();
-                            if (banListData[uid]) {
-                                delete banListData[uid];
-                                await setDoc(banListRef, banListData);
-                                alert("ปลดแบนผู้ใช้งานสำเร็จ!");
-                                loadBanList();
-                            } else {
-                                alert("ไม่พบข้อมูลผู้ใช้งานที่แบนในระบบ!");
-                            }
-                        }
-                    } catch (error) {
-                        console.error("เกิดข้อผิดพลาดในการปลดแบนผู้ใช้งาน:", error);
-                    }
-                } else {
-                    alert("กรุณากรอก UID ของผู้ใช้งานที่ต้องการปลดแบน!");
-                }
-            });
-
-            // การโหลดข้อมูลเริ่มต้น
-            loadStatus();
-            loadBanList();
-            loadUserList();
-
-            // การแสดงผลหน้าเมนูต่างๆ
-            document.getElementById('maintenanceLink').addEventListener('click', function() {
-                content.forEach(page => page.style.display = 'none');
-                document.getElementById('maintenance').style.display = 'block';
-            });
-
-            document.getElementById('banListLink').addEventListener('click', function() {
-                content.forEach(page => page.style.display = 'none');
-                document.getElementById('banList').style.display = 'block';
-            });
-
-            document.getElementById('userListLink').addEventListener('click', function() {
-                content.forEach(page => page.style.display = 'none');
-                document.getElementById('userList').style.display = 'block';
-                loadUserList(); // โหลดข้อมูลผู้ใช้งานที่ล็อกอิน
-            });
-
-        });
-    </script>
+    loadMaintenanceStatus();
+  </script>
 </body>
 </html>
