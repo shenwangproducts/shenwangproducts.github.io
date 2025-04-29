@@ -1,97 +1,139 @@
-import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-import { db } from "../firebase-app.js";
+// Firebase Configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyC-UwBguZRGdrIWLVkTsCRlt02vKOAlOlA",
+  authDomain: "shenwang-auth-user.firebaseapp.com",
+  projectId: "shenwang-auth-user",
+  storageBucket: "shenwang-auth-user.firebasestorage.app",
+  messagingSenderId: "273542969972",
+  appId: "1:273542969972:web:4d6ce4edf5188b98dbef21"
+};
 
-// เช็ค maintenance
-async function checkMaintenance() {
-  const ref = doc(db, "maintenance_status", "tbPcdWyBJTZrDDdRrTGA");
-  try {
-    const snapshot = await getDoc(ref);
-    if (snapshot.exists() && snapshot.data().istMaintenance === true) {
-      window.location.href = "maintenance.html";
-    }
-  } catch (e) {
-    console.error("Maintenance check error:", e);
-  }
+// Initialize Firebase
+const app = firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+// ฟังก์ชันพูดแนะนำตัว
+let hasSpokenIntro = false;
+
+function speakIntro() {
+  if (hasSpokenIntro) return;
+  const intro = new SpeechSynthesisUtterance("你好，我是零曦，网站的第二代AI。你可以问我任何你感兴趣的事情");
+  intro.lang = 'zh-CN';
+  intro.pitch = 1.2;
+  intro.rate = 1.0;
+  intro.onend = function () {
+    const next = new SpeechSynthesisUtterance("Please select the menu you are interested in above.");
+    next.lang = 'en-US';
+    next.pitch = 1.0;
+    next.rate = 1.0;
+    speechSynthesis.speak(next);
+  };
+  speechSynthesis.cancel();
+  speechSynthesis.speak(intro);
+  hasSpokenIntro = true;
 }
-checkMaintenance();
 
-// Intro + Popup
-window.addEventListener("load", () => {
-  if (!localStorage.getItem("popupShown")) {
-    document.getElementById("popup").style.display = "flex";
-  }
-  if (!localStorage.getItem("cookiesAccepted")) {
-    document.getElementById("cookieConsent").style.display = "block";
-  }
-
-  const isLoggedIn = localStorage.getItem("isLoggedIn");
-  const signupButton = document.getElementById("signupButton");
-  if (isLoggedIn === "true") {
-    signupButton.textContent = "dashboard";
-    signupButton.onclick = () => window.location.href = "dashboard.html";
-  }
-});
-
-window.closePopup = () => {
+// ฟังก์ชันปิด Popup และพูดแนะนำตัวเมื่อปิด
+function closePopup() {
   if (document.getElementById("dontShowAgain").checked) {
     localStorage.setItem("popupShown", "true");
   }
   document.getElementById("popup").style.display = "none";
   speakIntro();
-};
-
-function speakIntro() {
-  if (window.hasSpokenIntro) return;
-  const intro = new SpeechSynthesisUtterance("你好，我是零曦，网站的第二代AI。你可以问我任何你感兴趣的事情");
-  intro.lang = "zh-CN";
-  intro.pitch = 1.2;
-  intro.onend = () => {
-    const next = new SpeechSynthesisUtterance("Please select the menu you are interested in above.");
-    next.lang = "en-US";
-    speechSynthesis.speak(next);
-  };
-  speechSynthesis.cancel();
-  speechSynthesis.speak(intro);
-  window.hasSpokenIntro = true;
 }
 
-// คุกกี้
-window.acceptCookies = () => {
-  localStorage.setItem("cookiesAccepted", "true");
-  document.getElementById("cookieConsent").style.display = "none";
-};
-window.declineCookies = () => {
-  localStorage.setItem("cookiesAccepted", "false");
-  document.getElementById("cookieConsent").style.display = "none";
-};
-
-// เปลี่ยนหน้า
-window.changePage = (page) => {
-  const message = new SpeechSynthesisUtterance();
-  message.lang = "th-TH";
+// ฟังก์ชันเปลี่ยนหน้า
+function changePage(page) {
+  const message = new SpeechSynthesisUtterance("");
+  message.lang = 'th-TH';
   message.pitch = 1.1;
+  message.rate = 1.1;
+
+  let pageMessage = "";
 
   switch (page) {
-    case 'promo': message.text = "กำลังเข้าสู่หน้าหลัก โปรโมทแอปของเรา"; break;
-    case 'news': message.text = "กำลังเข้าสู่หน้าข่าวสาร"; break;
-    case 'dowload': message.text = "กำลังเข้าสู่หน้าดาวน์โหลด"; break;
-    case 'contact': message.text = "กำลังเข้าสู่หน้าติดต่อเรา"; break;
-    case 'signup': message.text = "กำลังไปหน้าลงทะเบียน"; break;
-    default: message.text = "กำลังย้อนไปหน้าแรก";
+    case 'promo':
+      pageMessage = "กำลังเข้าสู่หน้าหลัก โปรโมทแอปของเรา";
+      break;
+    case 'news':
+      pageMessage = "กำลังเข้าสู่หน้าข่าวสาร";
+      break;
+    case 'download':
+      pageMessage = "กำลังเข้าสู่หน้าดาวน์โหลด กรุณาอ่านข้อตกลงก่อนดาวน์โหลด";
+      break;
+    case 'contact':
+      pageMessage = "กำลังเข้าสู่หน้าติดต่อเรา";
+      break;
+    case 'signup':
+      pageMessage = "กำลังไปหน้าลงทะเบียน";
+      break;
+    default:
+      pageMessage = "กำลังย้อนไปหน้าแรก";
   }
 
+  message.text = pageMessage;
   speechSynthesis.cancel();
   speechSynthesis.speak(message);
-  message.onend = () => {
-    const pages = {
-      promo: 'index.html',
-      news: 'news.html',
-      dowload: 'dowload.html',
-      contact: 'contact.html',
-      signup: 'signup.html'
-    };
-    window.location.href = pages[page] || 'index.html';
-  };
-};
 
-window.startPromotion = () => window.location.href = "promo_submit.html";
+  message.onend = function () {
+    switch (page) {
+      case 'promo':
+        window.location.href = 'index.html';
+        break;
+      case 'news':
+        window.location.href = 'news.html';
+        break;
+      case 'download':
+        window.location.href = 'download.html';
+        break;
+      case 'contact':
+        window.location.href = 'contact.html';
+        break;
+      case 'signup':
+        window.location.href = 'signup.html';
+        break;
+      default:
+        window.location.href = 'index.html';
+    }
+  };
+}
+
+// ฟังก์ชันเริ่มโปรโมท
+function startPromotion() {
+  window.location.href = "promo_submit.html";
+}
+
+// เช็คว่าจะแสดง popup ไหม
+if (!localStorage.getItem("popupShown")) {
+  document.getElementById("popup").style.display = "flex";
+}
+
+// ตรวจสอบสถานะล็อกอิน
+document.addEventListener("DOMContentLoaded", function () {
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const signupButton = document.getElementById("signupButton");
+  if (isLoggedIn === "true") {
+    signupButton.textContent = "dashboard";
+    signupButton.onclick = function () {
+      window.location.href = "dashboard.html";
+    };
+  }
+});
+
+// ฟังก์ชันคุกกี้
+function acceptCookies() {
+  localStorage.setItem("cookiesAccepted", "true");
+  document.getElementById("cookieConsent").style.display = "none";
+}
+
+function declineCookies() {
+  localStorage.setItem("cookiesAccepted", "false");
+  document.getElementById("cookieConsent").style.display = "none";
+}
+
+// แสดงคุกกี้เมื่อโหลดหน้า
+window.addEventListener('load', function () {
+  if (!localStorage.getItem("cookiesAccepted")) {
+    document.getElementById("cookieConsent").style.display = "block";
+  }
+}); 
