@@ -84,7 +84,7 @@ function changePage(page) {
         window.location.href = 'news.html';
         break;
       case 'download':
-        window.location.href = 'download.html';
+        window.location.href = 'dowload.html';
         break;
       case 'contact':
         window.location.href = 'contact.html';
