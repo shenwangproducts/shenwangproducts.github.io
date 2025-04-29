@@ -93,7 +93,7 @@ function changePage(page) {
         window.location.href = 'signup.html';
         break;
       default:
-        window.location.href = 'index.html';
+        window.location.href = 'promo_display.html';
     }
   };
 }
