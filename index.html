@@ -1,15 +1,11 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Shenwang Media</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
 </head>
 <body>
   <header>
@@ -59,8 +55,11 @@
     <button onclick="declineCookies()" style="padding: 8px 15px; background: #f44336; color: white; border: none; border-radius: 5px;">ปฏิเสธ</button>
   </div>
 
+  <!-- Firebase: ใช้แบบโมดูล -->
   <script type="module">
-    // Firebase Configuration
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
     const firebaseConfig = {
       apiKey: "AIzaSyC-UwBguZRGdrIWLVkTsCRlt02vKOAlOlA",
       authDomain: "shenwang-auth-user.firebaseapp.com",
@@ -70,40 +69,36 @@
       appId: "1:273542969972:web:4d6ce4edf5188b98dbef21"
     };
 
-    // Initialize Firebase
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // ฟังก์ชันตรวจสอบสถานะการบำรุงรักษา
-    function checkMaintenance() {
-      // ดึงข้อมูลจาก collection maintenance_status และ document tbPcdWyBJTZrDDdRrTGA
-      const docRef = doc(db, "maintenance_status", "tbPcdWyBJTZrDDdRrTGA");
+    // ตรวจสอบสถานะการบำรุงรักษา
+    async function checkMaintenance() {
+      try {
+        const docRef = doc(db, "maintenance_status", "tbPcdWyBJTZrDDdRrTGA");
+        const snapshot = await getDoc(docRef);
 
-      getDoc(docRef).then((doc) => {
-        if (doc.exists()) {
-          const data = doc.data();
+        if (snapshot.exists()) {
+          const data = snapshot.data();
           if (data.istMaintenance === true) {
-            window.location.href = "maintenance.html"; // หรือแสดงหน้าอื่นตามที่ต้องการ
+            window.location.href = "maintenance.html";
           } else {
             console.log("Maintenance mode is OFF");
           }
         } else {
           console.log("No maintenance status found in Firestore.");
         }
-      }).catch((error) => {
+      } catch (error) {
         console.error("Error getting document:", error);
-      });
+      }
     }
 
-    // เรียกใช้ฟังก์ชันเมื่อโหลดหน้า
-    window.addEventListener('load', function () {
-      checkMaintenance(); // ตรวจสอบสถานะการบำรุงรักษา
+    window.addEventListener("load", () => {
+      checkMaintenance();
     });
   </script>
 
+  <!-- สคริปต์หลัก -->
   <script src="js/script.js"></script>
 </body>
 </html>
