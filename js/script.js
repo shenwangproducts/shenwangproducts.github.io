@@ -78,7 +78,7 @@ function changePage(page) {
   message.onend = function () {
     switch (page) {
       case 'promo':
-        window.location.href = 'index.html';
+        window.location.href = 'promo_display.html';
         break;
       case 'news':
         window.location.href = 'news.html';
