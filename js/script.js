@@ -58,7 +58,7 @@ function changePage(page) {
     case 'news':
       pageMessage = "กำลังเข้าสู่หน้าข่าวสาร";
       break;
-    case 'download':
+    case 'dowload':
       pageMessage = "กำลังเข้าสู่หน้าดาวน์โหลด กรุณาอ่านข้อตกลงก่อนดาวน์โหลด";
       break;
     case 'contact':
@@ -78,12 +78,12 @@ function changePage(page) {
   message.onend = function () {
     switch (page) {
       case 'promo':
-        window.location.href = 'index.html';
+        window.location.href = '';
         break;
       case 'news':
         window.location.href = 'news.html';
         break;
-      case 'download':
+      case 'dowload':
         window.location.href = 'download.html';
         break;
       case 'contact':
@@ -92,8 +92,8 @@ function changePage(page) {
       case 'signup':
         window.location.href = 'signup.html';
         break;
-      default:
-        window.location.href = 'index.html';
+      
+        
     }
   };
 }
