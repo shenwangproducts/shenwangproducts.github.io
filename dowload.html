@@ -3,318 +3,238 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>เชื่อมต่อระหว่างเซิฟเวอร์</title>
+  <title>Shenwang Cloud Gaming</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;700&display=swap" rel="stylesheet">
   <style>
     * {
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
-      font-family: 'Orbitron', sans-serif;
     }
 
     body {
-      margin: 0;
-      background: linear-gradient(180deg, #05010f, #0a0033);
-      color: #39ff14;
-      animation: fadeIn 1.5s ease;
+      font-family: 'Noto Sans Thai', sans-serif;
+      background-color: #060e1d;
+      color: white;
       overflow-x: hidden;
     }
 
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
-    }
-
     header {
-      background: rgba(0, 0, 0, 0.7);
-      padding: 15px 30px;
+      width: 100%;
+      padding: 20px 60px;
+      background-color: #000000e6;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 2px solid #00f7ff;
-      box-shadow: 0 0 20px #00f7ff;
+      position: sticky;
+      top: 0;
+      z-index: 999;
     }
 
     .logo {
-      display: flex;
-      align-items: center;
-    }
-
-    .logo img {
-      height: 40px;
-      margin-right: 10px;
-      border-radius: 50%;
-      box-shadow: 0 0 15px #f0f;
+      font-weight: bold;
+      font-size: 20px;
+      color: #00d5ff;
     }
 
     nav ul {
       list-style: none;
       display: flex;
-      gap: 20px;
+      gap: 30px;
     }
 
     nav ul li a {
-      color: #39ff14;
       text-decoration: none;
-      transition: 0.3s;
+      color: white;
+      font-weight: 500;
     }
 
     nav ul li a:hover {
-      color: #f0f;
-      text-shadow: 0 0 5px #f0f;
+      color: #00d5ff;
     }
 
-    #content {
-      padding: 40px 20px;
-      max-width: 1000px;
-      margin: auto;
-      text-align: center;
-    }
-
-    .dowload-title {
-      font-size: 32px;
-      color: #00f7ff;
-      text-shadow: 0 0 10px #00f7ff;
-    }
-
-    .dowload-description {
-      font-size: 18px;
-      color: #ccc;
-      margin-bottom: 30px;
-    }
-
-    .app-image-container img {
-      width: 100%;
-      max-width: 600px;
-      border-radius: 15px;
-      box-shadow: 0 0 25px #39ff14;
-      transition: 0.4s ease;
-    }
-
-    .app-image-container img:hover {
-      transform: scale(1.05);
-    }
-
-    .platform-options {
-      margin: 30px 0;
+    .hero {
+      position: relative;
       display: flex;
-      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      height: 90vh;
+      text-align: center;
+      background: linear-gradient(180deg, #0f172a 0%, #060e1d 100%);
+      overflow: hidden;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      color: #00d5ff;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 20px;
+      margin-bottom: 40px;
+      color: #c9d6e1;
+    }
+
+    .download-btn {
+      background: #00d5ff;
+      border: none;
+      padding: 18px 40px;
+      font-size: 18px;
+      border-radius: 30px;
+      font-weight: bold;
+      color: #000;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .download-btn:hover {
+      background: #00f0ff;
+      box-shadow: 0 0 10px #00eaff;
+    }
+
+    .platforms {
+      margin-top: 30px;
+      display: flex;
       justify-content: center;
       gap: 20px;
+      flex-wrap: wrap;
     }
 
     .platform-btn {
-      background: linear-gradient(45deg, #00f7ff, #f0f);
-      color: #000;
-      padding: 15px 30px;
+      background: #1c2b46;
+      color: #fff;
+      padding: 10px 25px;
       border: none;
-      border-radius: 50px;
-      font-weight: bold;
+      border-radius: 20px;
+      font-size: 14px;
       cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: 0.2s;
     }
 
     .platform-btn:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 20px #39ff14;
+      background: #00d5ff;
+      color: #000;
     }
 
-    .file-info p {
-      margin: 8px 0;
-      color: #ccc;
-    }
-
-    .video-container {
-      margin: 30px 0;
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      overflow: hidden;
-      border-radius: 15px;
-      box-shadow: 0 0 30px #00f7ff;
-    }
-
-    .video-container iframe {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-    }
-
-    .image-previews {
-      margin-top: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-    }
-
-    .image-previews img {
-      width: 30%;
-      border-radius: 10px;
-      box-shadow: 0 0 15px #f0f;
+    .game-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 12px;
       transition: transform 0.3s ease;
     }
 
-    .image-previews img:hover {
+    .game-card img:hover {
       transform: scale(1.05);
     }
 
-    .progress-bar {
-      background: #333;
-      height: 12px;
-      border-radius: 20px;
-      overflow: hidden;
-      margin: 40px auto;
-      max-width: 700px;
-    }
-
-    .progress {
-      background: linear-gradient(to right, #00f7ff, #f0f);
-      width: 60%;
-      height: 100%;
-      animation: loadAnim 3s ease-in-out forwards;
-    }
-
-    @keyframes loadAnim {
-      from {width: 0;}
-      to {width: 60%;}
-    }
-
-    .warning {
-      margin: 30px 0;
-    }
-
-    .warning label {
-      color: #ccc;
-    }
-
-    #dowload-btn {
-      background: #39ff14;
-      border: none;
-      padding: 10px 25px;
-      border-radius: 30px;
-      color: #000;
-      font-weight: bold;
-      cursor: not-allowed;
-      opacity: 0.5;
-      transition: all 0.3s ease;
-    }
-
-    #dowload-btn.enabled {
-      cursor: pointer;
-      opacity: 1;
-      background: #00ffcc;
-      box-shadow: 0 0 15px #00ffcc;
-    }
-
-    #dowload-btn.enabled:hover {
-      background: #0ff;
-    }
-
-    .support-link a {
-      color: #00f7ff;
+    .game-card {
+      background-color: #0a1a33;
+      padding: 15px;
+      border-radius: 14px;
+      transition: box-shadow 0.3s ease;
       text-decoration: none;
+      color: white;
     }
 
-    .support-link a:hover {
-      text-shadow: 0 0 10px #00f7ff;
+    .game-card:hover {
+      box-shadow: 0 0 10px rgba(0, 213, 255, 0.3);
     }
 
     footer {
       background: #000;
-      padding: 20px;
-      color: #666;
       text-align: center;
-      border-top: 1px solid #333;
-      margin-top: 50px;
+      padding: 20px;
+      font-size: 14px;
+      color: #888;
     }
   </style>
 </head>
 <body>
+
   <header>
-    <div class="logo">
-      <img src="assets/img/received.jpg" alt="Logo">
-      <span>Shenwang Space Link</span>
-    </div>
+    <div class="logo">Shenwang Cloud</div>
     <nav>
       <ul>
-        <li><a href="index.html">หน้าหลัก</a></li>
-        <li><a href="news.html">ข่าวสาร</a></li>
-        <li><a href="dowload.html">ช่องเชื่อม</a></li>
-        <li><a href="contact.html">ติดต่อ</a></li>
+        <li><a href="#">หน้าหลัก</a></li>
+        <li><a href="#">เกมทั้งหมด</a></li>
+        <li><a href="#">ข่าวสาร</a></li>
+        <li><a href="#">ติดต่อ</a></li>
       </ul>
     </nav>
   </header>
 
-  <div id="content">
-    <h1 class="dowload-title">อยู่ในเขตการปกครองเกม</h1>
-    <p class="dowload-description">ก้าวข้ามพรมแดนแห่งอวกาศและเวลาผ่านแอปนี้แค่แอพเดียวเล่นได้ทุกเกม</p>
+  <section class="hero">
+    <div class="hero-content">
+      <h1>เล่นเกม Android บน PC ได้ทันที</h1>
+      <p>ประสบการณ์เล่นเกมที่ลื่นไหล ปลอดภัย และเร็วขึ้นผ่านระบบคลาวด์ของ Shenwang</p>
+      <a href="#"><button class="download-btn">ดาวน์โหลดทันที</button></a>
+      <div class="platforms">
+        <a href="#"><button class="platform-btn">Windows</button></a>
+        <a href="#"><button class="platform-btn">macOS</button></a>
+        <a href="#"><button class="platform-btn">Android</button></a>
+      </div>
+    </div>
+  </section>
 
-    <div class="app-image-container">
-      <img src="assets/img/App_shenwang_hub.jpg" alt="App Image">
+  <section class="game-section" style="background-color:#031024; padding: 60px 40px;">
+    <h2 style="text-align:center; color:white; font-size: 32px; margin-bottom: 30px;">ค้นหาเกมตามประเภท</h2>
+
+    <div class="category-buttons" style="display:flex; flex-wrap:wrap; justify-content:center; gap:15px; margin-bottom:40px;">
+      <a href="#"><button class="platform-btn">เกมยอดนิยม</button></a>
+      <a href="#"><button class="platform-btn">เกมสุดพิเศษ</button></a>
+      <a href="#"><button class="platform-btn">ที่สุดของ RPG</button></a>
+      <a href="#"><button class="platform-btn">ที่สุดของกลยุทธ์</button></a>
+      <a href="#"><button class="platform-btn">ที่สุดของแอ็กชัน</button></a>
     </div>
 
-    <div class="platform-options">
-      <button class="platform-btn">Windows</button>
-      <button class="platform-btn">macOS</button>
-      <button class="platform-btn">Android</button>
+    <div class="game-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:25px; max-width: 1200px; margin:auto;">
+      <a href="#" class="game-card">
+        <img src="https://source.unsplash.com/featured/?batman" alt="DC" />
+        <p style="margin-top:10px; font-weight:bold;">DC: Dark Legion™</p>
+        <p style="font-size:13px; color:#ccc;">FunPlus International</p>
+      </a>
+
+      <a href="#" class="game-card">
+        <img src="https://source.unsplash.com/featured/?anime,girl" alt="Scarlet Girls" />
+        <p style="margin-top:10px; font-weight:bold;">Scarlet Girls</p>
+        <p style="font-size:13px; color:#ccc;">BURSTGAME</p>
+      </a>
+
+      <a href="#" class="game-card">
+        <img src="https://source.unsplash.com/featured/?battleship" alt="Yulgang" />
+        <p style="margin-top:10px; font-weight:bold;">Yulgang: ฮีโร่ยุทธภพ</p>
+        <p style="font-size:13px; color:#ccc;">9RING</p>
+      </a>
+
+      <a href="#" class="game-card">
+        <img src="https://source.unsplash.com/featured/?princess,anime" alt="Infinity Nikki" />
+        <p style="margin-top:10px; font-weight:bold;">Infinity Nikki</p>
+        <p style="font-size:13px; color:#ccc;">InFold Pte. Ltd.</p>
+      </a>
+
+      <a href="#" class="game-card">
+        <img src="https://source.unsplash.com/featured/?anime,sword" alt="Jujutsu Kaisen" />
+        <p style="margin-top:10px; font-weight:bold;">Jujutsu Kaisen</p>
+        <p style="font-size:13px; color:#ccc;">BILIBILI</p>
+      </a>
     </div>
 
-    <div class="file-info">
-      <p><strong>ขนาดไฟล์:</strong> 1.5 GB</p>
-      <p><strong>เวอร์ชัน:</strong> 1.0.0</p>
-      <p><strong>คู่มือการเชื่อมต่อ:</strong> ดูได้ในโฟลเดอร์หลังติดตั้ง</p>
+    <div style="text-align:center; margin-top: 40px;">
+      <a href="#"><button class="download-btn">ดูเกมทั้งหมด</button></a>
     </div>
-
-    <div class="video-container">
-      <iframe src="https://www.youtube.com/embed/BO-ZbxR6IcA" frameborder="0" allowfullscreen></iframe>
-    </div>
-
-    <div class="image-previews">
-      <img src="assets/img/game1.jpg" alt="Game 1">
-      <img src="assets/img/game2.jpg" alt="Game 2">
-      <img src="assets/img/game3.jpg" alt="Game 3">
-    </div>
-
-    <div class="progress-bar">
-      <div class="progress"></div>
-    </div>
-
-    <div class="warning">
-      <label><input type="checkbox" id="accept-terms"> ยอมรับข้อตกลงในการเข้าถึง</label><br><br>
-      <button id="dowload-btn">ยืนยันการเชื่อมต่อ</button>
-    </div>
-
-    <div class="support-link">
-      <a href="#">ขอความช่วยเหลือในการเดินทางย้ายเกมลงเครื่อง</a>
-    </div>
-  </div>
+  </section>
 
   <footer>
-    <p>Shenwang Cosmic Channel © 2025</p>
+    © 2025 Shenwang Cloud Gaming. All rights reserved.
   </footer>
 
-  <script>
-    const checkbox = document.getElementById('accept-terms');
-    const dowloadBtn = document.getElementById('dowload-btn');
-
-    checkbox.addEventListener('change', () => {
-      if (checkbox.checked) {
-        dowloadBtn.classList.add('enabled');
-        dowloadBtn.disabled = false;
-      } else {
-        dowloadBtn.classList.remove('enabled');
-        dowloadBtn.disabled = true;
-      }
-    });
-
-    dowloadBtn.addEventListener('click', () => {
-      if (checkbox.checked) {
-        alert("กดตกลงเพื่อเริ่มดาวโหลดได้เลย");
-      }
-    });
-
-    dowloadBtn.disabled = true;
-  </script>
 </body>
-</html> 
+</html>
