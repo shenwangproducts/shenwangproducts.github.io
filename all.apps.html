@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แอปพลิเคชันของคุณ</title>
+    <style>
+        /* CSS หลัก */
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        main section {
+            padding: 20px 0;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .grid-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .item-content {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .item-content h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .item-content a {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #ccc;
+            margin-top: 20px;
+            color: #777;
+        }
+
+        /* คลาสสำหรับซ่อนและแสดงส่วน */
+        .hidden-section {
+            display: none;
+        }
+
+        .active-section {
+            display: block;
+        }
+
+        /* สำหรับหน้าจอมือถือ */
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+
+            header {
+                padding-bottom: 10px;
+                margin-bottom: 10px;
+            }
+
+            nav ul li {
+                display: block;
+                margin: 10px 0;
+            }
+
+            .grid-container {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .grid-item {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ชื่อแอปพลิเคชัน</h1>
+            <nav>
+                <ul>
+                    <li><a href="#section1" data-target="section1">หัวข้อ 1</a></li>
+                    <li><a href="#section2" data-target="section2">หัวข้อ 2</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section id="section1" class="active-section">
+                <h2>เนื้อหาหัวข้อ 1</h2>
+                <div class="grid-container">
+                    <!-- เพิ่ม .grid-item ที่นี่ -->
+                </div>
+            </section>
+
+            <section id="section2" class="hidden-section">
+                <h2>เนื้อหาหัวข้อ 2</h2>
+                <div class="grid-container">
+                    <!-- เพิ่ม .grid-item ที่นี่ -->
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 แอปพลิเคชันของคุณ</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('nav a');
+            const sections = document.querySelectorAll('main section');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const targetId = this.getAttribute('data-target');
+
+                    // ซ่อนทุกส่วน
+                    sections.forEach(section => {
+                        section.classList.remove('active-section');
+                        section.classList.add('hidden-section');
+                    });
+
+                    // แสดงส่วนที่เลือก
+                    const targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        targetSection.classList.remove('hidden-section');
+                        targetSection.classList.add('active-section');
+                    }
+                });
+            });
+
+            // ตั้งค่าส่วนแรกให้แสดงเมื่อโหลดหน้า
+            if (sections.length > 0) {
+                sections[0].classList.remove('hidden-section');
+                sections[0].classList.add('active-section');
+            }
+        });
+    </script>
+</body>
+  </html>
