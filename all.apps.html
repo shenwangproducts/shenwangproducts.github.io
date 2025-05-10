@@ -7,8 +7,8 @@
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f8f9fa;
-      color: #212529;
+      background: linear-gradient(180deg, #0a0f2c, #001f3f);
+      color: #f1f1f1;
     }
     header {
       background: linear-gradient(90deg, #0033a0, #007bff);
@@ -22,12 +22,12 @@
     }
     .category-section {
       padding: 40px 20px;
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid #444;
     }
     .category-section h2 {
       font-size: 1.8em;
       margin-bottom: 20px;
-      color: #0033a0;
+      color: #66b2ff;
     }
     .game-list {
       display: grid;
@@ -35,24 +35,24 @@
       gap: 20px;
     }
     .game-card {
-      background: white;
+      background: #1a1a2e;
       border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
       padding: 20px;
       text-align: center;
     }
     .game-card h3 {
       margin: 10px 0 5px;
       font-size: 1.2em;
-      color: #007bff;
+      color: #00bfff;
     }
     .game-card p {
       margin: 0;
       font-size: 0.9em;
-      color: #666;
+      color: #aaa;
     }
     footer {
-      background: #343a40;
+      background: #0d0d1a;
       color: white;
       text-align: center;
       padding: 30px 20px;
@@ -69,6 +69,7 @@
       display: inline-block;
       margin: 0 10px;
       font-size: 0.9em;
+      color: #ccc;
     }
   </style>
 </head>
@@ -78,49 +79,196 @@
     <p>สำรวจเกมจากทุกประเภท พร้อมข้อมูลบริษัทผู้พัฒนา</p>
   </header>
   <main>
-    <!-- ใส่ตัวอย่างหมวด 2-3 หมวดก่อน -->
+    <!-- 27 ประเภทเกม -->
     <section class="category-section">
       <h2>1. Action (แอ็กชัน)</h2>
       <div class="game-list">
-        <div class="game-card">
-          <h3>Devil May Cry</h3>
-          <p>Capcom</p>
-        </div>
-        <div class="game-card">
-          <h3>Call of Duty</h3>
-          <p>Activision</p>
-        </div>
+        <div class="game-card"><h3>Call of Duty</h3><p>Activision</p></div>
+        <div class="game-card"><h3>Devil May Cry</h3><p>Capcom</p></div>
       </div>
-    </section><section class="category-section">
-  <h2>2. Adventure (ผจญภัย)</h2>
-  <div class="game-list">
-    <div class="game-card">
-      <h3>The Legend of Zelda</h3>
-      <p>Nintendo</p>
-    </div>
-    <div class="game-card">
-      <h3>Uncharted</h3>
-      <p>Naughty Dog</p>
-    </div>
-  </div>
-</section>
-
-<section class="category-section">
-  <h2>3. RPG (เกมสวมบทบาท)</h2>
-  <div class="game-list">
-    <div class="game-card">
-      <h3>The Witcher 3</h3>
-      <p>CD Projekt</p>
-    </div>
-    <div class="game-card">
-      <h3>Final Fantasy XV</h3>
-      <p>Square Enix</p>
-    </div>
-  </div>
-</section>
-
-<!-- สามารถเพิ่มหมวดที่เหลืออีก 24 หมวดในรูปแบบเดียวกัน -->
-
+    </section>
+    <section class="category-section">
+      <h2>2. Adventure (ผจญภัย)</h2>
+      <div class="game-list">
+        <div class="game-card"><h3>Uncharted</h3><p>Naughty Dog</p></div>
+        <div class="game-card"><h3>The Legend of Zelda</h3><p>Nintendo</p></div>
+      </div>
+    </section>
+    <section class="category-section">
+      <h2>3. RPG (เกมสวมบทบาท)</h2>
+      <div class="game-list">
+        <div class="game-card"><h3>The Witcher 3</h3><p>CD Projekt</p></div>
+        <div class="game-card"><h3>Final Fantasy XV</h3><p>Square Enix</p></div>
+      </div>
+    </section>
+    <section class="category-section">
+      <h2>4. Strategy (กลยุทธ์)</h2>
+      <div class="game-list">
+        <div class="game-card"><h3>Age of Empires</h3><p>Microsoft</p></div>
+        <div class="game-card"><h3>StarCraft II</h3><p>Blizzard</p></div>
+      </div>
+    </section>
+    <section class="category-section">
+      <h2>5. Simulation (จำลองสถานการณ์)</h2>
+      <div class="game-list">
+        <div class="game-card"><h3>The Sims 4</h3><p>EA</p></div>
+        <div class="game-card"><h3>Flight Simulator</h3><p>Microsoft</p></div>
+      </div>
+    </section>
+    <section class="category-section">
+      <h2>6. Sports (กีฬา)</h2>
+      <div class="game-list">
+        <div class="game-card"><h3>FIFA 24</h3><p>EA Sports</p></div>
+        <div class="game-card"><h3>NBA 2K</h3><p>2K Games</p></div>
+      </div>
+    </section>
+    <section class="category-section">
+      <h2>7. Racing (แข่งรถ)</h2>
+      <div class="game-list">
+        <div class="game-card"><h3>Need for Speed</h3><p>EA</p></div>
+        <div class="game-card"><h3>Gran Turismo</h3><p>Sony</p></div>
+      </div>
+    </section>
+    <section class="category-section">
+      <h2>8. Fighting (ต่อสู้)</h2>
+      <div class="game-list">
+        <div class="game-card"><h3>Street Fighter</h3><p>Capcom</p></div>
+        <div class="game-card"><h3>Tekken</h3><p>Bandai Namco</p></div>
+      </div>
+    </section>
+    <section class="category-section">
+      <h2>9. Horror (สยองขวัญ)</h2>
+      <div class="game-list">
+        <div class="game-card"><h3>Resident Evil</h3><p>Capcom</p></div>
+        <div class="game-card"><h3>Outlast</h3><p>Red Barrels</p></div>
+      </div>
+    </section>
+    <section class="category-section">
+      <h2>10. Puzzle (ปริศนา)</h2>
+      <div class="game-list">
+        <div class="game-card"><h3>Portal 2</h3><p>Valve</p></div>
+        <div class="game-card"><h3>Tetris</h3><p>The Tetris Company</p></div>
+      </div>
+    </section>
+    <section class="category-section">
+      <h2>11. Platformer (เกมกระโดด)</h2>
+      <div class="game-list">
+        <div class="game-card"><h3>Super Mario</h3><p>Nintendo</p></div>
+        <div class="game-card"><h3>Hollow Knight</h3><p>Team Cherry</p></div>
+      </div>
+    </section>
+    <section class="category-section">
+      <h2>12. MMO (ออนไลน์ขนาดใหญ่)</h2>
+      <div class="game-list">
+        <div class="game-card"><h3>World of Warcraft</h3><p>Blizzard</p></div>
+        <div class="game-card"><h3>Guild Wars 2</h3><p>ArenaNet</p></div>
+      </div>
+    </section>
+    <section class="category-section">
+      <h2>13. Sandbox</h2>
+      <div class="game-list">
+        <div class="game-card"><h3>Minecraft</h3><p>Mojang</p></div>
+        <div class="game-card"><h3>Terraria</h3><p>Re-Logic</p></div>
+      </div>
+    </section>
+    <section class="category-section">
+      <h2>14. Roguelike</h2>
+      <div class="game-list">
+        <div class="game-card"><h3>Hades</h3><p>Supergiant Games</p></div>
+        <div class="game-card"><h3>Dead Cells</h3><p>Motion Twin</p></div>
+      </div>
+    </section>
+    <section class="category-section">
+      <h2>15. Survival</h2>
+      <div class="game-list">
+        <div class="game-card"><h3>ARK: Survival Evolved</h3><p>Studio Wildcard</p></div>
+        <div class="game-card"><h3>Rust</h3><p>Facepunch Studios</p></div>
+      </div>
+    </section>
+    <section class="category-section">
+      <h2>16. Stealth</h2>
+      <div class="game-list">
+        <div class="game-card"><h3>Metal Gear Solid</h3><p>Konami</p></div>
+        <div class="game-card"><h3>Hitman</h3><p>IO Interactive</p></div>
+      </div>
+    </section>
+    <section class="category-section">
+      <h2>17. Rhythm (เกมดนตรี)</h2>
+      <div class="game-list">
+        <div class="game-card"><h3>Beat Saber</h3><p>Beat Games</p></div>
+        <div class="game-card"><h3>Osu!</h3><p>Dean Herbert</p></div>
+      </div>
+    </section>
+    <section class="category-section">
+      <h2>18. Visual Novel</h2>
+      <div class="game-list">
+        <div class="game-card"><h3>Doki Doki Literature Club</h3><p>Team Salvato</p></div>
+        <div class="game-card"><h3>Clannad</h3><p>Key</p></div>
+      </div>
+    </section>
+    <section class="category-section">
+      <h2>19. Idle / Incremental</h2>
+      <div class="game-list">
+        <div class="game-card"><h3>Cookie Clicker</h3><p>Orteil</p></div>
+        <div class="game-card"><h3>Adventure Capitalist</h3><p>Hyper Hippo</p></div>
+      </div>
+    </section>
+    <section class="category-section">
+      <h2>20. Card Games</h2>
+      <div class="game-list">
+        <div class="game-card"><h3>Hearthstone</h3><p>Blizzard</p></div>
+        <div class="game-card"><h3>Gwent</h3><p>CD Projekt</p></div>
+      </div>
+    </section>
+    <section class="category-section">
+      <h2>21. MOBA</h2>
+      <div class="game-list">
+        <div class="game-card"><h3>League of Legends</h3><p>Riot Games</p></div>
+        <div class="game-card"><h3>Dota 2</h3><p>Valve</p></div>
+      </div>
+    </section>
+    <section class="category-section">
+      <h2>22. Tower Defense</h2>
+      <div class="game-list">
+        <div class="game-card"><h3>Plants vs Zombies</h3><p>PopCap</p></div>
+        <div class="game-card"><h3>Bloons TD 6</h3><p>Ninja Kiwi</p></div>
+      </div>
+    </section>
+    <section class="category-section">
+      <h2>23. Trivia / Quiz</h2>
+      <div class="game-list">
+        <div class="game-card"><h3>Kahoot!</h3><p>Kahoot AS</p></div>
+        <div class="game-card"><h3>QuizUp</h3><p>Plain Vanilla</p></div>
+      </div>
+    </section>
+    <section class="category-section">
+      <h2>24. Party Games</h2>
+      <div class="game-list">
+        <div class="game-card"><h3>Among Us</h3><p>Innersloth</p></div>
+        <div class="game-card"><h3>Jackbox Party</h3><p>Jackbox Games</p></div>
+      </div>
+    </section>
+    <section class="category-section">
+      <h2>25. Educational</h2>
+      <div class="game-list">
+        <div class="game-card"><h3>Typing of the Dead</h3><p>SEGA</p></div>
+        <div class="game-card"><h3>Brain Age</h3><p>Nintendo</p></div>
+      </div>
+    </section>
+    <section class="category-section">
+      <h2>26. Battle Royale</h2>
+      <div class="game-list">
+        <div class="game-card"><h3>Fortnite</h3><p>Epic Games</p></div>
+        <div class="game-card"><h3>Free Fire</h3><p>Garena</p></div>
+      </div>
+    </section>
+    <section class="category-section">
+      <h2>27. Open World</h2>
+      <div class="game-list">
+        <div class="game-card"><h3>GTA V</h3><p>Rockstar Games</p></div>
+        <div class="game-card"><h3>Elden Ring</h3><p>FromSoftware</p></div>
+      </div>
+    </section>
   </main>
   <footer>
     <h4>ผู้สนับสนุน (Partners)</h4>
@@ -131,7 +279,7 @@
       <li>Steam</li>
       <li>Godot Engine</li>
     </ul>
-    <p>&copy; 2025 รวมเกมทุกแนว - พัฒนาเพื่อการศึกษา</p>
+    <p>&copy; 2025 Shenwang store all</p>
   </footer>
 </body>
-</html>
+  </html>
