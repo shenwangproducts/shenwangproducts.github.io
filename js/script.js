@@ -139,45 +139,37 @@ window.addEventListener('load', function () {
 }); 
 
 
-// scripts.js
+// js/scripts.js import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js"; import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-database.js";
 
-document.addEventListener("DOMContentLoaded", () => { const form = document.getElementById("registerForm");
+const firebaseConfig = { apiKey: "AIzaSyDyCl7wI3sNfKo_LX7sAETNkX2J-5q5UDM", authDomain: "devtogether-10efd.firebaseapp.com", projectId: "devtogether-10efd", storageBucket: "devtogether-10efd.appspot.com", messagingSenderId: "891467432360", appId: "1:891467432360:web:2d328047ef0b916b489d9d", measurementId: "G-7ZWFHSS8RF", databaseURL: "https://devtogether-10efd-default-rtdb.firebaseio.com" };
 
-if (form) { form.addEventListener("submit", (e) => { e.preventDefault();
+const app = initializeApp(firebaseConfig); const db = getDatabase(app);
 
-const nickname = document.getElementById("nickname").value.trim();
-  const facebook = document.getElementById("facebook").value.trim();
-  const contact = document.getElementById("contact").value.trim();
-  const roles = Array.from(document.getElementById("roles").selectedOptions).map(
-    (o) => o.value
-  );
-  const collab = document.getElementById("collab").value;
+const urlParams = new URLSearchParams(window.location.search); const token = urlParams.get("user"); const card = document.getElementById("card");
 
-  if (!nickname || !facebook || !contact || roles.length === 0) {
-    alert("กรุณากรอกข้อมูลให้ครบถ้วน");
-    return;
+if (!token) { card.innerHTML = "<h2>ไม่พบข้อมูลผู้ใช้</h2>"; } else { const userRef = ref(db, "members/" + token);
+
+get(userRef) .then((snapshot) => { if (snapshot.exists()) { const data = snapshot.val(); const groupLink = https://facebook.com/groups/devtogether-group?join=${token}; const qrAPI = https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(groupLink)};
+
+card.innerHTML = `
+      <h2>${data.nickname}</h2>
+      <div class="field"><span class="label">Facebook:</span><div class="value">${data.facebook}</div></div>
+      <div class="field"><span class="label">ติดต่อ:</span><div class="value">${data.contact}</div></div>
+      <div class="field"><span class="label">ตำแหน่ง:</span><div class="value">${data.roles.join(', ')}</div></div>
+      <div class="field"><span class="label">เข้าร่วมทีมแบบ:</span><div class="value">${data.collab}</div></div>
+      <div class="qr">
+        <p style="margin-bottom: 8px; color: #aaa">สแกนเพื่อเข้ากลุ่ม</p>
+        <img src="${qrAPI}" alt="QR Code" />
+      </div>
+    `;
+  } else {
+    card.innerHTML = "<h2>ไม่พบข้อมูลผู้ใช้</h2>";
   }
-
-  // สร้าง object ผู้ใช้
-  const userData = {
-    nickname,
-    facebook,
-    contact,
-    roles,
-    collab,
-    timestamp: new Date().toISOString()
-  };
-
-  // เก็บไว้ใน localStorage (สำหรับ demo)
-  localStorage.setItem(`devtogether_${nickname}`, JSON.stringify(userData));
-
-  // เข้ารหัสชื่อเล่นเป็น token
-  const token = btoa(nickname);
-
-  // redirect ไปหน้าบัตร
-  window.location.href = `card.html?user=${token}`;
+})
+.catch((error) => {
+  console.error(error);
+  card.innerHTML = "<h2>เกิดข้อผิดพลาด</h2>";
 });
 
-} });
+}
 
-                                           
