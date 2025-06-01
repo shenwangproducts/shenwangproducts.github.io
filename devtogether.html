@@ -98,5 +98,59 @@ button:hover {
 </form>
 
   </div>
+
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+  import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDyCl7wI3sNfKo_LX7sAETNkX2J-5q5UDM",
+    authDomain: "devtogether-10efd.firebaseapp.com",
+    projectId: "devtogether-10efd",
+    storageBucket: "devtogether-10efd.appspot.com",
+    messagingSenderId: "891467432360",
+    appId: "1:891467432360:web:2d328047ef0b916b489d9d",
+    measurementId: "G-7ZWFHSS8RF",
+    databaseURL: "https://devtogether-10efd-default-rtdb.firebaseio.com"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  const form = document.getElementById("registerForm");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const nickname = document.getElementById("nickname").value.trim();
+    const facebook = document.getElementById("facebook").value.trim();
+    const contact = document.getElementById("contact").value.trim();
+    const roles = Array.from(document.getElementById("roles").selectedOptions).map(opt => opt.value);
+    const collab = document.getElementById("collab").value;
+
+    if (!nickname || !facebook || !contact || roles.length === 0) {
+      alert("กรอกข้อมูลให้ครบถ้วน");
+      return;
+    }
+
+    const token = btoa(nickname.toLowerCase());
+    const data = {
+      nickname,
+      facebook,
+      contact,
+      roles,
+      collab,
+      timestamp: Date.now()
+    };
+
+    try {
+      await set(ref(db, "members/" + token), data);
+      window.location.href = `card.html?user=${token}`;
+    } catch (err) {
+      console.error(err);
+      alert("บันทึกข้อมูลไม่สำเร็จ");
+    }
+  });
+  </script>
 </body>
 </html>
