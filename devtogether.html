@@ -1,0 +1,81 @@
+<!DOCTYPE html><html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DevTogether - ลงทะเบียนสมาชิก</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="scripts.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input, select, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>ลงทะเบียนเข้าร่วม DevTogether</h2>
+    <form id="registerForm">
+      <label for="nickname">ชื่อในวงการ *</label>
+      <input type="text" id="nickname" required /><label for="facebook">ชื่อ Facebook *</label>
+  <input type="text" id="facebook" required />
+
+  <label for="contact">ช่องทางติดต่อ (เช่น Discord, IG, Email) *</label>
+  <input type="text" id="contact" required />
+
+  <label for="roles">ตำแหน่งที่ทำ *</label>
+  <select id="roles" multiple required>
+    <option value="dev">นักพัฒนาเกม</option>
+    <option value="2d">วาดภาพ 2D</option>
+    <option value="3d">สร้างโมเดล 3D</option>
+    <option value="writer">เขียนบท</option>
+    <option value="sound">ทำเสียง</option>
+    <option value="pm">โปรดิวเซอร์ / หัวหน้าทีม</option>
+  </select>
+
+  <label for="collab">สามารถร่วมงานกับผู้อื่นได้ไหม *</label>
+  <select id="collab" required>
+    <option value="yes">ได้</option>
+    <option value="no">ยังไม่พร้อม</option>
+  </select>
+
+  <button type="submit">ลงทะเบียน</button>
+</form>
+
+  </div>
+</body>
+</html>
