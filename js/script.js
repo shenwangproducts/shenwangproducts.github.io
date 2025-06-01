@@ -139,37 +139,70 @@ window.addEventListener('load', function () {
 }); 
 
 
-// js/scripts.js import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js"; import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-database.js";
+// js/scripts.js import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js"; import { getDatabase, ref, get, push, set } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-database.js";
 
 const firebaseConfig = { apiKey: "AIzaSyDyCl7wI3sNfKo_LX7sAETNkX2J-5q5UDM", authDomain: "devtogether-10efd.firebaseapp.com", projectId: "devtogether-10efd", storageBucket: "devtogether-10efd.appspot.com", messagingSenderId: "891467432360", appId: "1:891467432360:web:2d328047ef0b916b489d9d", measurementId: "G-7ZWFHSS8RF", databaseURL: "https://devtogether-10efd-default-rtdb.firebaseio.com" };
 
 const app = initializeApp(firebaseConfig); const db = getDatabase(app);
 
-const urlParams = new URLSearchParams(window.location.search); const token = urlParams.get("user"); const card = document.getElementById("card");
+// Check current page const isCardPage = window.location.pathname.includes("card.html");
+
+if (isCardPage) { // ----- Show member card ----- const urlParams = new URLSearchParams(window.location.search); const token = urlParams.get("user"); const card = document.getElementById("card");
 
 if (!token) { card.innerHTML = "<h2>ไม่พบข้อมูลผู้ใช้</h2>"; } else { const userRef = ref(db, "members/" + token);
 
-get(userRef) .then((snapshot) => { if (snapshot.exists()) { const data = snapshot.val(); const groupLink = https://facebook.com/groups/devtogether-group?join=${token}; const qrAPI = https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(groupLink)};
+get(userRef)
+  .then((snapshot) => {
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      const groupLink = `https://facebook.com/groups/devtogether-group?join=${token}`;
+      const qrAPI = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(groupLink)}`;
 
-card.innerHTML = `
-      <h2>${data.nickname}</h2>
-      <div class="field"><span class="label">Facebook:</span><div class="value">${data.facebook}</div></div>
-      <div class="field"><span class="label">ติดต่อ:</span><div class="value">${data.contact}</div></div>
-      <div class="field"><span class="label">ตำแหน่ง:</span><div class="value">${data.roles.join(', ')}</div></div>
-      <div class="field"><span class="label">เข้าร่วมทีมแบบ:</span><div class="value">${data.collab}</div></div>
-      <div class="qr">
-        <p style="margin-bottom: 8px; color: #aaa">สแกนเพื่อเข้ากลุ่ม</p>
-        <img src="${qrAPI}" alt="QR Code" />
-      </div>
-    `;
-  } else {
-    card.innerHTML = "<h2>ไม่พบข้อมูลผู้ใช้</h2>";
-  }
-})
-.catch((error) => {
-  console.error(error);
-  card.innerHTML = "<h2>เกิดข้อผิดพลาด</h2>";
+      card.innerHTML = `
+        <h2>${data.nickname}</h2>
+        <div class="field"><span class="label">Facebook:</span><div class="value">${data.facebook}</div></div>
+        <div class="field"><span class="label">ติดต่อ:</span><div class="value">${data.contact}</div></div>
+        <div class="field"><span class="label">ตำแหน่ง:</span><div class="value">${data.roles.join(', ')}</div></div>
+        <div class="field"><span class="label">เข้าร่วมทีมแบบ:</span><div class="value">${data.collab}</div></div>
+        <div class="qr">
+          <p style="margin-bottom: 8px; color: #aaa">สแกนเพื่อเข้ากลุ่ม</p>
+          <img src="${qrAPI}" alt="QR Code" />
+        </div>
+      `;
+    } else {
+      card.innerHTML = "<h2>ไม่พบข้อมูลผู้ใช้</h2>";
+    }
+  })
+  .catch((error) => {
+    console.error(error);
+    card.innerHTML = "<h2>เกิดข้อผิดพลาด</h2>";
+  });
+
+} } else { // ----- Handle form submission from devtogether.html ----- const form = document.getElementById("register-form"); if (form) { form.addEventListener("submit", (e) => { e.preventDefault();
+
+const nickname = form.querySelector("[name='nickname']").value;
+  const facebook = form.querySelector("[name='facebook']").value;
+  const contact = form.querySelector("[name='contact']").value;
+  const collab = form.querySelector("[name='collab']").value;
+
+  const roles = [];
+  form.querySelectorAll("[name='roles']:checked").forEach(cb => roles.push(cb.value));
+
+  const newRef = push(ref(db, "members"));
+  const token = newRef.key;
+
+  set(newRef, {
+    nickname,
+    facebook,
+    contact,
+    collab,
+    roles
+  }).then(() => {
+    window.location.href = `card.html?user=${token}`;
+  }).catch((err) => {
+    alert("เกิดข้อผิดพลาด: " + err.message);
+  });
 });
 
-}
+} }
 
