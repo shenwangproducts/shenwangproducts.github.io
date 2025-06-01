@@ -1,0 +1,73 @@
+<!DOCTYPE html><html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DevTogether - บัตรสมาชิก</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script defer src="js/scripts.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #eef2f7;
+      padding: 20px;
+    }
+    .card {
+      max-width: 400px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-bottom: 10px;
+    }
+    .info {
+      text-align: left;
+      margin-top: 20px;
+    }
+    #qrcode {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>บัตรสมาชิก DevTogether</h2>
+    <div id="userInfo" class="info"></div>
+    <div id="qrcode"></div>
+  </div>  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("user");
+
+    if (!token) {
+      document.getElementById("userInfo").innerHTML = "❌ ไม่พบข้อมูลผู้ใช้";
+      throw new Error("Missing user token");
+    }
+
+    const nickname = atob(token);
+    const raw = localStorage.getItem(`devtogether_${nickname}`);
+    if (!raw) {
+      document.getElementById("userInfo").innerHTML = "❌ ข้อมูลผู้ใช้ไม่ถูกต้อง หรือหมดอายุ";
+      throw new Error("Invalid or missing user data");
+    }
+
+    const user = JSON.parse(raw);
+    const info = `
+      <strong>ชื่อ:</strong> ${user.nickname}<br/>
+      <strong>Facebook:</strong> ${user.facebook}<br/>
+      <strong>ติดต่อ:</strong> ${user.contact}<br/>
+      <strong>ตำแหน่ง:</strong> ${user.roles.join(", ")}<br/>
+      <strong>ร่วมงานได้:</strong> ${user.collab === "yes" ? "✅ ได้" : "❌ ยังไม่พร้อม"}
+    `;
+    document.getElementById("userInfo").innerHTML = info;
+
+    // สร้าง QR (ลิงก์ไปที่กลุ่ม Facebook หรือแบบฟอร์มภายใน)
+    const fbLink = "https://www.facebook.com/groups/devtogether"; // เปลี่ยนตามจริง
+    QRCode.toCanvas(document.createElement("canvas"), fbLink, (err, canvas) => {
+      if (err) return console.error(err);
+      document.getElementById("qrcode").appendChild(canvas);
+    });
+  </script></body>
+</html>
