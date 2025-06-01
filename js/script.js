@@ -137,3 +137,47 @@ window.addEventListener('load', function () {
     document.getElementById("cookieConsent").style.display = "block";
   }
 }); 
+
+
+// scripts.js
+
+document.addEventListener("DOMContentLoaded", () => { const form = document.getElementById("registerForm");
+
+if (form) { form.addEventListener("submit", (e) => { e.preventDefault();
+
+const nickname = document.getElementById("nickname").value.trim();
+  const facebook = document.getElementById("facebook").value.trim();
+  const contact = document.getElementById("contact").value.trim();
+  const roles = Array.from(document.getElementById("roles").selectedOptions).map(
+    (o) => o.value
+  );
+  const collab = document.getElementById("collab").value;
+
+  if (!nickname || !facebook || !contact || roles.length === 0) {
+    alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+    return;
+  }
+
+  // สร้าง object ผู้ใช้
+  const userData = {
+    nickname,
+    facebook,
+    contact,
+    roles,
+    collab,
+    timestamp: new Date().toISOString()
+  };
+
+  // เก็บไว้ใน localStorage (สำหรับ demo)
+  localStorage.setItem(`devtogether_${nickname}`, JSON.stringify(userData));
+
+  // เข้ารหัสชื่อเล่นเป็น token
+  const token = btoa(nickname);
+
+  // redirect ไปหน้าบัตร
+  window.location.href = `card.html?user=${token}`;
+});
+
+} });
+
+                                           
