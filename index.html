@@ -1,97 +1,145 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Shenwang Media</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shenwang Media - Demo Version</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: #111;
+      color: #fff;
+      text-align: center;
+      padding-top: 80px;
+    }
+
+    header {
+      background: #222;
+      padding: 20px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    }
+
+    .logo-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .logo-center img {
+      width: 100px;
+      height: 100px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      color: #ff4d4d;
+    }
+
+    .main-nav a {
+      color: #ccc;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .main-nav a:hover {
+      color: #ff4d4d;
+    }
+
+    .promo-box {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 40px;
+      background: #1c1c1c;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+    }
+
+    .promo-box h2 {
+      color: #ff4d4d;
+    }
+
+    .promo-box button {
+      padding: 10px 20px;
+      background: #ff1a1a;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    .promo-box button:hover {
+      background: #ff4d4d;
+    }
+  </style>
 </head>
 <body>
+
   <header>
-    <div class="header-container">
-      <div class="logo-center">
-        <img src="assets/img/received.jpg" alt="Shenwang Media Logo" />
-        <h1>Shenwang Media</h1>
-      </div>
-      <nav class="main-nav" id="mainNav">
-        <a href="#" onclick="changePage('promo')">promote</a>
-        <a href="#" onclick="changePage('news')">news</a>
-        <a href="#" onclick="changePage('download')">install</a>
-        <a href="#" onclick="changePage('contact')">responsible</a>
-        <a href="#" id="signupButton" onclick="changePage('signup')">signup</a>
-      </nav>
+    <div class="logo-center">
+      <img src="https://via.placeholder.com/100" alt="Shenwang Logo" />
+      <h1>Shenwang Media</h1>
     </div>
+    <nav class="main-nav">
+      <a href="#">Promote</a>
+      <a href="#">News</a>
+      <a href="#">Install</a>
+      <a href="#">Responsible</a>
+      <a href="#">Signup</a>
+    </nav>
   </header>
 
   <main>
     <div class="promo-box">
-      <h2>เริ่มโปรโมทกับ Shenwang Media</h2>
-      <p>ปลดล็อกพลังของแพลตฟอร์มของเรา และเข้าถึงผู้คนทั่วโลกอย่างมีสไตล์</p>
-      <button onclick="startPromotion()">เริ่มโปรโมท</button>
+      <h2>Start Promoting with Shenwang Media</h2>
+      <p>Unlock the power of our platform and reach people worldwide with style.</p>
+      <button onclick="alert('Demo promotion started!')">Start Promotion</button>
     </div>
   </main>
 
-  <!-- Popup Notification -->
-  <div id="popup" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); display: flex; justify-content: center; align-items: center; z-index: 9999;">  
-  <div style="background: #1c1c1c; color: #fff; padding: 25px; border-radius: 12px; max-width: 95%; width: 400px; text-align: center; box-shadow: 0 0 15px rgba(255, 0, 0, 0.5); border: 2px solid #ff1a1a;">  
-    <h2 style="margin-top: 0; color: #ff4d4d;">Demo Site Notice</h2>  
-    <p>This website is a <strong>demo version</strong> for development and testing purposes only.</p>  
-    <p>It is not intended for public release, and no real user data is collected for commercial use.</p>  
-    <p>All data entered during this demo will be securely retained and transferred to the official version upon release.</p>  
-    <p><strong style="color: #ff4d4d;">Official demo domain:</strong> www.shenwang.wuaze.com</p>  
-    <hr style="margin: 15px 0; border-color: #444;">  
-    <p><strong>© 2025 Shenwang Media</strong></p>  
-    <p>All rights reserved. No content may be copied, modified, or redistributed without permission.</p>  
-    <label><input type="checkbox" id="dontShowAgain"> Don't show this again</label>  
-    <br>  
-    <button onclick="closePopup()" style="margin-top: 15px; padding: 10px 20px; border: none; background: #ff1a1a; color: white; border-radius: 5px; cursor: pointer;">Close</button>  
-  </div>  
+  <!-- ✅ Demo Popup -->
+  <div id="popup" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); display: flex; justify-content: center; align-items: center; z-index: 9999;">
+    <div style="background: #1c1c1c; color: #fff; padding: 25px; border-radius: 12px; max-width: 95%; width: 400px; text-align: center; box-shadow: 0 0 15px rgba(255, 0, 0, 0.5); border: 2px solid #ff1a1a;">
+      <h2 style="margin-top: 0; color: #ff4d4d;">Demo Site Notice</h2>
+      <p>This website is a <strong>demo version</strong> for development and testing purposes only.</p>
+      <p>It is not intended for public release, and no real user data is collected for commercial use.</p>
+      <p>All data entered during this demo will be securely retained and transferred to the official version upon release.</p>
+      <p><strong style="color: #ff4d4d;">Official demo domain:</strong> www.shenwang.wuaze.com</p>
+      <hr style="margin: 15px 0; border-color: #444;">
+      <p><strong>© 2025 Shenwang Media</strong></p>
+      <p>All rights reserved. No content may be copied, modified, or redistributed without permission.</p>
+      <label><input type="checkbox" id="dontShowAgain"> Don't show this again</label>
+      <br>
+      <button onclick="closePopup()" style="margin-top: 15px; padding: 10px 20px; border: none; background: #ff1a1a; color: white; border-radius: 5px; cursor: pointer;">Close</button>
+    </div>
   </div>
 
-  <!-- Cookie Consent -->
-  <div id="cookieConsent" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #333; color: white; padding: 15px; text-align: center; z-index: 10000; display: none;">
-    <p style="margin: 0 0 10px;">เราใช้คุกกี้เพื่อปรับปรุงประสบการณ์ของคุณบนเว็บไซต์</p>
-    <button onclick="acceptCookies()" style="padding: 8px 15px; margin-right: 10px; background: #4CAF50; color: white; border: none; border-radius: 5px;">ยอมรับ</button>
-    <button onclick="declineCookies()" style="padding: 8px 15px; background: #f44336; color: white; border: none; border-radius: 5px;">ปฏิเสธ</button>
-  </div>
+  <!-- ✅ Script for popup logic -->
+  <script>
+    // Hide popup if user has already dismissed it
+    window.addEventListener("DOMContentLoaded", function () {
+      if (localStorage.getItem("popupShown") === "true") {
+        document.getElementById("popup").style.display = "none";
+      }
+    });
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-  
-    const firebaseConfig = {
-      apiKey: "AIzaSyC-UwBguZRGdrIWLVkTsCRlt02vKOAlOlA",
-      authDomain: "shenwang-auth-user.firebaseapp.com",
-      projectId: "shenwang-auth-user",
-      storageBucket: "shenwang-auth-user.firebasestorage.app",
-      messagingSenderId: "273542969972",
-      appId: "1:273542969972:web:4d6ce4edf5188b98dbef21"
-    };
-  
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-  
-    // เรียกดู document
-    const docRef = doc(db, "maintenance_status", "tbPcdWyBJTZrDDdRrTGA");
-    getDoc(docRef)
-      .then((docSnap) => {
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          console.log(data);
-        } else {
-          console.log("Document does not exist");
-        }
-      })
-      .catch((error) => {
-        console.error("Error getting document:", error);
-      });
+    function closePopup() {
+      if (document.getElementById("dontShowAgain").checked) {
+        localStorage.setItem("popupShown", "true");
+      }
+      document.getElementById("popup").style.display = "none";
+    }
   </script>
 
-  <script src="js/script.js"></script>
 </body>
 </html>
