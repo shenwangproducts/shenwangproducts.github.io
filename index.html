@@ -1,229 +1,178 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Shenwang Media - Demo Version</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shenwang Media - รวมโปรโมทของทุกคน</title>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     body {
       margin: 0;
-      font-family: 'Orbitron', sans-serif;
-      background: #0e0e0e;
-      color: #fff;
-      text-align: center;
-      padding-top: 120px;
+      font-family: 'Prompt', sans-serif;
+      background: #0b0f0b;
+      color: #e0ffe0;
     }
 
     header {
-      background: #1a1a1a;
-      padding: 20px 0;
-      position: fixed;
+      background: #122212;
+      padding: 20px 40px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+      position: sticky;
       top: 0;
-      width: 100%;
       z-index: 1000;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
     }
 
-    .logo-center {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .logo-center img {
-      width: 90px;
-      height: 90px;
-      border-radius: 12px;
-      margin-bottom: 8px;
-    }
-
-    h1 {
+    header h1 {
       margin: 0;
-      font-size: 30px;
-      color: #ff4d4d;
+      font-size: 28px;
+      color: #7CFF7C;
     }
 
-    .main-nav {
+    .nav {
       margin-top: 10px;
     }
 
-    .main-nav a {
-      color: #ccc;
-      margin: 0 15px;
+    .nav a {
+      color: #caffca;
+      margin: 0 10px;
       text-decoration: none;
-      font-weight: bold;
-      font-size: 16px;
-      transition: color 0.3s ease;
+      font-weight: 600;
     }
 
-    .main-nav a:hover {
-      color: #ff4d4d;
+    .nav a:hover {
+      color: #7CFF7C;
     }
 
-    main {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 40px 20px;
-    }
-
-    .promo-box {
-      background: #1c1c1c;
-      padding: 40px;
-      border-radius: 14px;
-      box-shadow: 0 0 25px rgba(255, 0, 0, 0.2);
-      max-width: 600px;
-      width: 100%;
+    .hero {
+      padding: 60px 20px 40px;
       text-align: center;
     }
 
-    .promo-box h2 {
-      color: #ff4d4d;
+    .hero h2 {
       font-size: 24px;
+      color: #7CFF7C;
       margin-bottom: 10px;
     }
 
-    .promo-box p {
-      font-size: 16px;
-      line-height: 1.6;
-      margin-bottom: 20px;
+    .hero p {
+      color: #aaffaa;
+      max-width: 600px;
+      margin: auto;
     }
 
-    .promo-box button {
-      padding: 12px 28px;
-      background: #ff1a1a;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background 0.3s ease;
+    .project-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 40px;
     }
 
-    .promo-box button:hover {
-      background: #e60000;
-    }
-
-    /* Popup Styling */
-    #popup {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.9);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
-
-    #popup .popup-content {
-      background: #1e1e1e;
-      color: #fff;
-      padding: 30px;
-      border-radius: 14px;
-      max-width: 95%;
-      width: 450px;
+    .card {
+      background: #1d2a1d;
+      border-radius: 10px;
+      padding: 20px;
       text-align: center;
-      box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
-      border: 2px solid #ff1a1a;
+      box-shadow: 0 0 10px rgba(124, 255, 124, 0.2);
+      transition: transform 0.2s;
     }
 
-    #popup h2 {
-      color: #ff4d4d;
-      margin-top: 0;
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card img {
+      width: 100%;
+      max-width: 180px;
+      height: auto;
+      border-radius: 8px;
       margin-bottom: 15px;
     }
 
-    #popup p {
-      font-size: 15px;
-      line-height: 1.6;
+    .card h3 {
+      color: #7CFF7C;
+      margin: 10px 0 5px;
     }
 
-    #popup hr {
-      margin: 20px 0;
-      border-color: #444;
-    }
-
-    #popup button {
-      margin-top: 15px;
-      padding: 10px 25px;
-      border: none;
-      background: #ff1a1a;
-      color: white;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 15px;
-    }
-
-    #popup button:hover {
-      background: #e60000;
-    }
-
-    #popup label {
-      display: block;
-      margin-top: 10px;
+    .card p {
+      color: #c6ffc6;
       font-size: 14px;
     }
 
+    .actions {
+      text-align: right;
+      margin: 0 40px 50px;
+    }
+
+    .actions a {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #28a745;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+
+    .actions a:hover {
+      background: #3fd35f;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #88cc88;
+      font-size: 13px;
+      border-top: 1px solid #1a2a1a;
+    }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo-center">
-      <img src="https://via.placeholder.com/100" alt="Shenwang Logo" />
-      <h1>Shenwang Media</h1>
+    <h1>Shenwang Media</h1>
+    <div class="nav">
+      <a href="index.html">หน้าแรก</a>
+      <a href="projects.html">ผลงาน</a>
+      <a href="join.html">เข้ากลุ่ม</a>
+      <a href="download.html">ดาวน์โหลด</a>
+      <a href="games.html">เกมทั้งหมด</a>
+      <a href="submit.html">ส่งโปรโมท</a>
+      <a href="contact.html">ติดต่อ</a>
     </div>
-    <nav class="main-nav">
-      <a href="#">Promote</a>
-      <a href="#">News</a>
-      <a href="#">Install</a>
-      <a href="#">Responsible</a>
-      <a href="#">Signup</a>
-    </nav>
   </header>
 
-  <main>
-    <div class="promo-box">
-      <h2>Start Promoting with Shenwang Media</h2>
-      <p>Unlock the power of our platform and reach people worldwide with style.</p>
-      <button onclick="alert('Demo promotion started!')">Start Promotion</button>
-    </div>
-  </main>
+  <section class="hero">
+    <h2>รวมโปรโมทของทุกคน</h2>
+    <p>พื้นที่แสดงผลงาน กลุ่ม และโปรเจกต์จากผู้เล่น/ผู้พัฒนาเกมทั่วประเทศ</p>
+  </section>
 
-  <!-- Demo Popup -->
-  <div id="popup">
-    <div class="popup-content">
-      <h2>Demo Site Notice</h2>
-      <p>This website is a <strong>demo version</strong> for development and testing purposes only.</p>
-      <p>It is not intended for public release, and no real user data is collected for commercial use.</p>
-      <p>All data entered during this demo will be securely retained and transferred to the official version upon release.</p>
-      <p><strong style="color: #ff4d4d;">Official demo domain:</strong> www.shenwang.wuaze.com</p>
-      <hr>
-      <p><strong>© 2025 Shenwang Media</strong></p>
-      <p>No content may be copied, modified, or redistributed without permission.</p>
-      <label><input type="checkbox" id="dontShowAgain"> Don't show this again</label>
-      <button onclick="closePopup()">Close</button>
+  <section class="project-list">
+    <div class="card">
+      <img src="https://via.placeholder.com/180" alt="Project 1">
+      <h3>Project Zero</h3>
+      <p>เกมแนว Action RPG พร้อมกราฟิกสุดล้ำ</p>
     </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/180" alt="Project 2">
+      <h3>Alpha Group</h3>
+      <p>กลุ่มพัฒนาเกมแนว Puzzle + PvP</p>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/180" alt="Project 3">
+      <h3>DevLand</h3>
+      <p>แหล่งรวมนักพัฒนามือใหม่สาย Roblox</p>
+    </div>
+  </section>
+
+  <div class="actions">
+    <a href="projects.html">ดูทั้งหมด</a>
   </div>
 
-  <!-- Popup Logic -->
-  <script>
-    window.addEventListener("DOMContentLoaded", function () {
-      if (localStorage.getItem("popupShown") === "true") {
-        document.getElementById("popup").style.display = "none";
-      }
-    });
-
-    function closePopup() {
-      if (document.getElementById("dontShowAgain").checked) {
-        localStorage.setItem("popupShown", "true");
-      }
-      document.getElementById("popup").style.display = "none";
-    }
-  </script>
+  <footer>
+    © 2025 Shenwang Media. All rights reserved.
+  </footer>
 
 </body>
 </html>
-      
