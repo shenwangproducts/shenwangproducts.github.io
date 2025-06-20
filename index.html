@@ -9,20 +9,20 @@
     body {
       margin: 0;
       font-family: 'Orbitron', sans-serif;
-      background: #111;
+      background: #0e0e0e;
       color: #fff;
       text-align: center;
-      padding-top: 80px;
+      padding-top: 120px;
     }
 
     header {
-      background: #222;
-      padding: 20px;
+      background: #1a1a1a;
+      padding: 20px 0;
       position: fixed;
       top: 0;
       width: 100%;
       z-index: 1000;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
     }
 
     .logo-center {
@@ -32,55 +32,140 @@
     }
 
     .logo-center img {
-      width: 100px;
-      height: 100px;
+      width: 90px;
+      height: 90px;
       border-radius: 12px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     h1 {
       margin: 0;
-      font-size: 28px;
+      font-size: 30px;
       color: #ff4d4d;
+    }
+
+    .main-nav {
+      margin-top: 10px;
     }
 
     .main-nav a {
       color: #ccc;
-      margin: 0 10px;
+      margin: 0 15px;
       text-decoration: none;
       font-weight: bold;
+      font-size: 16px;
+      transition: color 0.3s ease;
     }
 
     .main-nav a:hover {
       color: #ff4d4d;
     }
 
+    main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
     .promo-box {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 40px;
       background: #1c1c1c;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+      padding: 40px;
+      border-radius: 14px;
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.2);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
     }
 
     .promo-box h2 {
       color: #ff4d4d;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .promo-box p {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 20px;
     }
 
     .promo-box button {
-      padding: 10px 20px;
+      padding: 12px 28px;
       background: #ff1a1a;
-      color: white;
+      color: #fff;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
       cursor: pointer;
-      margin-top: 15px;
+      font-size: 16px;
+      transition: background 0.3s ease;
     }
 
     .promo-box button:hover {
-      background: #ff4d4d;
+      background: #e60000;
     }
+
+    /* Popup Styling */
+    #popup {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    #popup .popup-content {
+      background: #1e1e1e;
+      color: #fff;
+      padding: 30px;
+      border-radius: 14px;
+      max-width: 95%;
+      width: 450px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+      border: 2px solid #ff1a1a;
+    }
+
+    #popup h2 {
+      color: #ff4d4d;
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+
+    #popup p {
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    #popup hr {
+      margin: 20px 0;
+      border-color: #444;
+    }
+
+    #popup button {
+      margin-top: 15px;
+      padding: 10px 25px;
+      border: none;
+      background: #ff1a1a;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    #popup button:hover {
+      background: #e60000;
+    }
+
+    #popup label {
+      display: block;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
   </style>
 </head>
 <body>
@@ -107,26 +192,24 @@
     </div>
   </main>
 
-  <!-- ✅ Demo Popup -->
-  <div id="popup" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); display: flex; justify-content: center; align-items: center; z-index: 9999;">
-    <div style="background: #1c1c1c; color: #fff; padding: 25px; border-radius: 12px; max-width: 95%; width: 400px; text-align: center; box-shadow: 0 0 15px rgba(255, 0, 0, 0.5); border: 2px solid #ff1a1a;">
-      <h2 style="margin-top: 0; color: #ff4d4d;">Demo Site Notice</h2>
+  <!-- Demo Popup -->
+  <div id="popup">
+    <div class="popup-content">
+      <h2>Demo Site Notice</h2>
       <p>This website is a <strong>demo version</strong> for development and testing purposes only.</p>
       <p>It is not intended for public release, and no real user data is collected for commercial use.</p>
       <p>All data entered during this demo will be securely retained and transferred to the official version upon release.</p>
       <p><strong style="color: #ff4d4d;">Official demo domain:</strong> www.shenwang.wuaze.com</p>
-      <hr style="margin: 15px 0; border-color: #444;">
+      <hr>
       <p><strong>© 2025 Shenwang Media</strong></p>
-      <p>All rights reserved. No content may be copied, modified, or redistributed without permission.</p>
+      <p>No content may be copied, modified, or redistributed without permission.</p>
       <label><input type="checkbox" id="dontShowAgain"> Don't show this again</label>
-      <br>
-      <button onclick="closePopup()" style="margin-top: 15px; padding: 10px 20px; border: none; background: #ff1a1a; color: white; border-radius: 5px; cursor: pointer;">Close</button>
+      <button onclick="closePopup()">Close</button>
     </div>
   </div>
 
-  <!-- ✅ Script for popup logic -->
+  <!-- Popup Logic -->
   <script>
-    // Hide popup if user has already dismissed it
     window.addEventListener("DOMContentLoaded", function () {
       if (localStorage.getItem("popupShown") === "true") {
         document.getElementById("popup").style.display = "none";
@@ -143,3 +226,4 @@
 
 </body>
 </html>
+      
